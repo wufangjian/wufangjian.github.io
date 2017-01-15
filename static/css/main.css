@@ -1,6 +1,7 @@
 /**
  * Master styling
  */
+
 body {
     font-family: "Roboto Condensed", Arial, sans-serif;
     background-color: #fff;
@@ -47,7 +48,8 @@ h3 {
 
 a, a:link, a:active {
     text-decoration: none;
-    color: #8C8C8C;
+    /*color: #8C8C8C;*/
+    color: #666;
 }
 
 a:hover {
@@ -216,4 +218,12 @@ div.col-sm-3 img#about {
     div.col-sm-3 {
         margin-top: 30px;
     }
+}
+
+/* add by wfj*/
+html,body{height: 100%;}
+body {font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif !important;}
+ol.posts li{line-height: 30px;}
+div.col-sm-3{
+    font-size: 13px !important;
 }

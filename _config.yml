@@ -1,6 +1,6 @@
 title: wufangjian
 description: My Personal Stack Problems
-author: 吴方建
+author: wufangjian
 github: https://github.com/wufangjian
 about: 前端工程师 / 爱玩儿 / 爱折腾
 disqus_shortname: wufangjian
@@ -16,16 +16,13 @@ collections:
 
 social:
     - icon: fa-facebook
-      link: "#"
-    - icon: fa-skype
-      link: "#"
-    - icon: fa-twitter
-      link: "https://twitter.com/agusmakmun6"
+      link: "https://www.facebook.com/fangjian.wu.9"
+    - icon: fa-weibo
+      link: "http://weibo.com/3530173380/profile"
+    - icon: fa-google
+      link: "https://plus.google.com/u/0/102026584849487539916"
     - icon: fa-linkedin
-      link: "#"
-    - icon: fa-stack-exchange
-      link: "#"
-
+      link: "https://www.linkedin.com/in/%E6%96%B9%E5%BB%BA-%E5%90%B4-271b63103?trk=hp-identity-photo"
 share:
   twitter_username: wufangjian
   fb_appid: 1749788565247320
