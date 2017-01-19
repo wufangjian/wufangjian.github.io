@@ -5,11 +5,11 @@ date:   2017-01-14 16:16:16 +0800
 categories: [js]
 ---
 
-javascript的一大特点，函数存在 [定义时上下文] [运行时上下文] [上下文可改变] 的概念
+javascript的一大特点，函数存在 `定义时上下文` `运行时上下文` `上下文可改变` 的概念
 
 ## call 、apply
 
-call 和 apply 函数就是为了改变函数的[运行时上下文]而存在，也就是改变函数体内部的 this 指向
+call 和 apply 函数就是为了改变函数的 `运行时上下文` 而存在，也就是改变函数体内部的 this 指向
 
 
 ```
@@ -45,6 +45,7 @@ call 和 apply 的方法作用是完全一致的，他们的区别在于传输�
 - apply: 参数放在一个数组对象里面  用于不确定参数个数的场景
 
 栗子：
+
 ```javascript
 
 var func = function(arg1, arg2){
@@ -54,6 +55,7 @@ var func = function(arg1, arg2){
 
 func.call(this, 'arg1', 'arg2') // arg1 arg2
 func.apply(this, ['arg1', 'arg2']) // arg1 arg2
+
 ```
 
 常见使用场景:
@@ -66,6 +68,7 @@ var arr = ['a1', 'a2', {id: 1}, true];
 var brr = [1, 2];
 
 Array.prototype.push.apply(arr, brr);
+
 ```
 
 2.获取数组中的最大值
@@ -119,6 +122,7 @@ log(1,2,3);  // 1 2 3
 ```
 
 在输出值前面添加上 `(app)`
+
 ```javascript
 function log() {
   var args = [].slice.apply(arguments);
@@ -190,6 +194,7 @@ func(); // 3
 这里我们创建了一个新的函数 func，当使用 bind() 创建一个绑定函数之后，它被执行的时候，它的 this 会被设置成 foo ， 而不是像我们调用 bar() 时的全局作用域。
 
 注意：多次调用bind只有第一次有效
+
 ```javascript
 
 var bar = function(){
