@@ -12,7 +12,7 @@ javascript的一大特点，函数存在 `定义时上下文` `运行时上下�
 call 和 apply 函数就是为了改变函数的 `运行时上下文` 而存在，也就是改变函数体内部的 this 指向
 
 
-```
+```javascript
 var fruits = function() {}
 fruits.prototype = {
     color: 'red',
