@@ -177,6 +177,8 @@ var foo = {
 
 
 再来一个简单的栗子：
+
+
 ```javascript
 var bar = function(){
   console.log(this.x);
@@ -191,6 +193,7 @@ var func = bar.bind(foo);
 func(); // 3
 
 ```
+
 这里我们创建了一个新的函数 func，当使用 bind() 创建一个绑定函数之后，它被执行的时候，它的 this 会被设置成 foo ， 而不是像我们调用 bar() 时的全局作用域。
 
 注意：多次调用bind只有第一次有效
