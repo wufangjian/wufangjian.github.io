@@ -49,7 +49,7 @@ permalink: /about/
 
 ```
 计算机基础
-    常用数据结构    
+    常用数据结构
     常用算法
     网络基础 http/tcp/ip
 
@@ -58,17 +58,17 @@ permalink: /about/
     node
     ES6 语法
     css    [BFC flex 常见布局...]
-    angularjs   能搭建大型单页面应用以及性能优化
-    vue / react 会用
-    css3 / h5   熟悉常用
+    angularjs   大型项目经验，复杂场景
+    vue / react 熟悉
+    css3 / h5   熟悉
     mongodb     熟悉常用API
     
 前端工程化工具
-    yog2    搭建过大型应用
-    fis3    搭建过大型面应用
-    webpack 基于vue的博客系统
-    grunt   爱奇艺主站机遇grunt打包
-    gulp    有有项目经验
+    yog2    大型项目经验
+    fis3    大型项目经验
+    webpack 熟悉
+    grunt   熟悉
+    gulp    熟悉
 
 后端
     java
