@@ -51,7 +51,7 @@ permalink: /about/
 计算机基础
     常用数据结构
     常用算法
-    网络基础 http/tcp/ip
+    网络基础 http/tcp/ip/
 
 前端基础
     javascript
@@ -64,6 +64,8 @@ permalink: /about/
     mongodb     熟悉常用API
     
 前端工程化工具
+    git     项目中使用
+    svn     熟悉
     yog2    大型项目经验
     fis3    大型项目经验
     webpack 熟悉
