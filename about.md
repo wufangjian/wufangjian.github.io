@@ -52,6 +52,7 @@ permalink: /about/
     常用数据结构
     常用算法
     网络基础 http/tcp/ip/
+    linux   vim/shell
 
 前端基础
     javascript
