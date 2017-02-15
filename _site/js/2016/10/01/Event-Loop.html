@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>ECMAScript arguments 对象 [js] - wufangjian</title>
+        <title>Event Loop (事件循环) [js] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="ECMAScript arguments 对象 [js]" />
-        <meta name="keywords" content="ECMAScript arguments 对象 [js], wufangjian, js" />
+        <meta name="description" content="Event Loop (事件循环) [js]" />
+        <meta name="keywords" content="Event Loop (事件循环) [js], wufangjian, js" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="ECMAScript arguments 对象 [js]" property="og:title">
+          <meta content="Event Loop (事件循环) [js]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/js/2017/01/15/arguments.html" property="og:url">
+          <meta content="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html" property="og:url">
         
         
-          <meta content="2017-01-15T16:16:16+08:00" property="article:published_time">
+          <meta content="2016-10-01T12:00:00+08:00" property="article:published_time">
           <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="ECMAScript arguments 对象 [js]">
+          <meta name="twitter:title" content="Event Loop (事件循环) [js]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/15/arguments.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,8 +131,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>ECMAScript arguments 对象 [js]</h1>
-<span class="time">15 Jan 2017</span>
+                <h1>Event Loop (事件循环) [js]</h1>
+<span class="time">01 Oct 2016</span>
 
 <span class="categories">
     &raquo; <a href="/category/js">js</a>
@@ -140,115 +140,121 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="arguments-">arguments 对象</h1>
-
-<blockquote>
-  <p>说明： arguments对象，在函数方法内部使用</p>
+    <div class="post"><blockquote>
+  <p>Event Loop 是JavaScript作为单线程语言的核心，对于正确理解Event Loop概念非常重要。</p>
 </blockquote>
 
-<p><strong>一、无需指定参数名称</strong></p>
+<p>JavaScript 的并发模型基于 “event loop”。这个模型与其他在 C 或者 Java 等语言中的模型着实不同。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">'a'</span><span class="p">){</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<h2 id="section">运行时概念</h2>
+
+<p>下面的内容解释了一个理论上的模型。现代 JavaScript 引擎着重实现和优化了描述的几个语义。</p>
+
+<p><img src="/static/img/2017/eventloop.jpg" alt="" /></p>
+
+<h3 id="section-1">栈</h3>
+
+<p>函数调用形成了一个堆栈帧</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">b</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="o">+</span><span class="mi">35</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">g</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">f</span><span class="p">(</span><span class="nx">m</span><span class="o">*</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">g</span><span class="p">(</span><span class="mi">21</span><span class="p">);</span>
+
+</code></pre>
+</div>
+
+<p>调用g的时候，创建第一个堆栈帧，包含g的参数和局部变量，当调用f的时候第二个堆栈帧就被创建，置于第一个堆栈帧之上。包含了f的参数和局部变量。当f返回的时候 f所处的堆栈帧就被弹出，当g返回的时候栈就空了。</p>
+
+<hr />
+
+<h3 id="section-2">堆</h3>
+
+<p>对象被分配在一个堆中，一个用以表示一个内存中大的未被组织的区域。</p>
+
+<hr />
+
+<h3 id="section-3">队列</h3>
+
+<p>一个 JavaScript 运行时包含了一个待处理的消息队列。<code class="highlighter-rouge">每一个消息都与一个函数相关联</code> 。当栈为空时，从队列中取出一个消息进行处理。这个处理过程包含了调用与这个消息相关联的函数（以及因而创建了一个初始堆栈帧）。当栈再次为空的时候，也就意味着消息处理结束。</p>
+
+<hr />
+
+<h2 id="section-4">事件循环</h2>
+
+<p>之所以称为 事件循环，是因为它经常被用于类似如下的方式来实现：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="k">while</span><span class="p">(</span><span class="nx">queue</span><span class="p">.</span><span class="nx">waitForMessage</span><span class="p">()){</span>
+  <span class="nx">queue</span><span class="p">.</span><span class="nx">processNextMessage</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre>
 </div>
 
-<p><strong>二、检测参数个数</strong></p>
+<p>如果当前没有任何消息，queue.waitForMessage 会同步等待消息到来。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
-    <span class="k">return</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-<span class="p">}</span>
+<hr />
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// 3</span>
+<h3 id="section-5">“执行至完成”</h3>
+
+<p>每一个消息执行完成后，其它消息才会被执行。当你分析你的程序时，这点提供了一些优秀的特性，包括当一个函数运行时，它不能被取代且会在其它代码运行前先完成（而且能够修改这个函数控制的数据）。这点与C语言不同。例如，C语言中当一个程序在一个线程中运行时，它可以在任何点停止且可以在其它线程中运行其它代码。</p>
+
+<p>这个模型的一个缺点在于当一个消息的完成耗时过长，网络应用无法处理用户的交互如点击或者滚动。浏览器用“程序需要过长时间运行”的对话框来缓解这个问题。一个比较好的解决方案是使消息处理变短且如果可能的话，将一个消息拆分成几个消息。</p>
+
+<hr />
+
+<h3 id="section-6">添加消息</h3>
+
+<p>在浏览器里，当一个事件出现且有一个事件监听器被绑定时，消息会被随时添加。如果没有事件监听器，事件会丢失。所以点击一个附带点击事件处理函数的元素会添加一个消息。其它事件亦然。</p>
+
+<p>调用 setTimeout 函数会在一个时间段过去后在队列中添加一个消息。这个时间段作为函数的第二个参数被传入。如果队列中没有其它消息，消息会被马上处理。但是，如果有其它消息，setTimeout 消息必须等待其它消息处理完。因此第二个参数仅仅表示最少的时间 而非确切的时间。</p>
+
+<hr />
+
+<h3 id="section-7">零延迟</h3>
+
+<p>零延迟 (Zero delay) 并不是意味着回调会立即执行。在零延迟调用 setTimeout 时，其并不是过了给定的时间间隔后就马上执行回调函数。其等待的时间基于队列里正在等待的消息数量。在下面的例子中，”this is just a message” 将会在回调 (callback) 获得处理之前输出到控制台，这是因为延迟是要求 <code class="highlighter-rouge">运行时 (runtime) 处理请求</code> 所需的最小时间，但不是有所保证的时间。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'this is the start'</span><span class="p">);</span>
+
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="nx">cb</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'this is a msg from call back'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'this is just a message'</span><span class="p">);</span>
+
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="nx">cb1</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'this is a msg from call back1'</span><span class="p">);</span>
+  <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'this is the  end'</span><span class="p">);</span>
+
+<span class="p">})();</span>
 </code></pre>
 </div>
+<hr />
 
-<p>说明：ECMAScript 不会验证传递给函数的参数个数是否等于函数定义的参数个数,开发者定义的函数都可以接受任意个数的参数（根据 Netscape 的文档，最多可接受 255 个），而不会引发任何错误。任何遗漏的参数都会以 undefined 传递给函数，多余的函数将忽略。</p>
+<h3 id="section-8">多个运行时互相通信</h3>
 
-<p><strong>三、模拟函数重载</strong></p>
+<p>一个 web worker 或者一个跨域的 iframe 都有它们自己的栈，堆和消息队列。两个不同的运行时只有通过 postMessage 方法进行通信。这个方法会给另一个运行时添加一个消息如果后者监听了 message 事件。</p>
 
-<p>方法重载：用同一方法，处理不同类型数据的一种手段，多个重名函数同时存在，具有不同的参数个数/参数类型</p>
+<hr />
 
-<p>java:</p>
+<h2 id="section-9">绝不阻塞</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Person</span><span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
-        <span class="k">return</span> <span class="n">a</span><span class="o">;</span>
-    <span class="o">}</span>
-    
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">){</span>
-            <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+<p>一个很有趣的事件循环 (event loop) 模型特性在于，Javascript 跟其它语言不同，它永不阻塞。处理 I/O (input/output) 通常由事件或者回调函数进行实现。所以当一个应用正等待 IndexedDB 的查询的返回或者一个 XHR 的请求返回时，它仍然可以处理其它事情例如用户输入。</p>
 
-</code></pre>
-</div>
-
-<p>js : 中只需要判断传入参数个数就能实现方法的重载</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">method</span><span class="p">(){</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="p">}</span>
-    
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">2</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<p><strong>四、arguments对象转换为数组</strong></p>
-
-<p>4.1 类数组：</p>
-
-<ul>
-  <li>
-    <p>拥有数组的一部分属性,如：length</p>
-  </li>
-  <li>
-    <p>也有自己的特有属性, 如：callee [当前函数的引用,只在函数执行时才存在]</p>
-  </li>
-</ul>
-
-<p>说明：类数组除了arguments, var nodeList = document.querySelectAll(‘div’)中的nodeList也是类数组</p>
-
-<p>4.2 转换为数组：</p>
-
-<ul>
-  <li>借助数组特性进行转换 Array、slice、splice</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 重点在于: 返回Array类型的对象</span>
-
-<span class="nb">Array</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
-<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
-<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">splice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</code></pre>
-</div>
-
-<p>能调用call的只有方法，所以不能用[].call这种形式，得用[].slice。而call的第一个参数表示真正调用slice的环境变为了arrayLike对象。所以就好像arrayLike也具有了数组的方法。</p>
-
-<ul>
-  <li>遍历</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 遍历是程序开发中万能的方法，高级方法底层往往就是调用的for循环</span>
-
-<span class="kd">function</span> <span class="nx">A</span><span class="p">(){</span>
-    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre>
-</div>
+<p>例外是存在的，如 alert 或者同步 XHR，但避免它们被认为是最佳实践。注意的是，例外的例外也是存在的（但通常是实现错误而非其它原因）。</p>
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -264,7 +270,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/15/arguments.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -328,6 +334,16 @@
     
         
             
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
         
     
 
@@ -383,16 +399,6 @@
     
         
             
-                
-                <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
-                    
-                        (Categories: <a href="/category/js">js</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -417,10 +423,10 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/js/2017/01/14/call-apply-bind.html">&laquo; call、apply、bind用法 [js]</a>
+    <a class="prev" href="/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html">&laquo; SSP-供应方平台 [广告]</a>
   
   
-    <a class="next" href="/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js] &raquo;</a>
+    <a class="next" href="/css/2016/11/01/CSS%E5%B8%83%E5%B1%80.html">CSS布局 [css] &raquo;</a>
   
 </div>
 
@@ -431,8 +437,8 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_ECMAScript arguments 对象 [js]";
-//        var disqus_title = "ECMAScript arguments 对象 [js]";
+//        var disqus_identifier = "https://wufangjian.github.io_Event Loop (事件循环) [js]";
+//        var disqus_title = "Event Loop (事件循环) [js]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {

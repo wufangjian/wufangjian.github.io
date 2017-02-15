@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>Codefights - wufangjian</title>
+        <title>理解CSS中BFC [css] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="Codefights" />
-        <meta name="keywords" content="Codefights, wufangjian, codefights" />
+        <meta name="description" content="理解CSS中BFC [css]" />
+        <meta name="keywords" content="理解CSS中BFC [css], wufangjian, css" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="Codefights" property="og:title">
+          <meta content="理解CSS中BFC [css]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,27 +24,32 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/category/codefights" property="og:url">
+          <meta content="https://wufangjian.github.io/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html" property="og:url">
         
+        
+          <meta content="2016-01-16T16:16:16+08:00" property="article:published_time">
+          <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
           <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
         
         
           
-          <meta content="codefights" property="article:section">
+          <meta content="css" property="article:section">
           
         
+        
+          
         
 
         <meta name="twitter:card" content="summary">
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="Codefights">
+          <meta name="twitter:title" content="理解CSS中BFC [css]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/category/codefights">
+          <meta name="twitter:url" content="https://wufangjian.github.io/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -126,53 +131,189 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <header id="post-header">
-    <h1 id="post-subtitle">标签: codefights</h1>
-</header>
+                <h1>理解CSS中BFC [css]</h1>
+<span class="time">16 Jan 2016</span>
 
-<div id="post-content">
-    <hr />
+<span class="categories">
+    &raquo; <a href="/category/css">css</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><p><a href="http://www.w3cplus.com/css/understanding-block-formatting-contexts-in-css.html">理解CSS中BFC</a></p>
+
+</div>
+    <div class="share-page">
+    <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
     
-        
-        
-            
-                <a href="/category/css" class="btn btn-sm btn-default">css</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/广告" class="btn btn-sm btn-default">广告</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/js" class="btn btn-sm btn-default">js</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/转载" class="btn btn-sm btn-default">转载</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/mac" class="btn btn-sm btn-default">mac</a>
-            
-        
-    
-    <hr />
+    <!-- Twitter -->
+     <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-via="wufangjian">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> -->
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble">
+    Google
+    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    </div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1749788565247320";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
 
     
-        <p>There are no posts in this categories.</p>
     
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>相关文章</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/css/2016/11/01/CSS%E5%B8%83%E5%B1%80.html">CSS布局 [css]</a>
+                    
+                        (Categories: <a href="/category/css">css</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+  
+    <a class="next" href="/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html">SSP-供应方平台 [广告] &raquo;</a>
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+//        /* <![CDATA[ */
+//
+//        var disqus_shortname = "wufangjian";
+//        var disqus_identifier = "https://wufangjian.github.io_理解CSS中BFC [css]";
+//        var disqus_title = "理解CSS中BFC [css]";
+//
+//        /* * * DON'T EDIT BELOW THIS LINE * * */
+//        (function() {
+//            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+//            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+//            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+//        })();
+//    /* ]]> */
+    </script>
+
+
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '//wufangjian-github-io.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 
                 <footer>

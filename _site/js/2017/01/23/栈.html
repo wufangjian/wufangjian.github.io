@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>ECMAScript arguments 对象 [js] - wufangjian</title>
+        <title>栈 [js] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="ECMAScript arguments 对象 [js]" />
-        <meta name="keywords" content="ECMAScript arguments 对象 [js], wufangjian, js" />
+        <meta name="description" content="栈 [js]" />
+        <meta name="keywords" content="栈 [js], wufangjian, js" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="ECMAScript arguments 对象 [js]" property="og:title">
+          <meta content="栈 [js]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/js/2017/01/15/arguments.html" property="og:url">
+          <meta content="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html" property="og:url">
         
         
-          <meta content="2017-01-15T16:16:16+08:00" property="article:published_time">
+          <meta content="2017-01-23T11:46:16+08:00" property="article:published_time">
           <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="ECMAScript arguments 对象 [js]">
+          <meta name="twitter:title" content="栈 [js]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/15/arguments.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,8 +131,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>ECMAScript arguments 对象 [js]</h1>
-<span class="time">15 Jan 2017</span>
+                <h1>栈 [js]</h1>
+<span class="time">23 Jan 2017</span>
 
 <span class="categories">
     &raquo; <a href="/category/js">js</a>
@@ -140,115 +140,129 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="arguments-">arguments 对象</h1>
-
-<blockquote>
-  <p>说明： arguments对象，在函数方法内部使用</p>
+    <div class="post"><blockquote>
+  <p>stack(栈) 是编程语言中最重要的概念之一，本文主要是说明栈的含义，个人在编程的过程中对栈的概念总是很含糊</p>
 </blockquote>
 
-<p><strong>一、无需指定参数名称</strong></p>
+<h1 id="section">栈</h1>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">'a'</span><span class="p">){</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<h2 id="lifo">1.数据结构 <code class="highlighter-rouge">LIFO</code></h2>
+
+<p><code class="highlighter-rouge">数据的存放方式 LIFO(last in first out)</code></p>
+
+<p>在数据结构中称为栈，先加入(push)栈的数据放在最下面，后加入的数据放在最上面，使用的时候先取出(pop)最上层的数据，也就是最后加入的数据.</p>
+
+<p>涉及到的一些操作：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- push：在最顶层加入数据。
+
+- pop：返回并移除最顶层的数据。
+
+- top：返回最顶层数据的值，但不移除它。
+
+- isempty：返回一个布尔值，表示当前stack是否为空栈。
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="call-stack">2.代码运行方式 <code class="highlighter-rouge">call stack</code></h2>
+
+<p>调用栈(call stack)，表示函数或子程序像堆放积木一样存放，实现层层调用</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kr">class</span> <span class="nx">Student</span><span class="p">{</span>
+    <span class="kr">int</span> <span class="nx">age</span><span class="p">;</span>              
+    <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>      
+
+    <span class="kr">public</span> <span class="nx">Student</span><span class="p">(</span><span class="kr">int</span> <span class="nx">Age</span><span class="p">,</span> <span class="nb">String</span> <span class="nx">Name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="nx">Age</span><span class="p">;</span>
+        <span class="nx">setName</span><span class="p">(</span><span class="nx">Name</span><span class="p">);</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<p><strong>二、检测参数个数</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
-    <span class="k">return</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// 3</span>
-</code></pre>
-</div>
-
-<p>说明：ECMAScript 不会验证传递给函数的参数个数是否等于函数定义的参数个数,开发者定义的函数都可以接受任意个数的参数（根据 Netscape 的文档，最多可接受 255 个），而不会引发任何错误。任何遗漏的参数都会以 undefined 传递给函数，多余的函数将忽略。</p>
-
-<p><strong>三、模拟函数重载</strong></p>
-
-<p>方法重载：用同一方法，处理不同类型数据的一种手段，多个重名函数同时存在，具有不同的参数个数/参数类型</p>
-
-<p>java:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Person</span><span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
-        <span class="k">return</span> <span class="n">a</span><span class="o">;</span>
-    <span class="o">}</span>
-    
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">){</span>
-            <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-</code></pre>
-</div>
-
-<p>js : 中只需要判断传入参数个数就能实现方法的重载</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">method</span><span class="p">(){</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="p">}</span>
-    
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">2</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="kr">public</span> <span class="k">void</span> <span class="nx">setName</span><span class="p">(</span><span class="nb">String</span> <span class="nx">Name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">Name</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
+
+<span class="kr">public</span> <span class="kr">class</span> <span class="nx">Main</span><span class="p">{</span>
+    <span class="kr">public</span> <span class="kr">static</span> <span class="k">void</span> <span class="nx">main</span><span class="p">(</span><span class="nb">String</span><span class="p">[]</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">Student</span> <span class="nx">s</span><span class="p">;</span>           
+            <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="s2">"Jonh"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
 </code></pre>
 </div>
 
-<p><strong>四、arguments对象转换为数组</strong></p>
+<p>上面这段代码运行的时候，首先调用main方法，里面需要生成一个Student的实例，于是又调用Student构造函数。在构造函数中，又调用到setName方</p>
 
-<p>4.1 类数组：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>     setName()
+        |
+     Student()
+        |
+      main()
+
+这三次调用像积木一样堆起来，就叫做"调用栈"。程序运行的时候，总是先完成最上层的调用，然后将它的值返回到下一层调用，直至完成整个调用栈，返回最后的结果。
+
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="section-1">3.内存区域</h2>
+
+<p><code class="highlighter-rouge">存放数据的一种内存区域</code></p>
+
+<p>程序运行时，需要内存空间存放数据，一般来说，系统会划分出两种不同的内存空间 1. stack(栈)  2.heap(堆)</p>
+
+<p>区别：</p>
 
 <ul>
   <li>
-    <p>拥有数组的一部分属性,如：length</p>
+    <p>栈是有结构的，每个区块按照一定次序存放，可以明确知道每个区块的大小。堆是无结构的，数据可以任意存放 <code class="highlighter-rouge">so 栈的寻址速度快于堆</code></p>
   </li>
   <li>
-    <p>也有自己的特有属性, 如：callee [当前函数的引用,只在函数执行时才存在]</p>
+    <p>一般来说每个线程分配一个stack,每个进程分配一个heap。因此stack是独占的，heap是共享的。stack创建的时候，大小是确定的，数据超过这个大小，就会发生stackoverflow错误，而heap的大小是不确定的，需要的话可以不断增加。</p>
   </li>
 </ul>
 
-<p>说明：类数组除了arguments, var nodeList = document.querySelectAll(‘div’)中的nodeList也是类数组</p>
+<p><code class="highlighter-rouge">只要是局部的，占用空间确定的数据，都存放在stack</code></p>
 
-<p>4.2 转换为数组：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// java</span>
 
-<ul>
-  <li>借助数组特性进行转换 Array、slice、splice</li>
-</ul>
+<span class="kr">class</span> <span class="nx">Test</span> <span class="p">{</span>
+  <span class="kr">public</span> <span class="k">void</span> <span class="nx">main</span><span class="p">(</span><span class="nb">String</span><span class="p">[]</span> <span class="nx">args</span><span class="p">){</span>
+      <span class="kr">int</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+      <span class="kr">int</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="nx">Person</span> <span class="nx">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">'wfj'</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 重点在于: 返回Array类型的对象</span>
 
-<span class="nb">Array</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
-<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
-<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">splice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</code></pre>
-</div>
-
-<p>能调用call的只有方法，所以不能用[].call这种形式，得用[].slice。而call的第一个参数表示真正调用slice的环境变为了arrayLike对象。所以就好像arrayLike也具有了数组的方法。</p>
-
-<ul>
-  <li>遍历</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 遍历是程序开发中万能的方法，高级方法底层往往就是调用的for循环</span>
-
-<span class="kd">function</span> <span class="nx">A</span><span class="p">(){</span>
-    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
+<span class="kr">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="kr">private</span> <span class="nb">String</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="kr">private</span> <span class="kr">int</span> <span class="nx">id</span><span class="p">;</span>
+  
+  <span class="kr">public</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">id</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 </div>
+
+<p>当 main 方法运行结束，会发生什么事?</p>
+
+<p>回答是整个stack被清空，i、y和cls1这三个变量消失，因为它们是局部变量，区块一旦运行结束，就没必要再存在了。而heap之中的那个对象实例继续存在，直到系统的垃圾清理机制（garbage collector）将这块内存回收。因此，一般来说，内存泄漏都发生在heap，即某些内存空间不再被使用了，却因为种种原因，没有被系统回收。</p>
+
+<hr />
+
+<p>文献：</p>
+
+<p><a href="http://www.ruanyifeng.com/blog/2013/11/stack.html">Stack的三种含义</a></p>
+
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -264,7 +278,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/15/arguments.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -290,20 +304,6 @@
     
         
             
-                
-                <div class="panel-body">
-                <h4>相关文章</h4>
-                <ul>
-                
-                <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
-                    
-                        (Categories: <a href="/category/js">js</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -311,6 +311,10 @@
     
         
             
+                
+                <div class="panel-body">
+                <h4>相关文章</h4>
+                <ul>
                 
                 <li class="relatedPost">
                     <a href="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
@@ -327,6 +331,16 @@
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -417,10 +431,10 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/js/2017/01/14/call-apply-bind.html">&laquo; call、apply、bind用法 [js]</a>
+    <a class="prev" href="/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">&laquo; 变量的声明提升 与 TDZ [js]</a>
   
   
-    <a class="next" href="/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js] &raquo;</a>
+    <a class="next" href="/mac/2017/02/14/iterm2.html">Mac 配置 iterm2 [mac] &raquo;</a>
   
 </div>
 
@@ -431,8 +445,8 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_ECMAScript arguments 对象 [js]";
-//        var disqus_title = "ECMAScript arguments 对象 [js]";
+//        var disqus_identifier = "https://wufangjian.github.io_栈 [js]";
+//        var disqus_title = "栈 [js]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {

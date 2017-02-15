@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <title>变量的声明提升 与 TDZ [js] - wufangjian</title>
+        <meta name="author" content="wufangjian" />
+        <meta name="description" content="变量的声明提升 与 TDZ [js]" />
+        <meta name="keywords" content="变量的声明提升 与 TDZ [js], wufangjian, js" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+        <meta content="1749788565247320" property="fb:app_id">
+        <meta content="wufangjian" property="og:site_name">
+        
+          <meta content="变量的声明提升 与 TDZ [js]" property="og:title">
+        
+        
+          <meta content="article" property="og:type">
+        
+        
+          <meta content="My Personal Stack Problems" property="og:description">
+        
+        
+          <meta content="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html" property="og:url">
+        
+        
+          <meta content="2017-01-22T16:16:16+08:00" property="article:published_time">
+          <meta content="https://wufangjian.github.io/about/" property="article:author">
+        
+        
+          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+        
+        
+          
+          <meta content="js" property="article:section">
+          
+        
+        
+          
+        
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@wufangjian">
+        <meta name="twitter:creator" content="@wufangjian">
+        
+          <meta name="twitter:title" content="变量的声明提升 与 TDZ [js]">
+        
+        
+          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">
+        
+        
+          <meta name="twitter:description" content="My Personal Stack Problems">
+        
+        
+
+        <!-- Font awesome icons -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/static/css/syntax.css">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!-- Custom CSS -->        
+        <link rel="stylesheet" href="/static/css/super-search.css">
+        <link rel="stylesheet" href="/static/css/thickbox.css">
+        <link rel="stylesheet" href="/static/css/projects.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          
+          ga('create', 'UA-XXXXXXXX-Y', 'auto');
+          ga('send', 'pageview');
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="col-sm-3">
+              <div class="fixed-condition">
+                <a href="/"><img id="about" src="/static/img/avatar.jpg" height="75px" width="75px" /></a>
+                <h1 class="author-name">wufangjian</h1>
+                
+                <div id="about">
+                    前端工程师 / 爱玩儿 / 爱折腾
+                </div>
+                
+
+                <div class="social">
+                    <ul>
+                        
+                            <li><a href="https://www.facebook.com/fangjian.wu.9" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        
+                            <li><a href="http://weibo.com/3530173380/profile" target="_blank"><i class="fa fa-weibo"></i></a></li>
+                        
+                            <li><a href="https://plus.google.com/u/0/102026584849487539916" target="_blank"><i class="fa fa-google"></i></a></li>
+                        
+                            <li><a href="https://www.linkedin.com/in/%E6%96%B9%E5%BB%BA-%E5%90%B4-271b63103?trk=hp-identity-photo" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        
+                    </ul>
+                </div>
+
+                <div class="search" id="js-search">
+                  <input type="text" placeholder="搜索文章" class="search__input form-control" id="js-search__input">
+                  <ul class="search__results" id="js-search__results"></ul>
+                </div>
+                <hr />
+
+                <strong>导航</strong><br />
+                    &nbsp;&raquo; <a href="/">主页</a> <br />
+                
+                    &nbsp;&raquo; <a class="about" href="/projects/">项目</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="https://github.com/wufangjian">Github</a><br />
+                
+                    &nbsp;&raquo; <a class="about" href="/about/">关于我</a><br />
+                
+              </div><!-- end /.fixed-condition -->
+            </div>
+
+            <div class="col-sm-8 col-offset-1">
+                <h1>变量的声明提升 与 TDZ [js]</h1>
+<span class="time">22 Jan 2017</span>
+
+<span class="categories">
+    &raquo; <a href="/category/js">js</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><blockquote>
+  <p>此文章主要是想指出，通常我们认为js中 var定义的变量会发生声明提升，而let/const 定义的变量不会发生声明的提升</p>
+</blockquote>
+
+<p>其实：<code class="highlighter-rouge">let/const/var</code> 定义的变量 <code class="highlighter-rouge">都会发生声明提升</code></p>
+
+<h2 id="section">声明提升</h2>
+
+<p>先来看个例子</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">var</span>  <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="p">;(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+  <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">})()</span>
+</code></pre>
+</div>
+
+<p>如果没有发生变量声明提升，那么console.log应该输出 1</p>
+
+<p>但实际上此处发生了 ReferenceError（引用错误） 表明一个不存在的变量被引用。</p>
+
+<p>那麽：var/[let、const] 声明的变量在发生声明提升时，初始化行为不同</p>
+
+<ul>
+  <li>
+    <p><strong>var</strong> 声明的变量初始化为 <code class="highlighter-rouge">(undefined) </code></p>
+  </li>
+  <li>
+    <p><strong>let/const</strong> 声明的变量会保持为未初始<code class="highlighter-rouge">(uninitialised)</code>化状态</p>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>  <span class="c1">// undefined, a 在这里会被初始化为 undefined</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>  <span class="c1">// ReferenceError, b 在这里会保持为未初始化的状态不变</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">})()</span>
+</code></pre>
+</div>
+
+<h2 id="tdz">TDZ</h2>
+
+<p><strong>概念</strong>：TDZ 并不是某个地方， 或是内存中的某个区域，而是变量被声明和被初始化之间的这段时间</p>
+
+<p>例子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="s2">"outer"</span>
+
+<span class="p">;(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// 内部的 a 变量在这里被声明，TDZ 开始的地方</span>
+  
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>  <span class="c1">// ReferenceError</span>
+  
+  <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="s2">"inner"</span>  <span class="c1">// a 变量被初始化，TDZ 结束</span>
+ <span class="p">})()</span>
+</code></pre>
+</div>
+
+<p>稍微复杂一点的例子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span> <span class="c1">// 没有问题</span>
+
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">b</span> <span class="c1">//  ReferenceError，在这里b并没有完全的被初始化,还处在 TDZ 当中</span>
+</code></pre>
+</div>
+<hr />
+
+<p><strong><code class="highlighter-rouge">ES6 中函数默认参数的计算顺序是从左到右进行的</code></strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 函数的参数 a 想要得到参数 b 的值，而参数 b 这时还未被初始化， 处在 TDZ 中， 所以会报 ReferenceError 的错误</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">foo</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// </span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 这里的 a 已经被初始化，所以 b 可以取到 a 的值</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span>
+</code></pre>
+</div>
+<hr />
+
+<p><code class="highlighter-rouge">看了以上的例子估计还是不能理解，为什么会是这样子的? 函数参数的默认值有自己的作用域？</code></p>
+
+<p>再看看下面的三个例子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">)},</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">x</span><span class="p">();</span> <span class="c1">// 2</span>
+  <span class="nx">y</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="nx">x</span><span class="p">();</span> <span class="c1">// 3</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span> <span class="c1">//1</span>
+
+
+<span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">)})</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="nx">x</span><span class="p">();</span> <span class="c1">// 1</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">();</span>
+
+
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">)})</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="nx">x</span><span class="p">();</span> <span class="c1">// ReferenceError: y is not defined</span>
+<span class="p">}</span>
+<span class="nx">foo</span><span class="p">();</span>
+</code></pre>
+</div>
+
+<p>很让人困惑，感觉是存在3个作用域，全局/参数/函数体。参数默认值的函数，可以访问参数中定义的，和参数外定义(outer/global)的变量，不能访问函数体中定义的变量。
+一个需要注意的地方是，如果参数默认值是一个变量，则该变量所处的作用域，与其他变量的作用域规则是一样的，即先是当前函数的作用域，然后才是全局作用域。</p>
+
+<p><strong><a href="http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-of-parameters/#conditional-intermediate-scope-for-parameters">params scope</a></strong></p>
+
+<p>参数在有默认值的情况下，此时会创建一个新的作用域，这个作用域既不是函数作用域，也不是全局作用域。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 默认值，并不会肯定从全局去取，而是从 params scope 中取</span>
+
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// throws!</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">foo</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<hr />
+
+<p><strong>总结</strong></p>
+
+<ul>
+  <li>
+    <p>如果参数存在默认值，则有三个环境 environment( environment in ES6 = scope in ES5). <code class="highlighter-rouge">Outer environment</code> / <code class="highlighter-rouge">parameters environment</code> / <code class="highlighter-rouge">function body environment</code>.</p>
+  </li>
+  <li>
+    <p>parameters environment 可以访问自己和外层，不能访问函数体内的变量。</p>
+  </li>
+  <li>
+    <p>函数体内可以修改 parameters env 里定义的 formal parameters 的值，不能重新定义（除非用var……）。</p>
+  </li>
+</ul>
+
+<p><strong>提示</strong></p>
+
+<p><em>参数变量、函数体内变量、全局变量别用一样的名字</em></p>
+
+<p><em>不要用 var 来定义变量，总是用 let 或 const</em></p>
+
+<hr />
+
+<h2 id="section-1">思考</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="c1">// reference error: x is not defined. 因为这里 x 是处在 TDZ(Temporal Dead Zone)。</span>
+
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">foo</span><span class="p">();</span>
+</code></pre>
+</div>
+
+<p>参考文献：</p>
+
+<p><a href="http://code.wileam.com/default-value-n-params-env/">params default value &amp; params environment &amp; TDZ</a></p>
+
+<p><a href="http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-of-parameters/#conditional-intermediate-scope-for-parameters">ES6 Notes: Default values of parameters</a></p>
+
+</div>
+    <div class="share-page">
+    <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
+    
+    <!-- Twitter -->
+     <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-via="wufangjian">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> -->
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble">
+    Google
+    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    </div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1749788565247320";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <div class="panel-body">
+                <h4>相关文章</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+    </ul>
+    </div>
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/js/2017/01/15/arguments.html">&laquo; ECMAScript arguments 对象 [js]</a>
+  
+  
+    <a class="next" href="/js/2017/01/23/%E6%A0%88.html">栈 [js] &raquo;</a>
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+//        /* <![CDATA[ */
+//
+//        var disqus_shortname = "wufangjian";
+//        var disqus_identifier = "https://wufangjian.github.io_变量的声明提升 与 TDZ [js]";
+//        var disqus_title = "变量的声明提升 与 TDZ [js]";
+//
+//        /* * * DON'T EDIT BELOW THIS LINE * * */
+//        (function() {
+//            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+//            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+//            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+//        })();
+//    /* ]]> */
+    </script>
+
+
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '//wufangjian-github-io.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+                <footer>
+                    &copy; wufangjian
+                     
+                    - <a href="https://github.com/wufangjian">https://github.com/wufangjian</a> - Powered by Jekyll.
+                    
+
+                    <div class="btn-github" style="float:right;">
+                        <iframe src="https://ghbtns.com/github-btn.html?user=wufangjian&repo=myblog&type=star&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                        <iframe src="https://ghbtns.com/github-btn.html?user=wufangjian&repo=myblog&type=fork&count=true" frameborder="0" scrolling="0" width="85" height="20px"></iframe>
+                    </div>
+                </footer>
+            </div><!-- end /.col-sm-8 -->
+        </div><!-- end /.container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/super-search.js"></script>
+        <script src="/static/js/thickbox-compressed.js"></script>
+        <script src="/static/js/projects.js"></script>
+    </body>
+</html>

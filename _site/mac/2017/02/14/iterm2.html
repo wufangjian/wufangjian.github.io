@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>Codefights - wufangjian</title>
+        <title>Mac 配置 iterm2 [mac] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="Codefights" />
-        <meta name="keywords" content="Codefights, wufangjian, codefights" />
+        <meta name="description" content="Mac 配置 iterm2 [mac]" />
+        <meta name="keywords" content="Mac 配置 iterm2 [mac], wufangjian, mac" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="Codefights" property="og:title">
+          <meta content="Mac 配置 iterm2 [mac]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,27 +24,32 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/category/codefights" property="og:url">
+          <meta content="https://wufangjian.github.io/mac/2017/02/14/iterm2.html" property="og:url">
         
+        
+          <meta content="2017-02-14T22:46:16+08:00" property="article:published_time">
+          <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
           <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
         
         
           
-          <meta content="codefights" property="article:section">
+          <meta content="mac" property="article:section">
           
         
+        
+          
         
 
         <meta name="twitter:card" content="summary">
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="Codefights">
+          <meta name="twitter:title" content="Mac 配置 iterm2 [mac]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/category/codefights">
+          <meta name="twitter:url" content="https://wufangjian.github.io/mac/2017/02/14/iterm2.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -126,53 +131,224 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <header id="post-header">
-    <h1 id="post-subtitle">标签: codefights</h1>
-</header>
+                <h1>Mac 配置 iterm2 [mac]</h1>
+<span class="time">14 Feb 2017</span>
 
-<div id="post-content">
-    <hr />
+<span class="categories">
+    &raquo; <a href="/category/mac">mac</a>
+</span>
+
+
+<div class="content">
+    <div class="post"><blockquote>
+  <p>项目开发过程中我们经常会用SSH工具进行远程连接，windows下面常用的是secureCRT，Mac下secureCRT也可以用，但是付费版本，稳定性不太好。iTerm2 是 MAC 下最好的终端工具，下面将介绍iterm2在Max下面的安装与使用</p>
+</blockquote>
+
+<h2 id="iterm2-">iTerm2 安装</h2>
+
+<p>直接访问<a href="http://www.iterm2.com/">官网</a>下载安装</p>
+
+<h2 id="iterm2rz-sz-">配置iTerm2支持rz sz 命令</h2>
+
+<ul>
+  <li>
+    <p>rz 文件上传</p>
+  </li>
+  <li>
+    <p>sz 文件下载</p>
+  </li>
+</ul>
+
+<h3 id="maclrzsz">1、在mac下安装lrzsz</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew install lrzsz
+</code></pre>
+</div>
+
+<h3 id="zmoden">2、下载zmoden脚本</h3>
+
+<p>github上<a href="https://github.com/mmastrac/iterm2-zmodem">下载</a></p>
+
+<p>iterm2-recv-zmodem.sh 与 iterm2-send-zmodem.sh 移入  /usr/local/bin/目录下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+// 执行赋值权限
+chmod +x iterm2-recv-zmodem.sh
+
+chmod +x iterm2-send-zmodem.sh
+</code></pre>
+</div>
+
+<h3 id="section">3、配置</h3>
+
+<p>同时按cmd和,键，选择profile-&gt;default-&gt;advanced-&gt;triggers-&gt;edit中添加配置</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+expression:\*\*B0100
+Action: Run Silent Coprocess
+Parameters: /usr/local/bin/iterm2-send-zmodem.sh
+
+Regular expression:\*\*B00000000000000
+Action: Run Silent Coprocess
+Parameters: /usr/local/bin/iterm2-recv-zmodem.sh
+</code></pre>
+</div>
+
+</div>
+    <div class="share-page">
+    <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
     
-        
-        
-            
-                <a href="/category/css" class="btn btn-sm btn-default">css</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/广告" class="btn btn-sm btn-default">广告</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/js" class="btn btn-sm btn-default">js</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/转载" class="btn btn-sm btn-default">转载</a>
-            
-        
-    
-        
-        
-            
-                <a href="/category/mac" class="btn btn-sm btn-default">mac</a>
-            
-        
-    
-    <hr />
+    <!-- Twitter -->
+     <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-via="wufangjian">Tweet</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> -->
+
+    <!-- Google + -->
+    <div class="g-plus" data-action="share" data-annotation="bubble">
+    Google
+    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- Facebook -->
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/mac/2017/02/14/iterm2.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    </div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1749788565247320";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</div>
+
+
 
     
-        <p>There are no posts in this categories.</p>
     
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+
+
+<div class="PageNavigation">
+  
+    <a class="prev" href="/js/2017/01/23/%E6%A0%88.html">&laquo; 栈 [js]</a>
+  
+  
+</div>
+
+
+<div class="disqus-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+//        /* <![CDATA[ */
+//
+//        var disqus_shortname = "wufangjian";
+//        var disqus_identifier = "https://wufangjian.github.io_Mac 配置 iterm2 [mac]";
+//        var disqus_title = "Mac 配置 iterm2 [mac]";
+//
+//        /* * * DON'T EDIT BELOW THIS LINE * * */
+//        (function() {
+//            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+//            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+//            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+//        })();
+//    /* ]]> */
+    </script>
+
+
+    <script>
+
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '//wufangjian-github-io.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 
                 <footer>

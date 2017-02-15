@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>ECMAScript arguments 对象 [js] - wufangjian</title>
+        <title>栈 [js] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="ECMAScript arguments 对象 [js]" />
-        <meta name="keywords" content="ECMAScript arguments 对象 [js], wufangjian, js" />
+        <meta name="description" content="栈 [js]" />
+        <meta name="keywords" content="栈 [js], wufangjian, js" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="ECMAScript arguments 对象 [js]" property="og:title">
+          <meta content="栈 [js]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/js/2017/01/15/arguments.html" property="og:url">
+          <meta content="https://wufangjian.github.io/js/2017/01/23/iterm2.html" property="og:url">
         
         
-          <meta content="2017-01-15T16:16:16+08:00" property="article:published_time">
+          <meta content="2017-01-23T11:46:16+08:00" property="article:published_time">
           <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="ECMAScript arguments 对象 [js]">
+          <meta name="twitter:title" content="栈 [js]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/15/arguments.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/23/iterm2.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,8 +131,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>ECMAScript arguments 对象 [js]</h1>
-<span class="time">15 Jan 2017</span>
+                <h1>栈 [js]</h1>
+<span class="time">23 Jan 2017</span>
 
 <span class="categories">
     &raquo; <a href="/category/js">js</a>
@@ -140,115 +140,7 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="arguments-">arguments 对象</h1>
-
-<blockquote>
-  <p>说明： arguments对象，在函数方法内部使用</p>
-</blockquote>
-
-<p><strong>一、无需指定参数名称</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">'a'</span><span class="p">){</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<p><strong>二、检测参数个数</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
-    <span class="k">return</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span> <span class="c1">// 3</span>
-</code></pre>
-</div>
-
-<p>说明：ECMAScript 不会验证传递给函数的参数个数是否等于函数定义的参数个数,开发者定义的函数都可以接受任意个数的参数（根据 Netscape 的文档，最多可接受 255 个），而不会引发任何错误。任何遗漏的参数都会以 undefined 传递给函数，多余的函数将忽略。</p>
-
-<p><strong>三、模拟函数重载</strong></p>
-
-<p>方法重载：用同一方法，处理不同类型数据的一种手段，多个重名函数同时存在，具有不同的参数个数/参数类型</p>
-
-<p>java:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Person</span><span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
-        <span class="k">return</span> <span class="n">a</span><span class="o">;</span>
-    <span class="o">}</span>
-    
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">){</span>
-            <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-</code></pre>
-</div>
-
-<p>js : 中只需要判断传入参数个数就能实现方法的重载</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">method</span><span class="p">(){</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="p">}</span>
-    
-    <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">2</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<p><strong>四、arguments对象转换为数组</strong></p>
-
-<p>4.1 类数组：</p>
-
-<ul>
-  <li>
-    <p>拥有数组的一部分属性,如：length</p>
-  </li>
-  <li>
-    <p>也有自己的特有属性, 如：callee [当前函数的引用,只在函数执行时才存在]</p>
-  </li>
-</ul>
-
-<p>说明：类数组除了arguments, var nodeList = document.querySelectAll(‘div’)中的nodeList也是类数组</p>
-
-<p>4.2 转换为数组：</p>
-
-<ul>
-  <li>借助数组特性进行转换 Array、slice、splice</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 重点在于: 返回Array类型的对象</span>
-
-<span class="nb">Array</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
-<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
-<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">splice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</code></pre>
-</div>
-
-<p>能调用call的只有方法，所以不能用[].call这种形式，得用[].slice。而call的第一个参数表示真正调用slice的环境变为了arrayLike对象。所以就好像arrayLike也具有了数组的方法。</p>
-
-<ul>
-  <li>遍历</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 遍历是程序开发中万能的方法，高级方法底层往往就是调用的for循环</span>
-
-<span class="kd">function</span> <span class="nx">A</span><span class="p">(){</span>
-    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-        <span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre>
-</div>
+    <div class="post">
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -264,7 +156,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/15/arguments.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/23/iterm2.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -327,6 +219,16 @@
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -417,10 +319,8 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/js/2017/01/14/call-apply-bind.html">&laquo; call、apply、bind用法 [js]</a>
+    <a class="prev" href="/js/2017/01/23/%E6%A0%88.html">&laquo; 栈 [js]</a>
   
-  
-    <a class="next" href="/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js] &raquo;</a>
   
 </div>
 
@@ -431,8 +331,8 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_ECMAScript arguments 对象 [js]";
-//        var disqus_title = "ECMAScript arguments 对象 [js]";
+//        var disqus_identifier = "https://wufangjian.github.io_栈 [js]";
+//        var disqus_title = "栈 [js]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {

@@ -140,7 +140,240 @@
 
 
 <div class="content">
-    <div class="post"><p><a href="http://www.admin10000.com/document/6711.html">深入浅出 妙用Javascript中apply、call、bind</a></p>
+    <div class="post"><p>javascript的一大特点，函数存在 <code class="highlighter-rouge">定义时上下文</code> <code class="highlighter-rouge">运行时上下文</code> <code class="highlighter-rouge">上下文可改变</code> 的概念</p>
+
+<h2 id="call-apply">call 、apply</h2>
+
+<p>call 和 apply 函数就是为了改变函数的 <code class="highlighter-rouge">运行时上下文</code> 而存在，也就是改变函数体内部的 this 指向</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{}</span>
+<span class="nx">fruits</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">color</span><span class="p">:</span> <span class="s1">'red'</span><span class="p">,</span>
+    <span class="na">say</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">color</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">apple</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">fruits</span><span class="p">();</span>
+
+<span class="nx">apple</span><span class="p">.</span><span class="nx">say</span><span class="p">();</span> <span class="c1">// red</span>
+
+</code></pre>
+</div>
+
+<p>banana = {color: ‘blue’}; 此时想让bannana也拥有say方法</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">apple</span><span class="p">.</span><span class="nx">say</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">banana</span><span class="p">);</span> <span class="c1">// blue</span>
+<span class="nx">apple</span><span class="p">.</span><span class="nx">say</span><span class="p">.</span><span class="nx">apple</span><span class="p">(</span><span class="nx">banana</span><span class="p">);</span>  <span class="c1">// blue</span>
+
+</code></pre>
+</div>
+<p>此时我们可以看出，call 、apply 可以动态改变this指向，当某个对象不存在某个方法，而另外一个对象有该方法，那么我们可以用apply 和 call去改变该方法的this指向来完成</p>
+
+<h2 id="call-apply-1">call 、apply的区别</h2>
+
+<p>call 和 apply 的方法作用是完全一致的，他们的区别在于传输参数的方式不同</p>
+
+<ul>
+  <li>call: 枚举每一个参数   用于确定参数个数的场景</li>
+  <li>apply: 参数放在一个数组对象里面  用于不确定参数个数的场景</li>
+</ul>
+
+<p>栗子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg1</span><span class="p">,</span> <span class="nx">arg2</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arg1</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="nx">arg2</span><span class="p">)</span>
+     
+<span class="p">}</span>
+
+<span class="nx">func</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">'arg1'</span><span class="p">,</span> <span class="s1">'arg2'</span><span class="p">)</span> <span class="c1">// arg1 arg2</span>
+<span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="s1">'arg1'</span><span class="p">,</span> <span class="s1">'arg2'</span><span class="p">])</span> <span class="c1">// arg1 arg2</span>
+
+</code></pre>
+</div>
+
+<p>常见使用场景:</p>
+
+<p>1.数组之间的追加</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a1'</span><span class="p">,</span> <span class="s1">'a2'</span><span class="p">,</span> <span class="p">{</span><span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="kc">true</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">brr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+
+<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="nx">brr</span><span class="p">);</span>
+
+</code></pre>
+</div>
+
+<p>2.获取数组中的最大值</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">22</span><span class="p">]</span>
+<span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">Math</span><span class="p">,</span> <span class="nx">arr</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>3.验证是否是数组</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">isArray</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+  <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">===</span> <span class="s1">'[object Array]'</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>4.类数组转换为数组</p>
+
+<p>Javascript中存在一种名为伪数组的对象结构。比较特别的是 arguments 对象，还有像调用 getElementsByTagName , document.childNodes 之类的，它们返回NodeList对象都属于伪数组。不能应用 Array下的 push , pop 等方法。</p>
+
+<p>但是我们能通过 Array.prototype.slice.call 转换为真正的数组的带有 length 属性的对象，这样 domNodes 就可以应用 Array 下的所有方法了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">domNodes</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"*"</span><span class="p">));</span>
+
+</code></pre>
+</div>
+
+<h2 id="callapply">call、apply栗子</h2>
+
+<p>1.模拟console.log方法打印日志</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">log</span><span class="p">(</span><span class="s1">'aaa'</span><span class="p">);</span>  <span class="c1">// aaa</span>
+</code></pre>
+</div>
+
+<p>以上例子只能打印一个参数的情况，如果需要打印多个参数？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>  <span class="c1">// 1 2 3</span>
+</code></pre>
+</div>
+
+<p>在输出值前面添加上 <code class="highlighter-rouge">(app)</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+  <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="s1">'(app)'</span><span class="p">);</span>
+  
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h2 id="bind">bind</h2>
+
+<p>bind()方法会创建一个新函数，称为绑定函数，当调用这个绑定函数时，绑定函数会以创建它时传入 bind()方法的第一个参数作为 this，传入 bind() 方法的第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数。</p>
+
+<p>常见 通过缓存中间变量来改变上下文</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">bar</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="na">eventBind</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">_this</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">'.someClass'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="cm">/* Act on the event */</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_this</span><span class="p">.</span><span class="nx">bar</span><span class="p">);</span>     <span class="c1">//1</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p>使用bind()后:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">bar</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="na">eventBind</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">'.someClass'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="cm">/* Act on the event */</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">bar</span><span class="p">);</span>      <span class="c1">// 1</span>
+        <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在上述代码里，bind() 创建了一个函数，当这个click事件绑定在被调用的时候，它的 this 关键词会被设置成被传入的值（这里指调用bind()时传入的参数）。因此，这里我们传入想要的上下文 this(其实就是 foo )，到 bind() 函数中。然后，当回调函数被执行的时候， this 便指向 foo 对象。</p>
+
+<p>再来一个简单的栗子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">x</span><span class="p">:</span><span class="mi">3</span>
+<span class="p">}</span>
+
+<span class="nx">bar</span><span class="p">();</span> <span class="c1">// undefined</span>
+<span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="nx">bar</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span>
+<span class="nx">func</span><span class="p">();</span> <span class="c1">// 3</span>
+
+</code></pre>
+</div>
+
+<p>这里我们创建了一个新的函数 func，当使用 bind() 创建一个绑定函数之后，它被执行的时候，它的 this 会被设置成 foo ， 而不是像我们调用 bar() 时的全局作用域。</p>
+
+<p>注意：多次调用bind只有第一次有效</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">x</span><span class="p">:</span><span class="mi">3</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">sed</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">x</span><span class="p">:</span><span class="mi">4</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="nx">bar</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="nx">sed</span><span class="p">);</span>
+<span class="nx">func</span><span class="p">();</span> <span class="c1">// 3</span>
+  
+<span class="kd">var</span> <span class="nx">fiv</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">x</span><span class="p">:</span><span class="mi">5</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="nx">bar</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="nx">sed</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="nx">fiv</span><span class="p">);</span>
+<span class="nx">func</span><span class="p">();</span> <span class="c1">// 3</span>
+</code></pre>
+</div>
+
+<p>在Javascript中，多次 bind() 是无效的。更深层次的原因， bind() 的实现，相当于使用函数在内部包了一个 call / apply ，第二次 bind() 相当于再包住第一次 bind() ,故第二次以后的 bind 是无法生效的。</p>
+
+<h2 id="call-applybind">call 、apply、bind的区别</h2>
+
+<p>当你希望改变上下文环境之后并非立即执行，而是回调执行的时候，使用 bind() 方法。而 apply/call 则会立即执行函数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">x</span><span class="p">:</span> <span class="mi">81</span><span class="p">,</span>
+<span class="p">};</span>
+  
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">getX</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+  
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">getX</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">obj</span><span class="p">)());</span>  <span class="c1">//81</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">getX</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span>    <span class="c1">//81</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">getX</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span>   <span class="c1">//81</span>
+</code></pre>
+</div>
+
+<h2 id="section">总结</h2>
+
+<p><em>apply 、 call 、bind 三者都是用来改变函数的this对象的指向的；</em>
+<em>apply 、 call 、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；</em>
+<em>apply 、 call 、bind 三者都可以利用后续参数传参；</em>
+<em>bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。</em></p>
 
 </div>
     <div class="share-page">
@@ -176,10 +409,51 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <li class="relatedPost">
                     <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
@@ -204,7 +478,58 @@
     
         
             
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
         
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
     
         
             
@@ -218,7 +543,7 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/python/codefights/2016/06/11/get-month-name-cf.html">&laquo; get Month Name [CF]</a>
+    <a class="prev" href="/js/2017/01/14/%E9%97%AD%E5%8C%85.html">&laquo; 闭包 [js]</a>
   
   
     <a class="next" href="/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js] &raquo;</a>
