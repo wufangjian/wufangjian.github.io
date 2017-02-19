@@ -5,9 +5,77 @@
     <description>My Personal Stack Problems</description>
     <link>https://wufangjian.github.io/</link>
     <atom:link href="https://wufangjian.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 15 Feb 2017 11:47:29 +0800</pubDate>
-    <lastBuildDate>Wed, 15 Feb 2017 11:47:29 +0800</lastBuildDate>
+    <pubDate>Sun, 19 Feb 2017 23:22:38 +0800</pubDate>
+    <lastBuildDate>Sun, 19 Feb 2017 23:22:38 +0800</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
+    
+      <item>
+        <title></title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;在css中我们经常会用到 &lt;code class=&quot;highlighter-rouge&quot;&gt;html,body{}&lt;/code&gt; 这种写法，但常常忽略 html 与 body 之间的区别&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在css中，&lt;em&gt;&amp;lt;html&amp;gt;&lt;/em&gt; 和 &lt;em&gt;&amp;lt;body&amp;gt;&lt;/em&gt; 的区别往往被忽略，全局样式或者定义在html上，或者 body 上，实际上两者是有区别的&lt;/p&gt;
+
+&lt;p&gt;## html和body的关联&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Document&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+	
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;标准定义：&lt;em&gt;&amp;lt;html&amp;gt;&lt;/em&gt; 是文档的根元素，&lt;em&gt;&amp;lt;head&amp;gt;&lt;/em&gt;  &lt;em&gt;&amp;lt;body&amp;gt;&lt;/em&gt; 是 &lt;em&gt;&amp;lt;html&amp;gt;&lt;/em&gt; 唯一的两个元素&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;规范：&lt;em&gt;&amp;lt;head&amp;gt;&lt;/em&gt; 与 &lt;em&gt;&amp;lt;body&amp;gt;&lt;/em&gt; 是兄弟元素，也是需要加以区别的元素&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;html 和 body是父子关系，在html文档中，:root 选择符对应 html元素&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;:root {
+
+}
+html {
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;提示: &lt;code class=&quot;highlighter-rouge&quot;&gt;:root&lt;/code&gt; 选择符的优先级大于html选择符&lt;/p&gt;
+
+&lt;h2 id=&quot;html&quot;&gt;哪些全局样式应用到 html&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;1.rem&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;html {font-size: 62.5%}
+body {font-size: 1.4rem}    /*14px*/
+h1 {font-size: 2.4rem}      /*24px*/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;2.background-color&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;古怪的background-color&lt;/code&gt; 将background-color应用到body以后，即便body里面的元素没有占满视口，背景颜色也会蔓延到整个视口&lt;/p&gt;
+
+&lt;h2 id=&quot;body-&quot;&gt;应用到 body 上的全局样式&lt;/h2&gt;
+
+</description>
+        <pubDate>Sun, 19 Feb 2017 23:22:38 +0800</pubDate>
+        <link>https://wufangjian.github.io/2017/02/19/2017-02-19-html-body.html</link>
+        <guid isPermaLink="true">https://wufangjian.github.io/2017/02/19/2017-02-19-html-body.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Mac 配置 iterm2 [mac]</title>
@@ -15,11 +83,13 @@
   &lt;p&gt;项目开发过程中我们经常会用SSH工具进行远程连接，windows下面常用的是secureCRT，Mac下secureCRT也可以用，但是付费版本，稳定性不太好。iTerm2 是 MAC 下最好的终端工具，下面将介绍iterm2在Max下面的安装与使用&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;iterm2-&quot;&gt;iTerm2 安装&lt;/h2&gt;
+&lt;h2 id=&quot;iterm2-&quot;&gt;一、iTerm2 安装&lt;/h2&gt;
 
-&lt;p&gt;直接访问&lt;a href=&quot;http://www.iterm2.com/&quot;&gt;官网&lt;/a&gt;下载安装&lt;/p&gt;
+&lt;p&gt;直接访问 &lt;a href=&quot;http://www.iterm2.com/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;官网&lt;/code&gt;&lt;/a&gt; 下载安装&lt;/p&gt;
 
-&lt;h2 id=&quot;iterm2rz-sz-&quot;&gt;配置iTerm2支持rz sz 命令&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;iterm2rz-sz-&quot;&gt;二、配置iTerm2支持rz sz 命令&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -32,36 +102,35 @@
 
 &lt;h3 id=&quot;maclrzsz&quot;&gt;1、在mac下安装lrzsz&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install lrzsz
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;brew&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;lrzsz&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h3 id=&quot;zmoden&quot;&gt;2、下载zmoden脚本&lt;/h3&gt;
 
-&lt;p&gt;github上&lt;a href=&quot;https://github.com/mmastrac/iterm2-zmodem&quot;&gt;下载&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;github上 &lt;a href=&quot;https://github.com/mmastrac/iterm2-zmodem&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;下载&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;iterm2-recv-zmodem.sh 与 iterm2-send-zmodem.sh 移入  /usr/local/bin/目录下&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-// 执行赋值权限
-chmod +x iterm2-recv-zmodem.sh
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 执行赋值权限&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;iterm2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;zmodem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;
 
-chmod +x iterm2-send-zmodem.sh
+&lt;span class=&quot;nx&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;iterm2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;zmodem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h3 id=&quot;section&quot;&gt;3、配置&lt;/h3&gt;
 
-&lt;p&gt;同时按cmd和,键，选择profile-&amp;gt;default-&amp;gt;advanced-&amp;gt;triggers-&amp;gt;edit中添加配置&lt;/p&gt;
+&lt;p&gt;同时按&lt;code class=&quot;highlighter-rouge&quot;&gt;cmd和,&lt;/code&gt;键，选择profile-&amp;gt;default-&amp;gt;advanced-&amp;gt;triggers-&amp;gt;edit中添加配置&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-expression:\*\*B0100
-Action: Run Silent Coprocess
-Parameters: /usr/local/bin/iterm2-send-zmodem.sh
+&lt;span class=&quot;nl&quot;&gt;expression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;B0100&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Run&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Silent&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Coprocess&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;Parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/usr/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;iterm2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;zmodem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;
 
-Regular expression:\*\*B00000000000000
-Action: Run Silent Coprocess
-Parameters: /usr/local/bin/iterm2-recv-zmodem.sh
+&lt;span class=&quot;nx&quot;&gt;Regular&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;expression&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:\&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;B00000000000000&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Run&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Silent&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Coprocess&lt;/span&gt;
+&lt;span class=&quot;nl&quot;&gt;Parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/usr/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;iterm2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;zmodem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 

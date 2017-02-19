@@ -144,11 +144,13 @@
   <p>项目开发过程中我们经常会用SSH工具进行远程连接，windows下面常用的是secureCRT，Mac下secureCRT也可以用，但是付费版本，稳定性不太好。iTerm2 是 MAC 下最好的终端工具，下面将介绍iterm2在Max下面的安装与使用</p>
 </blockquote>
 
-<h2 id="iterm2-">iTerm2 安装</h2>
+<h2 id="iterm2-">一、iTerm2 安装</h2>
 
-<p>直接访问<a href="http://www.iterm2.com/">官网</a>下载安装</p>
+<p>直接访问 <a href="http://www.iterm2.com/"><code class="highlighter-rouge">官网</code></a> 下载安装</p>
 
-<h2 id="iterm2rz-sz-">配置iTerm2支持rz sz 命令</h2>
+<hr />
+
+<h2 id="iterm2rz-sz-">二、配置iTerm2支持rz sz 命令</h2>
 
 <ul>
   <li>
@@ -161,36 +163,35 @@
 
 <h3 id="maclrzsz">1、在mac下安装lrzsz</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>brew install lrzsz
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">brew</span> <span class="nx">install</span> <span class="nx">lrzsz</span>
 </code></pre>
 </div>
 
 <h3 id="zmoden">2、下载zmoden脚本</h3>
 
-<p>github上<a href="https://github.com/mmastrac/iterm2-zmodem">下载</a></p>
+<p>github上 <a href="https://github.com/mmastrac/iterm2-zmodem"><code class="highlighter-rouge">下载</code></a></p>
 
 <p>iterm2-recv-zmodem.sh 与 iterm2-send-zmodem.sh 移入  /usr/local/bin/目录下</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
-// 执行赋值权限
-chmod +x iterm2-recv-zmodem.sh
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 执行赋值权限</span>
+<span class="nx">chmod</span> <span class="o">+</span><span class="nx">x</span> <span class="nx">iterm2</span><span class="o">-</span><span class="nx">recv</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
 
-chmod +x iterm2-send-zmodem.sh
+<span class="nx">chmod</span> <span class="o">+</span><span class="nx">x</span> <span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
 </code></pre>
 </div>
 
 <h3 id="section">3、配置</h3>
 
-<p>同时按cmd和,键，选择profile-&gt;default-&gt;advanced-&gt;triggers-&gt;edit中添加配置</p>
+<p>同时按<code class="highlighter-rouge">cmd和,</code>键，选择profile-&gt;default-&gt;advanced-&gt;triggers-&gt;edit中添加配置</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>
-expression:\*\*B0100
-Action: Run Silent Coprocess
-Parameters: /usr/local/bin/iterm2-send-zmodem.sh
+<span class="nl">expression</span><span class="p">:</span><span class="err">\</span><span class="o">*</span><span class="err">\</span><span class="o">*</span><span class="nx">B0100</span>
+<span class="nl">Action</span><span class="p">:</span> <span class="nx">Run</span> <span class="nx">Silent</span> <span class="nx">Coprocess</span>
+<span class="nl">Parameters</span><span class="p">:</span> <span class="sr">/usr/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
 
-Regular expression:\*\*B00000000000000
-Action: Run Silent Coprocess
-Parameters: /usr/local/bin/iterm2-recv-zmodem.sh
+<span class="nx">Regular</span> <span class="nx">expression</span><span class="err">:\</span><span class="o">*</span><span class="err">\</span><span class="o">*</span><span class="nx">B00000000000000</span>
+<span class="nl">Action</span><span class="p">:</span> <span class="nx">Run</span> <span class="nx">Silent</span> <span class="nx">Coprocess</span>
+<span class="nl">Parameters</span><span class="p">:</span> <span class="sr">/usr/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">recv</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
 </code></pre>
 </div>
 
@@ -223,6 +224,9 @@ Parameters: /usr/local/bin/iterm2-recv-zmodem.sh
 </div>
 
 
+
+    
+    
 
     
     
@@ -307,6 +311,8 @@ Parameters: /usr/local/bin/iterm2-recv-zmodem.sh
   
     <a class="prev" href="/js/2017/01/23/%E6%A0%88.html">&laquo; 栈 [js]</a>
   
+  
+    <a class="next" href="/2017/02/19/2017-02-19-html-body.html"> &raquo;</a>
   
 </div>
 
