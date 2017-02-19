@@ -146,7 +146,7 @@
 
 <p>在css中，<em>&lt;html&gt;</em> 和 <em>&lt;body&gt;</em> 的区别往往被忽略，全局样式或者定义在html上，或者 body 上，实际上两者是有区别的</p>
 
-<p>## html和body的关联</p>
+<h2 id="htmlbody">html和body的关联</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
@@ -194,9 +194,58 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 <p><strong>2.background-color</strong></p>
 
-<p><code class="highlighter-rouge">古怪的background-color</code> 将background-color应用到body以后，即便body里面的元素没有占满视口，背景颜色也会蔓延到整个视口</p>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">古怪的background-color</code> 将background-color应用到body以后，即便body里面的元素没有占满视口，背景颜色也会蔓延到整个视口</p>
+  </li>
+  <li>
+    <p>解决办法：给html设置background-color 设置 height: 100% 可以解决这个问题</p>
+  </li>
+</ul>
+
+<p>如果body及其子元素的高度需要设置为窗口高度，那么html元素上也需要添加</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>html {height: 100%}
+</code></pre>
+</div>
+<hr />
 
 <h2 id="body-">应用到 body 上的全局样式</h2>
+
+<p>早期规范中，&lt;body&gt; 有以下行内属性:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>iniline attribute</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>background</td>
+      <td style="text-align: center">background</td>
+    </tr>
+    <tr>
+      <td>bgcolor</td>
+      <td style="text-align: center">background/background-color</td>
+    </tr>
+    <tr>
+      <td>marginleft/margintop</td>
+      <td style="text-align: center">margin-left/margin-top</td>
+    </tr>
+    <tr>
+      <td>text</td>
+      <td style="text-align: center">font</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="section">总结:</h2>
+
+<p>除了css中存在区别，JavaScript中同样也存在区别。 例如：document.documentElement 对应 HTML， document.body 对应 body</p>
 
 </div>
     <div class="share-page">
