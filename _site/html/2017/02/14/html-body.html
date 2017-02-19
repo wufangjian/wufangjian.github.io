@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>Mac 配置 iterm2 [mac] - wufangjian</title>
+        <title>[html] html body 在css中的区别 - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="Mac 配置 iterm2 [mac]" />
-        <meta name="keywords" content="Mac 配置 iterm2 [mac], wufangjian, mac" />
+        <meta name="description" content="[html] html body 在css中的区别" />
+        <meta name="keywords" content="[html] html body 在css中的区别, wufangjian, html" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="Mac 配置 iterm2 [mac]" property="og:title">
+          <meta content="[html] html body 在css中的区别" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,7 +24,7 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/mac/2017/02/14/iterm2.html" property="og:url">
+          <meta content="https://wufangjian.github.io/html/2017/02/14/html-body.html" property="og:url">
         
         
           <meta content="2017-02-14T22:46:16+08:00" property="article:published_time">
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="mac" property="article:section">
+          <meta content="html" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="Mac 配置 iterm2 [mac]">
+          <meta name="twitter:title" content="[html] html body 在css中的区别">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/mac/2017/02/14/iterm2.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/html/2017/02/14/html-body.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,69 +131,72 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>Mac 配置 iterm2 [mac]</h1>
+                <h1>[html] html body 在css中的区别</h1>
 <span class="time">14 Feb 2017</span>
 
 <span class="categories">
-    &raquo; <a href="/category/mac">mac</a>
+    &raquo; <a href="/category/html">html</a>
 </span>
 
 
 <div class="content">
     <div class="post"><blockquote>
-  <p>项目开发过程中我们经常会用SSH工具进行远程连接，windows下面常用的是secureCRT，Mac下secureCRT也可以用，但是付费版本，稳定性不太好。iTerm2 是 MAC 下最好的终端工具，下面将介绍iterm2在Max下面的安装与使用</p>
+  <p>在css中我们经常会用到 <code class="highlighter-rouge">html,body{}</code> 这种写法，但常常忽略 html 与 body 之间的区别</p>
 </blockquote>
 
-<h2 id="iterm2-">一、iTerm2 安装</h2>
+<p>在css中，<em>&lt;html&gt;</em> 和 <em>&lt;body&gt;</em> 的区别往往被忽略，全局样式或者定义在html上，或者 body 上，实际上两者是有区别的</p>
 
-<p>直接访问 <a href="http://www.iterm2.com/"><code class="highlighter-rouge">官网</code></a> 下载安装</p>
+<p>## html和body的关联</p>
 
-<hr />
-
-<h2 id="iterm2rz-sz-">二、配置iTerm2支持rz sz 命令</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>Document<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
 
 <ul>
   <li>
-    <p>rz 文件上传</p>
+    <p>标准定义：<em>&lt;html&gt;</em> 是文档的根元素，<em>&lt;head&gt;</em>  <em>&lt;body&gt;</em> 是 <em>&lt;html&gt;</em> 唯一的两个元素</p>
   </li>
   <li>
-    <p>sz 文件下载</p>
+    <p>规范：<em>&lt;head&gt;</em> 与 <em>&lt;body&gt;</em> 是兄弟元素，也是需要加以区别的元素</p>
   </li>
 </ul>
 
-<h3 id="maclrzsz">1、在mac下安装lrzsz</h3>
+<p><strong>html 和 body是父子关系，在html文档中，:root 选择符对应 html元素</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">brew</span> <span class="nx">install</span> <span class="nx">lrzsz</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>:root {
+
+}
+html {
+
+}
+</code></pre>
+</div>
+<p>提示: <code class="highlighter-rouge">:root</code> 选择符的优先级大于html选择符</p>
+
+<h2 id="html">哪些全局样式应用到 html</h2>
+
+<p><strong>1.rem</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>html {font-size: 62.5%}
+body {font-size: 1.4rem}    /*14px*/
+h1 {font-size: 2.4rem}      /*24px*/
 </code></pre>
 </div>
 
-<h3 id="zmoden">2、下载zmoden脚本</h3>
+<p><strong>2.background-color</strong></p>
 
-<p>github上 <a href="https://github.com/mmastrac/iterm2-zmodem"><code class="highlighter-rouge">下载</code></a></p>
+<p><code class="highlighter-rouge">古怪的background-color</code> 将background-color应用到body以后，即便body里面的元素没有占满视口，背景颜色也会蔓延到整个视口</p>
 
-<p>iterm2-recv-zmodem.sh 与 iterm2-send-zmodem.sh 移入  /usr/local/bin/目录下</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 执行赋值权限</span>
-<span class="nx">chmod</span> <span class="o">+</span><span class="nx">x</span> <span class="nx">iterm2</span><span class="o">-</span><span class="nx">recv</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
-
-<span class="nx">chmod</span> <span class="o">+</span><span class="nx">x</span> <span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
-</code></pre>
-</div>
-
-<h3 id="section">3、配置</h3>
-
-<p>同时按<code class="highlighter-rouge">cmd和,</code>键，选择profile-&gt;default-&gt;advanced-&gt;triggers-&gt;edit中添加配置</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-<span class="nl">expression</span><span class="p">:</span><span class="err">\</span><span class="o">*</span><span class="err">\</span><span class="o">*</span><span class="nx">B0100</span>
-<span class="nl">Action</span><span class="p">:</span> <span class="nx">Run</span> <span class="nx">Silent</span> <span class="nx">Coprocess</span>
-<span class="nl">Parameters</span><span class="p">:</span> <span class="sr">/usr/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">send</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
-
-<span class="nx">Regular</span> <span class="nx">expression</span><span class="err">:\</span><span class="o">*</span><span class="err">\</span><span class="o">*</span><span class="nx">B00000000000000</span>
-<span class="nl">Action</span><span class="p">:</span> <span class="nx">Run</span> <span class="nx">Silent</span> <span class="nx">Coprocess</span>
-<span class="nl">Parameters</span><span class="p">:</span> <span class="sr">/usr/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">iterm2</span><span class="o">-</span><span class="nx">recv</span><span class="o">-</span><span class="nx">zmodem</span><span class="p">.</span><span class="nx">sh</span>
-</code></pre>
-</div>
+<h2 id="body-">应用到 body 上的全局样式</h2>
 
 </div>
     <div class="share-page">
@@ -210,7 +213,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/mac/2017/02/14/iterm2.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/html/2017/02/14/html-body.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -313,10 +316,8 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/js/2017/01/23/%E6%A0%88.html">&laquo; 栈 [js]</a>
+    <a class="prev" href="/mac/2017/02/14/iterm2.html">&laquo; Mac 配置 iterm2 [mac]</a>
   
-  
-    <a class="next" href="/html/2017/02/14/html-body.html">[html] html body 在css中的区别 &raquo;</a>
   
 </div>
 
@@ -327,8 +328,8 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_Mac 配置 iterm2 [mac]";
-//        var disqus_title = "Mac 配置 iterm2 [mac]";
+//        var disqus_identifier = "https://wufangjian.github.io_[html] html body 在css中的区别";
+//        var disqus_title = "[html] html body 在css中的区别";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {

@@ -5,12 +5,12 @@
     <description>My Personal Stack Problems</description>
     <link>https://wufangjian.github.io/</link>
     <atom:link href="https://wufangjian.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 19 Feb 2017 23:23:49 +0800</pubDate>
-    <lastBuildDate>Sun, 19 Feb 2017 23:23:49 +0800</lastBuildDate>
+    <pubDate>Sun, 19 Feb 2017 23:25:07 +0800</pubDate>
+    <lastBuildDate>Sun, 19 Feb 2017 23:25:07 +0800</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
     
       <item>
-        <title></title>
+        <title>[html] html body 在css中的区别</title>
         <description>&lt;blockquote&gt;
   &lt;p&gt;在css中我们经常会用到 &lt;code class=&quot;highlighter-rouge&quot;&gt;html,body{}&lt;/code&gt; 这种写法，但常常忽略 html 与 body 之间的区别&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -70,10 +70,12 @@ h1 {font-size: 2.4rem}      /*24px*/
 &lt;h2 id=&quot;body-&quot;&gt;应用到 body 上的全局样式&lt;/h2&gt;
 
 </description>
-        <pubDate>Sun, 19 Feb 2017 23:23:49 +0800</pubDate>
-        <link>https://wufangjian.github.io/2017/02/19/2017-02-19-html-body.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/2017/02/19/2017-02-19-html-body.html</guid>
+        <pubDate>Tue, 14 Feb 2017 22:46:16 +0800</pubDate>
+        <link>https://wufangjian.github.io/html/2017/02/14/html-body.html</link>
+        <guid isPermaLink="true">https://wufangjian.github.io/html/2017/02/14/html-body.html</guid>
         
+        
+        <category>html</category>
         
       </item>
     
