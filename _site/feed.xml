@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>https://wufangjian.github.io/</link>
     <atom:link href="https://wufangjian.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 19 Feb 2017 23:39:28 +0800</pubDate>
-    <lastBuildDate>Sun, 19 Feb 2017 23:39:28 +0800</lastBuildDate>
+    <pubDate>Sun, 19 Feb 2017 23:42:16 +0800</pubDate>
+    <lastBuildDate>Sun, 19 Feb 2017 23:42:16 +0800</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
     
       <item>
@@ -43,6 +43,8 @@
 
 &lt;p&gt;&lt;strong&gt;html 和 body是父子关系，在html文档中，:root 选择符对应 html元素&lt;/strong&gt;&lt;/p&gt;
 
+&lt;hr /&gt;
+
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;:root {
 
 }
@@ -53,9 +55,9 @@ html {
 &lt;/div&gt;
 &lt;p&gt;提示: &lt;code class=&quot;highlighter-rouge&quot;&gt;:root&lt;/code&gt; 选择符的优先级大于html选择符&lt;/p&gt;
 
-&lt;hr /&gt;
-
 &lt;h2 id=&quot;html&quot;&gt;哪些全局样式应用到 html&lt;/h2&gt;
+
+&lt;hr /&gt;
 
 &lt;p&gt;&lt;strong&gt;1.rem&lt;/strong&gt;&lt;/p&gt;
 
@@ -81,9 +83,10 @@ h1 {font-size: 2.4rem}      /*24px*/
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;html {height: 100%}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;hr /&gt;
 
 &lt;h2 id=&quot;body-&quot;&gt;应用到 body 上的全局样式&lt;/h2&gt;
+
+&lt;hr /&gt;
 
 &lt;p&gt;早期规范中，&amp;lt;body&amp;gt; 有以下行内属性:&lt;/p&gt;
 
@@ -114,9 +117,9 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;hr /&gt;
-
 &lt;h2 id=&quot;section&quot;&gt;总结:&lt;/h2&gt;
+
+&lt;hr /&gt;
 
 &lt;p&gt;除了css中存在区别，JavaScript中同样也存在区别。 例如：document.documentElement 对应 HTML， document.body 对应 body&lt;/p&gt;
 
