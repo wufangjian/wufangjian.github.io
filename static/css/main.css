@@ -2,6 +2,7 @@
  * Master styling
  */
 
+
 body {
     font-family: "Roboto Condensed", Arial, sans-serif;
     background-color: #fff;
@@ -66,9 +67,6 @@ a:hover {
 div#container {
     width: 700px;
     margin: auto;
-}
-.container{
-    background: #fff;
 }
 
 /**
@@ -237,4 +235,8 @@ ol.posts li a{
 }
 div.col-sm-3{
     font-size: 13px !important;
+}
+.container{
+    background: #fff;
+    height: 100%;
 }
