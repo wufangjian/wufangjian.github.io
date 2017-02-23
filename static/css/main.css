@@ -228,6 +228,9 @@ ol.posts li{
     font-family: '新宋体';
     font-weight: 400;
 }
+ol.posts li a{
+    text-decoration: underline;
+}
 div.col-sm-3{
     font-size: 13px !important;
 }
