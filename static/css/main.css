@@ -223,7 +223,11 @@ div.col-sm-3 img#about {
 /* add by wfj*/
 html,body{height: 100%;}
 body {font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif !important;}
-ol.posts li{line-height: 30px;}
+ol.posts li{
+    line-height: 35px;
+    font-family: '新宋体';
+    font-weight: 400;
+}
 div.col-sm-3{
     font-size: 13px !important;
 }
