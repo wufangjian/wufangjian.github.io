@@ -2,6 +2,7 @@
  * Master styling
  */
 
+
 body {
     font-family: "Roboto Condensed", Arial, sans-serif;
     background-color: #fff;
@@ -9,6 +10,7 @@ body {
     line-height: 1.5em;
     color: #666;
     font-weight: 300;
+    background: #eee;
 }
 hr {
     margin-top: 20px;
@@ -49,7 +51,7 @@ h3 {
 a, a:link, a:active {
     text-decoration: none;
     /*color: #8C8C8C;*/
-    color: #666;
+    color: #3fa757;
 }
 
 a:hover {
@@ -223,7 +225,17 @@ div.col-sm-3 img#about {
 /* add by wfj*/
 html,body{height: 100%;}
 body {font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif !important;}
-ol.posts li{line-height: 30px;}
+ol.posts li{
+    line-height: 35px;
+    font-family: '新宋体';
+    font-weight: 400;
+}
+ol.posts li a{
+    /*text-decoration: underline;*/
+}
 div.col-sm-3{
     font-size: 13px !important;
+}
+.container{
+    background: #fff;
 }

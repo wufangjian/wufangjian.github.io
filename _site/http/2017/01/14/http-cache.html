@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>JavaScript 运行机制详解：再谈Event Loop [转载] - wufangjian</title>
+        <title>HTTP 缓存 [HTTP] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="JavaScript 运行机制详解：再谈Event Loop [转载]" />
-        <meta name="keywords" content="JavaScript 运行机制详解：再谈Event Loop [转载], wufangjian, 转载" />
+        <meta name="description" content="HTTP 缓存 [HTTP]" />
+        <meta name="keywords" content="HTTP 缓存 [HTTP], wufangjian, HTTP" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="JavaScript 运行机制详解：再谈Event Loop [转载]" property="og:title">
+          <meta content="HTTP 缓存 [HTTP]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/%E8%BD%AC%E8%BD%BD/2017/01/05/%E5%86%8D%E8%B0%88Event-Loop.html" property="og:url">
+          <meta content="https://wufangjian.github.io/http/2017/01/14/http-cache.html" property="og:url">
         
         
-          <meta content="2017-01-05T12:00:00+08:00" property="article:published_time">
+          <meta content="2017-01-14T16:00:00+08:00" property="article:published_time">
           <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="转载" property="article:section">
+          <meta content="HTTP" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="JavaScript 运行机制详解：再谈Event Loop [转载]">
+          <meta name="twitter:title" content="HTTP 缓存 [HTTP]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/%E8%BD%AC%E8%BD%BD/2017/01/05/%E5%86%8D%E8%B0%88Event-Loop.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/http/2017/01/14/http-cache.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,20 +131,128 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>JavaScript 运行机制详解：再谈Event Loop [转载]</h1>
-<span class="time">05 Jan 2017</span>
+                <h1>HTTP 缓存 [HTTP]</h1>
+<span class="time">14 Jan 2017</span>
 
 <span class="categories">
-    &raquo; <a href="/category/转载">转载</a>
+    &raquo; <a href="/category/HTTP">HTTP</a>
 </span>
 
 
 <div class="content">
-    <div class="post"><blockquote>
-  <p>最近看了一篇 <code class="highlighter-rouge">阮一丰</code> 老师的文章，<code class="highlighter-rouge">JavaScript 运行机制详解：再谈Event Loop</code> 感觉收获颇多，在此记录一下.</p>
+    <div class="post"><h1 id="http-">HTTP 缓存</h1>
+
+<p>有时，HTTP 中的缓存可能会非常让人头疼。</p>
+
+<p>按照文档正确地使用 HTTP 并不是那么困难，但事实上，不同的浏览器和 HTTP 版本常常困扰着我们。</p>
+
+<p>通过 Stack Overflow 的搜索结果，你可以很轻易地发现很多人有相同的困扰。我们自己或是不必或是没有时间去钻研所有的边缘的情况。</p>
+
+<p>所以这里有一些博主总结的实用并速记的规则，并且在未来博主也会持续地跟进和更新。</p>
+
+<h2 id="section">静态资源</h2>
+
+<p>永远不会修改的内容：JS 和 CSS 文件，图片，和任何类型的二进制文件都属于这个类目。</p>
+
+<p>永远，我确实说的是永远。为静态资源指定版本号是很通用的做法。它们无论什么时候改动了，它们的 URL 就改变了。</p>
+
+<p>这里是一些针对静态资源的简单的规则：</p>
+
+<p>在文件或者路径中嵌入指纹。避免为指纹使用查询字符串。另外，确保生成的URL长度超过8个不同的字符。</p>
+
+<p>使用这些 HTTP 头：
+<code class="highlighter-rouge">
+Cache-Control: public, max-age=31536000
+Expires: (一年后的今天)
+ETag: (基于内容生成)
+Last-Modified: (过去某个时间)
+Vary: Accept-Encoding
+</code></p>
+
+<p>针对静态资源的设置就是那么简单。</p>
+
+<h2 id="section-1">动态资源</h2>
+
+<p>针对应用程序私密性和新鲜度方面需求的不同，我们应该使用不同的缓存控制设置。</p>
+
+<p>对于非私密性和经常性变动的资源（想像一下股票信息），我们应该使用下面这些：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Cache-Control: public, max-age=0
+Expires: (当前时间)
+ETag: (基于内容生成)
+Last-Modified: (过去某个时间)
+Vary: Accept-Encoding
+</code></pre>
+</div>
+
+<p>这些设置的效果是：这些资源可以被公开地（通过浏览器和代理服务器）缓存起来。每一次在浏览器使用这些资源之前，浏览器或者代理服务器会检查这些资源是否有更新的版本，如果有，就把它们下载下来。</p>
+
+<p>这样的设置需要注意，浏览器在重新检查资源时效性方面有一定的灵活性。典型的是，当用户点击了「返回／前进」按钮时，浏览器不会重新检查这些资源文件，而是直接使用缓存的版本。你如果需要更严格的控制，需要告知浏览器即使当用户点击了「返回／前进」按钮，也需要重新检查这些资源文件，那么可以使用：
+<code class="highlighter-rouge">
+Cache-Control: public, no-cache, no-store
+</code></p>
+
+<p>不是所有的动态资源都会马上变成过时的资源。如果它们可以保持至少5分钟的时效，可以使用：
+<code class="highlighter-rouge">
+Cache-Control: public, max-age=300
+</code></p>
+
+<p>经过这样的设置，浏览器只会在5分钟之后才重新检查。在这之前，缓存的内容会被直接使用。如果在5分钟后，这些过时的内容需要严格控制，你可以添加 must-revalidate 字段：
+<code class="highlighter-rouge">
+Cache-Control: public, max-age=300, must-revalidate
+</code></p>
+
+<p>对于私密或者针对用户的内容，需要把 public 替换为 private 以避免内容被代理缓存。
+<code class="highlighter-rouge">
+Cache-Control: private, …
+</code></p>
+
+<h2 id="cache-control--expires">Cache-Control 和 Expires</h2>
+
+<p>当同时使用 Cache-Control 和 Expires 时，Cache-Control 获得优先权。</p>
+
+<p>同时使用 Cache-Control 和 Expires 意味着得到更广泛的支持（被不同的浏览器和版本）。当然，它们两个应该被配置成相同的时效值，以避免引起困惑。</p>
+
+<h2 id="etag--last-modified">ETag 和 Last-Modified</h2>
+
+<p>这两个头在浏览器对资源做重新检查验证的时候会使用到。大致来说，浏览器只是盲目地存储这两个来自于服务器的头的值，然后在需要检查验证的时候，浏览器根据请求条件，把这两个指发送给服务器（分别通过 If-None-Match 和 If-Modified-Since）。</p>
+
+<p>注意只有在资源过期的情况下，检查验证才会发生。</p>
+
+<p>在有条件的请求下，If-None-Match 和 If-Modified-Since 头的出现取决于服务器。然而，由于是服务器生成的 ETag 和（或） Last-Modified，所以实际上，这没有什么大问题。大多数的浏览器在可能的情况下都会把着两者都发送给服务器。</p>
+
+<blockquote>
+  <p>参考 <a href="http://stackoverflow.com/questions/824152/what-takes-precedence-the-etag-or-last-modified-http-header">What takes precedence: the ETag or Last-Modified HTTP header?</a></p>
 </blockquote>
 
-<p><a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a></p>
+<p>一个通常的建议是：避免使用 ETag。这不是一个总是有用的建议。ETag 在判断内容是否真的改动方面确实提供了更为精确的控制。针对生成的 ETag，默认的Apache方法需要把文件的索引节（inode），大小（size）和最后修改时间作为输入求值得到。这会导致在负载均衡的环境中，生成的 ETag 值变得毫无用处，因为每个服务器都会针对相同的文件生成一个不同的 Etag 值。这个可能就是唯一的问题导致很多人完全禁用 ETag，其实只要精确地针对一个匹配的文件生成一个独一无二的 ETag 值，就没有必要禁用 ETag 了。</p>
+
+<blockquote>
+  <p>参考 <a href="https://www.techpunch.co.uk/development/should-your-site-be-using-etags-or-not">Should your site be using etags or not?</a></p>
+</blockquote>
+
+<h2 id="ctrl-r">手动按下 Ctrl-R</h2>
+
+<p>当按下 Ctrl-R 时，浏览器会携带下面的请求，以检查是否需要更新缓存内容：
+<code class="highlighter-rouge">
+Cache-Control: max-age=0
+If-None-Match: …
+If-Modifed-Since: …
+</code></p>
+
+<p>注意这并不只是和原服务器建立连接，其同样适用于代理服务器。本质上，它只是重新检查验证内容。如果服务器回应了一个304，浏览器将会使用缓存的内容。</p>
+
+<h2 id="vary-accept-encoding">Vary: Accept-Encoding</h2>
+
+<p>这个头对于一些人来说可能比较陌生。</p>
+
+<p>当一个资源启用了 gzip 压缩，并且被代理服务器缓存，客户端如果不支持 gzip 压缩，那么在这样的情况下将会得到不正确的数据（也就是，压缩过的数据）。这将会使代理服务器缓存两个版本的资源：一个是压缩过的，一个是没压缩过的。正确版本的资源将在请求头发送之后进行传输。</p>
+
+<p>还有一个现实的原因：IE 浏览器不缓存任何带有 Vary 头但值不为 Accept-Encoding 和 User-Agent 的资源。所以通过这种方式添加这个头，才能确保这些资源在 IE 下被缓存。</p>
+
+<hr />
+
+<p><a href="https://www.css3.io/http_cache.html">其它资源</a></p>
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -160,7 +268,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/%E8%BD%AC%E8%BD%BD/2017/01/05/%E5%86%8D%E8%B0%88Event-Loop.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/http/2017/01/14/http-cache.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -277,10 +385,10 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/css/2016/11/01/CSS%E5%B8%83%E5%B1%80.html">&laquo; CSS布局 [css]</a>
+    <a class="prev" href="/js/2017/01/14/%E9%97%AD%E5%8C%85.html">&laquo; 闭包 [js]</a>
   
   
-    <a class="next" href="/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js] &raquo;</a>
+    <a class="next" href="/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js] &raquo;</a>
   
 </div>
 
@@ -291,8 +399,8 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_JavaScript 运行机制详解：再谈Event Loop [转载]";
-//        var disqus_title = "JavaScript 运行机制详解：再谈Event Loop [转载]";
+//        var disqus_identifier = "https://wufangjian.github.io_HTTP 缓存 [HTTP]";
+//        var disqus_title = "HTTP 缓存 [HTTP]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {
