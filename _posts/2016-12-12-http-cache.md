@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HTTP 缓存 [HTTP]"
+title:  "HTTP 缓存 [http]"
 date:   2017-01-14 16:00:00 +0800
-categories: [HTTP]
+categories: [http]
 ---
 
 # HTTP 缓存
