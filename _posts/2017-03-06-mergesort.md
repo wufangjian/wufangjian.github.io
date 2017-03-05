@@ -7,7 +7,7 @@ categories: [算法]
 
 > 归并是所有排序算法中时间复杂度低的算法
 
-#归并排序
+# 归并排序
 
 **时间复杂度：** O(nlgn)
 
@@ -16,7 +16,7 @@ categories: [算法]
 **归并排序算法的核心：** 先进行划分,再进行排序归并.归并两个有序的数组.即归并两个有序的数组A和B,然后就有了包含这两个新数组的数组C.
 
 
-- 归并
+## 归并
 
 ```javascript
 function merge(left, right) {
@@ -51,7 +51,9 @@ function merge(left, right) {
 	return ret;
 }
 ```
-- 排序
+
+
+## 排序
 
 ```javascript
 // 排序
