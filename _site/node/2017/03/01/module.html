@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>html body 在css中的区别 [html] - wufangjian</title>
+        <title>模块机制 [node] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="html body 在css中的区别 [html]" />
-        <meta name="keywords" content="html body 在css中的区别 [html], wufangjian, html" />
+        <meta name="description" content="模块机制 [node]" />
+        <meta name="keywords" content="模块机制 [node], wufangjian, node" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="html body 在css中的区别 [html]" property="og:title">
+          <meta content="模块机制 [node]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/html/2017/02/14/html-body.html" property="og:url">
+          <meta content="https://wufangjian.github.io/node/2017/03/01/module.html" property="og:url">
         
         
-          <meta content="2017-02-14T22:46:16+08:00" property="article:published_time">
+          <meta content="2017-03-01T16:02:16+08:00" property="article:published_time">
           <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="html" property="article:section">
+          <meta content="node" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="html body 在css中的区别 [html]">
+          <meta name="twitter:title" content="模块机制 [node]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/html/2017/02/14/html-body.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/node/2017/03/01/module.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,129 +131,50 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>html body 在css中的区别 [html]</h1>
-<span class="time">14 Feb 2017</span>
+                <h1>模块机制 [node]</h1>
+<span class="time">01 Mar 2017</span>
 
 <span class="categories">
-    &raquo; <a href="/category/html">html</a>
+    &raquo; <a href="/category/node">node</a>
 </span>
 
 
 <div class="content">
-    <div class="post"><blockquote>
-  <p>在css中我们经常会用到 <code class="highlighter-rouge">html,body{}</code> 这种写法，但常常忽略 html 与 body 之间的区别</p>
-</blockquote>
+    <div class="post"><h2 id="commonjs">CommonJS规范</h2>
 
-<p>在css中，<em>&lt;html&gt;</em> 和 <em>&lt;body&gt;</em> 的区别往往被忽略，全局样式或者定义在html上，或者 body 上，实际上两者是有区别的</p>
+<h3 id="section">说明</h3>
 
-<h2 id="htmlbody">html和body的关联</h2>
+<h3 id="commonjs-1">CommonJS出发点</h3>
 
-<hr />
+<h3 id="commonjs-2">CommonJS模块规范</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;title&gt;</span>Document<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-	
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
+<p>1.模块引用</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">math</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'math'</span><span class="p">)</span>
 </code></pre>
 </div>
 
-<ul>
-  <li>
-    <p>标准定义：<em>&lt;html&gt;</em> 是文档的根元素，<em>&lt;head&gt;</em>  <em>&lt;body&gt;</em> 是 <em>&lt;html&gt;</em> 唯一的两个元素</p>
-  </li>
-  <li>
-    <p>规范：<em>&lt;head&gt;</em> 与 <em>&lt;body&gt;</em> 是兄弟元素，也是需要加以区别的元素</p>
-  </li>
-</ul>
+<p>require()方法，这个方法接收模块标识，以此引入一个模块的API到当前上下文中</p>
 
-<p><strong>html 和 body是父子关系，在html文档中，:root 选择符对应 html元素</strong></p>
+<p>2.模块定义</p>
 
-<hr />
-
-<div class="highlighter-rouge"><pre class="highlight"><code>:root {
-
-}
-html {
-
-}
-</code></pre>
-</div>
-<p>提示: <code class="highlighter-rouge">:root</code> 选择符的优先级大于html选择符</p>
-
-<h2 id="html">哪些全局样式应用到 html</h2>
-
-<hr />
-
-<p><strong>1.rem</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>html {font-size: 62.5%}
-body {font-size: 1.4rem}    /*14px*/
-h1 {font-size: 2.4rem}      /*24px*/
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+		<span class="nx">sum</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre>
 </div>
 
-<p><strong>2.background-color</strong></p>
+<p>对应引入的功能，上下文提供了exports对象用于导出方法或变量，并且它是唯一的导出的出口。在模块中还存在一个module对象，它代表模块自身，而exports是module的属性，在node中一个文件及一个模块，将方法挂载在exports对象上作为属性及可定义导出的方式</p>
 
-<ul>
-  <li>
-    <p><code class="highlighter-rouge">古怪的background-color</code> 将background-color应用到body以后，即便body里面的元素没有占满视口，背景颜色也会蔓延到整个视口</p>
-  </li>
-  <li>
-    <p>解决办法：给html设置background-color 设置 height: 100% 可以解决这个问题</p>
-  </li>
-</ul>
+<p>3.模块标识</p>
 
-<p>如果body及其子元素的高度需要设置为窗口高度，那么html元素上也需要添加</p>
+<p>模块标识其实就是传递给require的参数，模块的定义十分简单，接口也十分简单,它的意义在于把内聚的方法和变量限定在私有的作用域中，同时支持引入和导出功能以顺畅的连接上下游依赖</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>html {height: 100%}
-</code></pre>
-</div>
-
-<h2 id="body-">应用到 body 上的全局样式</h2>
-
-<hr />
-
-<p>早期规范中，&lt;body&gt; 有以下行内属性:</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>iniline attribute</th>
-      <th style="text-align: center"> </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>background</td>
-      <td style="text-align: center">background</td>
-    </tr>
-    <tr>
-      <td>bgcolor</td>
-      <td style="text-align: center">background/background-color</td>
-    </tr>
-    <tr>
-      <td>marginleft/margintop</td>
-      <td style="text-align: center">margin-left/margin-top</td>
-    </tr>
-    <tr>
-      <td>text</td>
-      <td style="text-align: center">font</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="section">总结:</h2>
-
-<hr />
-
-<p>除了css中存在区别，JavaScript中同样也存在区别。 例如：document.documentElement 对应 HTML， document.body 对应 body</p>
-
+<p>3.模块标识</p>
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -269,7 +190,7 @@ h1 {font-size: 2.4rem}      /*24px*/
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/html/2017/02/14/html-body.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/node/2017/03/01/module.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -407,10 +328,10 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/mac/2017/02/14/iterm2.html">&laquo; Mac 配置 iterm2 [mac]</a>
+    <a class="prev" href="/http/2017/02/22/http.html">&laquo; HTTP协议 1.0、1.1、2.0 [http]</a>
   
   
-    <a class="next" href="/http/2017/02/22/http.html">HTTP协议 1.0、1.1、2.0 [http] &raquo;</a>
+    <a class="next" href="/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html">二分查找 [算法] &raquo;</a>
   
 </div>
 
@@ -421,8 +342,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_html body 在css中的区别 [html]";
-//        var disqus_title = "html body 在css中的区别 [html]";
+//        var disqus_identifier = "https://wufangjian.github.io_模块机制 [node]";
+//        var disqus_title = "模块机制 [node]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {
