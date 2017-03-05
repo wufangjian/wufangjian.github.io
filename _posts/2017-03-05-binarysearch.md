@@ -31,3 +31,5 @@ var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var flag = binarySearch(arr, 0, 9, 2);
 console.log(flag);  // 2
 ```
+
+时间复杂度：O(lgn)
