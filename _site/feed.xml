@@ -5,8 +5,8 @@
     <description>My Personal Stack Problems</description>
     <link>https://wufangjian.github.io/</link>
     <atom:link href="https://wufangjian.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 07 Mar 2017 16:42:58 +0800</pubDate>
-    <lastBuildDate>Tue, 07 Mar 2017 16:42:58 +0800</lastBuildDate>
+    <pubDate>Tue, 07 Mar 2017 16:44:35 +0800</pubDate>
+    <lastBuildDate>Tue, 07 Mar 2017 16:44:35 +0800</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
     
       <item>
@@ -21,13 +21,13 @@
 
 &lt;p&gt;FCFS的意思是先来先服务(First Come First Service)。顾名思义就是按照进程被添加到等待&lt;code class=&quot;highlighter-rouge&quot;&gt;队列&lt;/code&gt;的先后顺序来进行调用的&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/static/img/2017/sys-fcfs.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/static/img/2017/sys-fcfs.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;spf-short-process-first&quot;&gt;SPF [Short Process First]&lt;/h3&gt;
 
 &lt;p&gt;SPF的意思是短进程优先(Short Process First)。进程要运行多长时间都可以提前知道。这个值是程序提前写在进程里面的了，系统只要去读取这个值就可以了&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/static/img/2017/sys-spf.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/static/img/2017/sys-spf.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 07 Mar 2017 16:14:16 +0800</pubDate>
