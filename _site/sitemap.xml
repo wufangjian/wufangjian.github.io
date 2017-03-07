@@ -5,9 +5,39 @@
     <description>My Personal Stack Problems</description>
     <link>https://wufangjian.github.io/</link>
     <atom:link href="https://wufangjian.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 06 Mar 2017 00:39:38 +0800</pubDate>
-    <lastBuildDate>Mon, 06 Mar 2017 00:39:38 +0800</lastBuildDate>
+    <pubDate>Tue, 07 Mar 2017 16:42:58 +0800</pubDate>
+    <lastBuildDate>Tue, 07 Mar 2017 16:42:58 +0800</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
+    
+      <item>
+        <title>操作系统常用调度算法 [操作系统]</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;《操作系统》是所有计算机专业的必修课程，也是编程的基础，不管是前端还是后端都应该去了解&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;进程调度算法&lt;/h2&gt;
+
+&lt;h3 id=&quot;fcfs-first-come-first-service&quot;&gt;FCFS [first come first service]&lt;/h3&gt;
+
+&lt;p&gt;FCFS的意思是先来先服务(First Come First Service)。顾名思义就是按照进程被添加到等待&lt;code class=&quot;highlighter-rouge&quot;&gt;队列&lt;/code&gt;的先后顺序来进行调用的&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/static/img/2017/sys-fcfs.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;spf-short-process-first&quot;&gt;SPF [Short Process First]&lt;/h3&gt;
+
+&lt;p&gt;SPF的意思是短进程优先(Short Process First)。进程要运行多长时间都可以提前知道。这个值是程序提前写在进程里面的了，系统只要去读取这个值就可以了&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/static/img/2017/sys-spf.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 07 Mar 2017 16:14:16 +0800</pubDate>
+        <link>https://wufangjian.github.io/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html</link>
+        <guid isPermaLink="true">https://wufangjian.github.io/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html</guid>
+        
+        
+        <category>操作系统</category>
+        
+      </item>
     
       <item>
         <title>归并排序 [算法]</title>
@@ -15,7 +45,7 @@
   &lt;p&gt;归并是所有排序算法中时间复杂度低的算法&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;#归并排序&lt;/p&gt;
+&lt;h1 id=&quot;section&quot;&gt;归并排序&lt;/h1&gt;
 
 &lt;p&gt;&lt;strong&gt;时间复杂度：&lt;/strong&gt; O(nlgn)&lt;/p&gt;
 
@@ -23,9 +53,7 @@
 
 &lt;p&gt;&lt;strong&gt;归并排序算法的核心：&lt;/strong&gt; 先进行划分,再进行排序归并.归并两个有序的数组.即归并两个有序的数组A和B,然后就有了包含这两个新数组的数组C.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;归并&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&quot;section-1&quot;&gt;归并&lt;/h3&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
@@ -60,9 +88,8 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;排序&lt;/li&gt;
-&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;排序&lt;/h3&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 排序&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mergeSort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -98,6 +125,8 @@
 &lt;h2 id=&quot;section&quot;&gt;二分查找&lt;/h2&gt;
 
 &lt;p&gt;概念：二分查找又称折半查找&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;时间复杂度：&lt;/strong&gt; O(lgn)&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;优点：&lt;/strong&gt; 比较次数少，查找速度快，平均性能好&lt;/p&gt;
 
@@ -150,12 +179,30 @@
 &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-
-&lt;p&gt;时间复杂度：O(lgn)&lt;/p&gt;
 </description>
         <pubDate>Sun, 05 Mar 2017 16:02:16 +0800</pubDate>
         <link>https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html</link>
         <guid isPermaLink="true">https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html</guid>
+        
+        
+        <category>算法</category>
+        
+      </item>
+    
+      <item>
+        <title>常用排序算法 [算法]</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;了解常用排序算法的时间复杂度，空间复杂度对于学好算法至关重要&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;常用排序算法&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/static/img/2017/sort.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 03 Mar 2017 16:02:16 +0800</pubDate>
+        <link>https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/03/sort.html</link>
+        <guid isPermaLink="true">https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/03/sort.html</guid>
         
         
         <category>算法</category>
