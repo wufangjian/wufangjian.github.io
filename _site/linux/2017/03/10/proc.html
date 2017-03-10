@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>SSP-供应方平台 [广告] - wufangjian</title>
+        <title>proc详解 [Linux] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="SSP-供应方平台 [广告]" />
-        <meta name="keywords" content="SSP-供应方平台 [广告], wufangjian, 广告" />
+        <meta name="description" content="proc详解 [Linux]" />
+        <meta name="keywords" content="proc详解 [Linux], wufangjian, Linux" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="SSP-供应方平台 [广告]" property="og:title">
+          <meta content="proc详解 [Linux]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html" property="og:url">
+          <meta content="https://wufangjian.github.io/linux/2017/03/10/proc.html" property="og:url">
         
         
-          <meta content="2016-01-24T12:00:00+08:00" property="article:published_time">
+          <meta content="2017-03-10T15:21:16+08:00" property="article:published_time">
           <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="广告" property="article:section">
+          <meta content="Linux" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="SSP-供应方平台 [广告]">
+          <meta name="twitter:title" content="proc详解 [Linux]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/linux/2017/03/10/proc.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,161 +131,122 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>SSP-供应方平台 [广告]</h1>
-<span class="time">24 Jan 2016</span>
+                <h1>proc详解 [Linux]</h1>
+<span class="time">10 Mar 2017</span>
 
 <span class="categories">
-    &raquo; <a href="/category/广告">广告</a>
+    &raquo; <a href="/category/Linux">Linux</a>
 </span>
 
 
 <div class="content">
-    <div class="post"><h2 id="section">1.项目简介</h2>
+    <div class="post"><h2 id="proc">proc文件系统</h2>
+
+<p><strong>概念：</strong> Linux系统上的/proc目录是一种文件系统</p>
+
+<p>与其它常见的文件系统不同的是，/proc是一种<code class="highlighter-rouge">伪文件系统</code>（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，用户可以通过这些文件查看有关系统硬件及当前正在运行进程的信息，甚至可以通过更改其中某些文件来改变内核的运行状态。</p>
+
+<p>基于/proc文件系统如上所述的特殊性，其内的文件也常被称作<code class="highlighter-rouge">虚拟文件</code>，并具有一些独特的特点。</p>
 
 <blockquote>
-  <p>SSP（Sell-SidePlatform 供应方平台），目前有<code class="highlighter-rouge">广告位管理</code>、<code class="highlighter-rouge">报表管理</code>、<code class="highlighter-rouge">模板管理</code>等模块</p>
+  <p>例如，其中有些文件虽然使用查看命令查看时会返回大量信息，但文件本身的大小却会显示为0字节。此外，这些特殊文件中大多数文件的时间及日期属性通常为当前系统时间和日期，这跟它们随时会被刷新（存储于RAM中）有关。</p>
 </blockquote>
 
-<p>该系统是在百川的时候开发，然后一直维护到现在，后期里面的功能会逐步迁移到AOP平台的流量管理模块。</p>
+<p>为了查看及使用上的方便，这些文件通常会按照相关性进行分类存储于不同的目录甚至子目录中，如/proc/scsi目录中存储的就是当前系统上所有SCSI设备的相关信息，/proc/N中存储的则是系统当前正在运行的进程的相关信息，其中N为正在运行的进程（可以想象得到，在某进程结束后其相关目录则会消失）。</p>
+
+<p>大多数虚拟文件可以使用文件查看命令如cat、more或者less进行查看，有些文件信息表述的内容可以一目了然，但也有文件的信息却不怎么具有可读性。不过，这些可读性较差的文件在使用一些命令如apm、free、lspci或top查看时却可以有着不错的表现。</p>
+
+<hr />
+
+<h2 id="section">一、进程目录中的常见文件介绍</h2>
+
+<p>/proc目录中包含许多以数字命名的子目录，这些数字表示系统当前正在运行进程的进程号，里面包含对应进程相关的多个信息文件。</p>
+
+<h2 id="proc-1">二、/proc目录下常见的文件介绍</h2>
+
+<p>2.1、/proc/apm</p>
+
+<p>2.2、/proc/buddyinfo</p>
+
+<p>2.3、/proc/cmdline</p>
+
+<p>2.4、/proc/cpuinfo</p>
+
+<p>2.5、/proc/crypto</p>
+
+<p>2.6、/proc/devices</p>
+
+<p>2.7、/proc/diskstats</p>
+
+<p>2.8、/proc/dma</p>
+
+<p>2.9、/proc/execdomains</p>
+
+<p>2.10、/proc/fb</p>
+
+<p>2.11、/proc/filesystems</p>
+
+<p>2.12、/proc/interrupts</p>
+
+<p>2.13、/proc/iomem</p>
+
+<p>2.14、/proc/ioports</p>
+
+<p>2.15、/proc/kallsyms</p>
+
+<p>2.16、/proc/kcore</p>
+
+<p>2.17、/proc/kmsg</p>
+
+<p>2.18、/proc/loadavg</p>
+
+<p>2.19、/proc/locks</p>
+
+<p>2.20、/proc/mdstat</p>
+
+<p>2.21、/proc/meminfo</p>
+
+<p>2.22、/proc/mounts</p>
+
+<p>2.23、/proc/modules</p>
+
+<p>2.24、/proc/partitions</p>
+
+<p>2.25、/proc/pci</p>
+
+<p>2.26、/proc/slabinfo</p>
+
+<p>2.27、/proc/stat</p>
+
+<p>2.28、/proc/swaps</p>
+
+<p>2.29、/proc/uptime</p>
+
+<p>2.30、/proc/version</p>
+
+<p>2.31、/proc/vmstat</p>
+
+<p>2.32、/proc/zoneinfo</p>
+
+<hr />
+
+<h2 id="procsys">三、/proc/sys目录详解</h2>
 
 <ul>
-  <li>
-    <p><strong>广告位管理</strong> : 管理百度内部产品线的广告位，目前只涉及到贴吧、手百、百度云、手百小说、浏览器…</p>
-  </li>
-  <li>
-    <p><strong>报表管理</strong> : 不同维度的广告报表，主要涉及到展示、点击、计费等核心统计信息</p>
-  </li>
-  <li>
-    <p><strong>模板管理</strong> : 整个ssp系统的核心，把广告模板细粒度化到每一个字段，可以通过该系统定制化广告模板样式，可以在不同的平台上做到样式的重用。</p>
-  </li>
+  <li>3.1、/proc/sys/debug 子目录</li>
 </ul>
 
-<h2 id="section-1">2.项目架构</h2>
-
 <blockquote>
-  <p>该系统选用的技术栈 <code class="highlighter-rouge">yog2</code>、<code class="highlighter-rouge">fis3</code>、<code class="highlighter-rouge">angularjs</code>、<code class="highlighter-rouge">gulp</code>，前后端完全分离</p>
-</blockquote>
-
-<p><strong>说明</strong>：之所以fis3 和 gulp会同时存在(都属于打包工具)，是因为前期项目架构的时候，没有充分fis3的优势。而是 用的<code class="highlighter-rouge">gulp + angular</code>开发的脚手架，先通过gulp进行项目打包，然后利用yog2进行项目部署</p>
-
-<p>目录结构：</p>
-
-<p>yog2</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>├── BCLOUD
-├── LICENSE
-├── README
-├── README.md
-├── app.js
-├── build.sh
-├── conf
-│   ├── plugins
-│   └── ral
-├── node_modules.tar.gz
-├── package.json
-└── plugins
-    ├── README.md
-    ├── bdservice
-    ├── bdservice-plugin.json
-    ├── session
-    └── session-plugin.json
-</code></pre>
-</div>
-
-<p>APP-native</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-├─client                 # 前端代码
-│  ├─page                # 前端页面
-│  ├─project             # 项目目录
-│  │  ├─package.json
-│  │  ├─gulpFile.js
-│  │  ├─gulp
-│  │  ├─src
-│  │  ├─bower_components
-│  │  └─node_modules
-│  ├─static              # 前端非模块化静态资源
-│  │  ├─css
-│  │  └─js
-│  └─widget              # 前端组件
-├─fis-conf.js            # FIS编译配置
-└─server                 # 后端代码
-    ├─action             # Action是指MVC中的路由动作，处理页面请求
-    ├─lib                # 可以存放一些通用库
-    ├─model              # 可以存放一些数据层代码，如后端API请求等
-    └─router.js          # AppRouter路由，用于处理自动路由无法满足的需求
-</code></pre>
-</div>
-
-<h2 id="section-2">3.项目部署</h2>
-
-<p><strong>*前提：环境必备</strong></p>
-
-<blockquote>
-  <p>确保当前开发机已安装Nodejs(版本高于V6.0.0支持ECMSCRIPT6/7最新标准)、FIS3、YOG2(Node版本管理推荐使用NVM)</p>
+  <p>此目录通常是一空目录</p>
 </blockquote>
 
 <ul>
-  <li>
-    <p><a href="https://nodejs.org/en/">Nodejs (with NPM)</a></p>
-  </li>
-  <li>
-    <p><a href="http://fis.baidu.com/">FIS3</a></p>
-  </li>
-  <li>
-    <p><a href="http://fex.baidu.com/yog2/docs/">YOG2</a></p>
-  </li>
+  <li>3.2、/proc/sys/dev 子目录</li>
 </ul>
 
-<p><strong>1.gitlab地址</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>http://gitlab.baidu.com/NativeAds/App-native.git
-</code></pre>
-</div>
-
-<p><strong>2.svn模块</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>dianquan/node/nativeads
-</code></pre>
-</div>
-
-<p><strong>3.线上地址</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>nativeads.tieba.baidu.com/native
-</code></pre>
-</div>
-
-<p><strong>4.运行</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>// clone代码
-git clone http://gitlab.baidu.com/NativeAds/App-native.git
-
-
-// 安装依赖
-cd App-native/client/project
-npm install 
-bower install 
-
-// 或者通过解压已打包好的tar包
-cd App-native/client/project
-
-tar -zxvf node_modules.tar.gz
-tar -zxvf bower_components.tar.gz
-
-
-// 本地运行
-cd App-native/client/project
-gulp server
-
-// 本地编译
-gulp build
-
-// 发布代码（debug代表的是开发时候的开发模式，8084代码的是发布的端口号）
-yog2 release debug -wLd 8084
-
-</code></pre>
-</div>
-
+<blockquote>
+  <p>为系统上特殊设备提供参数信息文件的目录，其不同设备的信息文件分别存储于不同的子目录中，如大多数系统上都会具有的/proc/sys/dev/cdrom和/proc/sys/dev/raid（如果内核编译时开启了支持raid的功能） 目录，其内存储的通常是系统上cdrom和raid的相关参数信息文件。</p>
+</blockquote>
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -301,7 +262,7 @@ yog2 release debug -wLd 8084
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/linux/2017/03/10/proc.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -467,10 +428,8 @@ yog2 release debug -wLd 8084
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html">&laquo; 理解CSS中BFC [css]</a>
+    <a class="prev" href="/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html">&laquo; Consistent Hashing [算法]</a>
   
-  
-    <a class="next" href="/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js] &raquo;</a>
   
 </div>
 
@@ -481,8 +440,8 @@ yog2 release debug -wLd 8084
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_SSP-供应方平台 [广告]";
-//        var disqus_title = "SSP-供应方平台 [广告]";
+//        var disqus_identifier = "https://wufangjian.github.io_proc详解 [Linux]";
+//        var disqus_title = "proc详解 [Linux]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {

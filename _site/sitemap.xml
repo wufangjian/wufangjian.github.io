@@ -5,9 +5,141 @@
     <description>My Personal Stack Problems</description>
     <link>https://wufangjian.github.io/</link>
     <atom:link href="https://wufangjian.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 07 Mar 2017 18:25:18 +0800</pubDate>
-    <lastBuildDate>Tue, 07 Mar 2017 18:25:18 +0800</lastBuildDate>
+    <pubDate>Fri, 10 Mar 2017 16:18:16 +0800</pubDate>
+    <lastBuildDate>Fri, 10 Mar 2017 16:18:16 +0800</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
+    
+      <item>
+        <title>proc详解 [Linux]</title>
+        <description>&lt;h2 id=&quot;proc&quot;&gt;proc文件系统&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;概念：&lt;/strong&gt; Linux系统上的/proc目录是一种文件系统&lt;/p&gt;
+
+&lt;p&gt;与其它常见的文件系统不同的是，/proc是一种&lt;code class=&quot;highlighter-rouge&quot;&gt;伪文件系统&lt;/code&gt;（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，用户可以通过这些文件查看有关系统硬件及当前正在运行进程的信息，甚至可以通过更改其中某些文件来改变内核的运行状态。&lt;/p&gt;
+
+&lt;p&gt;基于/proc文件系统如上所述的特殊性，其内的文件也常被称作&lt;code class=&quot;highlighter-rouge&quot;&gt;虚拟文件&lt;/code&gt;，并具有一些独特的特点。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;例如，其中有些文件虽然使用查看命令查看时会返回大量信息，但文件本身的大小却会显示为0字节。此外，这些特殊文件中大多数文件的时间及日期属性通常为当前系统时间和日期，这跟它们随时会被刷新（存储于RAM中）有关。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;为了查看及使用上的方便，这些文件通常会按照相关性进行分类存储于不同的目录甚至子目录中，如/proc/scsi目录中存储的就是当前系统上所有SCSI设备的相关信息，/proc/N中存储的则是系统当前正在运行的进程的相关信息，其中N为正在运行的进程（可以想象得到，在某进程结束后其相关目录则会消失）。&lt;/p&gt;
+
+&lt;p&gt;大多数虚拟文件可以使用文件查看命令如cat、more或者less进行查看，有些文件信息表述的内容可以一目了然，但也有文件的信息却不怎么具有可读性。不过，这些可读性较差的文件在使用一些命令如apm、free、lspci或top查看时却可以有着不错的表现。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;一、进程目录中的常见文件介绍&lt;/h2&gt;
+
+&lt;p&gt;/proc目录中包含许多以数字命名的子目录，这些数字表示系统当前正在运行进程的进程号，里面包含对应进程相关的多个信息文件。&lt;/p&gt;
+
+&lt;h2 id=&quot;proc-1&quot;&gt;二、/proc目录下常见的文件介绍&lt;/h2&gt;
+
+&lt;p&gt;2.1、/proc/apm&lt;/p&gt;
+
+&lt;p&gt;2.2、/proc/buddyinfo&lt;/p&gt;
+
+&lt;p&gt;2.3、/proc/cmdline&lt;/p&gt;
+
+&lt;p&gt;2.4、/proc/cpuinfo&lt;/p&gt;
+
+&lt;p&gt;2.5、/proc/crypto&lt;/p&gt;
+
+&lt;p&gt;2.6、/proc/devices&lt;/p&gt;
+
+&lt;p&gt;2.7、/proc/diskstats&lt;/p&gt;
+
+&lt;p&gt;2.8、/proc/dma&lt;/p&gt;
+
+&lt;p&gt;2.9、/proc/execdomains&lt;/p&gt;
+
+&lt;p&gt;2.10、/proc/fb&lt;/p&gt;
+
+&lt;p&gt;2.11、/proc/filesystems&lt;/p&gt;
+
+&lt;p&gt;2.12、/proc/interrupts&lt;/p&gt;
+
+&lt;p&gt;2.13、/proc/iomem&lt;/p&gt;
+
+&lt;p&gt;2.14、/proc/ioports&lt;/p&gt;
+
+&lt;p&gt;2.15、/proc/kallsyms&lt;/p&gt;
+
+&lt;p&gt;2.16、/proc/kcore&lt;/p&gt;
+
+&lt;p&gt;2.17、/proc/kmsg&lt;/p&gt;
+
+&lt;p&gt;2.18、/proc/loadavg&lt;/p&gt;
+
+&lt;p&gt;2.19、/proc/locks&lt;/p&gt;
+
+&lt;p&gt;2.20、/proc/mdstat&lt;/p&gt;
+
+&lt;p&gt;2.21、/proc/meminfo&lt;/p&gt;
+
+&lt;p&gt;2.22、/proc/mounts&lt;/p&gt;
+
+&lt;p&gt;2.23、/proc/modules&lt;/p&gt;
+
+&lt;p&gt;2.24、/proc/partitions&lt;/p&gt;
+
+&lt;p&gt;2.25、/proc/pci&lt;/p&gt;
+
+&lt;p&gt;2.26、/proc/slabinfo&lt;/p&gt;
+
+&lt;p&gt;2.27、/proc/stat&lt;/p&gt;
+
+&lt;p&gt;2.28、/proc/swaps&lt;/p&gt;
+
+&lt;p&gt;2.29、/proc/uptime&lt;/p&gt;
+
+&lt;p&gt;2.30、/proc/version&lt;/p&gt;
+
+&lt;p&gt;2.31、/proc/vmstat&lt;/p&gt;
+
+&lt;p&gt;2.32、/proc/zoneinfo&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;procsys&quot;&gt;三、/proc/sys目录详解&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;3.1、/proc/sys/debug 子目录&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;此目录通常是一空目录&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;3.2、/proc/sys/dev 子目录&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;为系统上特殊设备提供参数信息文件的目录，其不同设备的信息文件分别存储于不同的子目录中，如大多数系统上都会具有的/proc/sys/dev/cdrom和/proc/sys/dev/raid（如果内核编译时开启了支持raid的功能） 目录，其内存储的通常是系统上cdrom和raid的相关参数信息文件。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Fri, 10 Mar 2017 15:21:16 +0800</pubDate>
+        <link>https://wufangjian.github.io/linux/2017/03/10/proc.html</link>
+        <guid isPermaLink="true">https://wufangjian.github.io/linux/2017/03/10/proc.html</guid>
+        
+        
+        <category>Linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Consistent Hashing [算法]</title>
+        <description>
+</description>
+        <pubDate>Wed, 08 Mar 2017 11:32:16 +0800</pubDate>
+        <link>https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html</link>
+        <guid isPermaLink="true">https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html</guid>
+        
+        
+        <category>算法</category>
+        
+      </item>
     
       <item>
         <title>操作系统常用调度算法 [操作系统]</title>

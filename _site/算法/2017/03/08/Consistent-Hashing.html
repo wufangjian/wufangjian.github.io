@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>SSP-供应方平台 [广告] - wufangjian</title>
+        <title>Consistent Hashing [算法] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="SSP-供应方平台 [广告]" />
-        <meta name="keywords" content="SSP-供应方平台 [广告], wufangjian, 广告" />
+        <meta name="description" content="Consistent Hashing [算法]" />
+        <meta name="keywords" content="Consistent Hashing [算法], wufangjian, 算法" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="SSP-供应方平台 [广告]" property="og:title">
+          <meta content="Consistent Hashing [算法]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html" property="og:url">
+          <meta content="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html" property="og:url">
         
         
-          <meta content="2016-01-24T12:00:00+08:00" property="article:published_time">
+          <meta content="2017-03-08T11:32:16+08:00" property="article:published_time">
           <meta content="https://wufangjian.github.io/about/" property="article:author">
         
         
@@ -35,7 +35,7 @@
         
         
           
-          <meta content="广告" property="article:section">
+          <meta content="算法" property="article:section">
           
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="SSP-供应方平台 [广告]">
+          <meta name="twitter:title" content="Consistent Hashing [算法]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html">
+          <meta name="twitter:url" content="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,161 +131,16 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>SSP-供应方平台 [广告]</h1>
-<span class="time">24 Jan 2016</span>
+                <h1>Consistent Hashing [算法]</h1>
+<span class="time">08 Mar 2017</span>
 
 <span class="categories">
-    &raquo; <a href="/category/广告">广告</a>
+    &raquo; <a href="/category/算法">算法</a>
 </span>
 
 
 <div class="content">
-    <div class="post"><h2 id="section">1.项目简介</h2>
-
-<blockquote>
-  <p>SSP（Sell-SidePlatform 供应方平台），目前有<code class="highlighter-rouge">广告位管理</code>、<code class="highlighter-rouge">报表管理</code>、<code class="highlighter-rouge">模板管理</code>等模块</p>
-</blockquote>
-
-<p>该系统是在百川的时候开发，然后一直维护到现在，后期里面的功能会逐步迁移到AOP平台的流量管理模块。</p>
-
-<ul>
-  <li>
-    <p><strong>广告位管理</strong> : 管理百度内部产品线的广告位，目前只涉及到贴吧、手百、百度云、手百小说、浏览器…</p>
-  </li>
-  <li>
-    <p><strong>报表管理</strong> : 不同维度的广告报表，主要涉及到展示、点击、计费等核心统计信息</p>
-  </li>
-  <li>
-    <p><strong>模板管理</strong> : 整个ssp系统的核心，把广告模板细粒度化到每一个字段，可以通过该系统定制化广告模板样式，可以在不同的平台上做到样式的重用。</p>
-  </li>
-</ul>
-
-<h2 id="section-1">2.项目架构</h2>
-
-<blockquote>
-  <p>该系统选用的技术栈 <code class="highlighter-rouge">yog2</code>、<code class="highlighter-rouge">fis3</code>、<code class="highlighter-rouge">angularjs</code>、<code class="highlighter-rouge">gulp</code>，前后端完全分离</p>
-</blockquote>
-
-<p><strong>说明</strong>：之所以fis3 和 gulp会同时存在(都属于打包工具)，是因为前期项目架构的时候，没有充分fis3的优势。而是 用的<code class="highlighter-rouge">gulp + angular</code>开发的脚手架，先通过gulp进行项目打包，然后利用yog2进行项目部署</p>
-
-<p>目录结构：</p>
-
-<p>yog2</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>├── BCLOUD
-├── LICENSE
-├── README
-├── README.md
-├── app.js
-├── build.sh
-├── conf
-│   ├── plugins
-│   └── ral
-├── node_modules.tar.gz
-├── package.json
-└── plugins
-    ├── README.md
-    ├── bdservice
-    ├── bdservice-plugin.json
-    ├── session
-    └── session-plugin.json
-</code></pre>
-</div>
-
-<p>APP-native</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-├─client                 # 前端代码
-│  ├─page                # 前端页面
-│  ├─project             # 项目目录
-│  │  ├─package.json
-│  │  ├─gulpFile.js
-│  │  ├─gulp
-│  │  ├─src
-│  │  ├─bower_components
-│  │  └─node_modules
-│  ├─static              # 前端非模块化静态资源
-│  │  ├─css
-│  │  └─js
-│  └─widget              # 前端组件
-├─fis-conf.js            # FIS编译配置
-└─server                 # 后端代码
-    ├─action             # Action是指MVC中的路由动作，处理页面请求
-    ├─lib                # 可以存放一些通用库
-    ├─model              # 可以存放一些数据层代码，如后端API请求等
-    └─router.js          # AppRouter路由，用于处理自动路由无法满足的需求
-</code></pre>
-</div>
-
-<h2 id="section-2">3.项目部署</h2>
-
-<p><strong>*前提：环境必备</strong></p>
-
-<blockquote>
-  <p>确保当前开发机已安装Nodejs(版本高于V6.0.0支持ECMSCRIPT6/7最新标准)、FIS3、YOG2(Node版本管理推荐使用NVM)</p>
-</blockquote>
-
-<ul>
-  <li>
-    <p><a href="https://nodejs.org/en/">Nodejs (with NPM)</a></p>
-  </li>
-  <li>
-    <p><a href="http://fis.baidu.com/">FIS3</a></p>
-  </li>
-  <li>
-    <p><a href="http://fex.baidu.com/yog2/docs/">YOG2</a></p>
-  </li>
-</ul>
-
-<p><strong>1.gitlab地址</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>http://gitlab.baidu.com/NativeAds/App-native.git
-</code></pre>
-</div>
-
-<p><strong>2.svn模块</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>dianquan/node/nativeads
-</code></pre>
-</div>
-
-<p><strong>3.线上地址</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>nativeads.tieba.baidu.com/native
-</code></pre>
-</div>
-
-<p><strong>4.运行</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>// clone代码
-git clone http://gitlab.baidu.com/NativeAds/App-native.git
-
-
-// 安装依赖
-cd App-native/client/project
-npm install 
-bower install 
-
-// 或者通过解压已打包好的tar包
-cd App-native/client/project
-
-tar -zxvf node_modules.tar.gz
-tar -zxvf bower_components.tar.gz
-
-
-// 本地运行
-cd App-native/client/project
-gulp server
-
-// 本地编译
-gulp build
-
-// 发布代码（debug代表的是开发时候的开发模式，8084代码的是发布的端口号）
-yog2 release debug -wLd 8084
-
-</code></pre>
-</div>
-
+    <div class="post">
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -301,7 +156,7 @@ yog2 release debug -wLd 8084
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -341,12 +196,53 @@ yog2 release debug -wLd 8084
     
         
             
+                
+                <div class="panel-body">
+                <h4>相关文章</h4>
+                <ul>
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html">归并排序 [算法]</a>
+                    
+                        (Categories: <a href="/category/算法">算法</a>)
+                    
+                </li>
+                
+                
+            
         
     
 
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html">二分查找 [算法]</a>
+                    
+                        (Categories: <a href="/category/算法">算法</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/03/sort.html">常用排序算法 [算法]</a>
+                    
+                        (Categories: <a href="/category/算法">算法</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -456,21 +352,17 @@ yog2 release debug -wLd 8084
         
     
 
-    
-    
-        
-            
-        
-    
 
+    </ul>
+    </div>
 
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html">&laquo; 理解CSS中BFC [css]</a>
+    <a class="prev" href="/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html">&laquo; 操作系统常用调度算法 [操作系统]</a>
   
   
-    <a class="next" href="/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js] &raquo;</a>
+    <a class="next" href="/linux/2017/03/10/proc.html">proc详解 [Linux] &raquo;</a>
   
 </div>
 
@@ -481,8 +373,8 @@ yog2 release debug -wLd 8084
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_SSP-供应方平台 [广告]";
-//        var disqus_title = "SSP-供应方平台 [广告]";
+//        var disqus_identifier = "https://wufangjian.github.io_Consistent Hashing [算法]";
+//        var disqus_title = "Consistent Hashing [算法]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {
