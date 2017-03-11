@@ -5,13 +5,17 @@
     <description>My Personal Stack Problems</description>
     <link>https://wufangjian.github.io/</link>
     <atom:link href="https://wufangjian.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 10 Mar 2017 16:18:16 +0800</pubDate>
-    <lastBuildDate>Fri, 10 Mar 2017 16:18:16 +0800</lastBuildDate>
+    <pubDate>Sat, 11 Mar 2017 15:45:11 +0800</pubDate>
+    <lastBuildDate>Sat, 11 Mar 2017 15:45:11 +0800</lastBuildDate>
     <generator>Jekyll v3.0.3</generator>
     
       <item>
         <title>proc详解 [Linux]</title>
-        <description>&lt;h2 id=&quot;proc&quot;&gt;proc文件系统&lt;/h2&gt;
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;通常在Linux系统下面我们需要运行：ll /proc/1111&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;proc&quot;&gt;proc文件系统&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;概念：&lt;/strong&gt; Linux系统上的/proc目录是一种文件系统&lt;/p&gt;
 
@@ -33,71 +37,136 @@
 
 &lt;p&gt;/proc目录中包含许多以数字命名的子目录，这些数字表示系统当前正在运行进程的进程号，里面包含对应进程相关的多个信息文件。&lt;/p&gt;
 
+&lt;p&gt;指令： ll /proc&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dr-xr-xr-x   8 root   root        0 Feb 10 15:52 9154
+dr-xr-xr-x   8 root   root        0 Mar  9 16:56 9348
+dr-xr-xr-x   8 work   work        0 Mar  9 19:34 9367
+dr-xr-xr-x   8 work   work        0 Feb 10 15:52 961
+dr-xr-xr-x   8 work   work        0 Mar  9 16:56 9654
+dr-xr-xr-x   8 work   work        0 Mar  9 16:56 9665
+dr-xr-xr-x   8 work   work        0 Mar  9 16:56 9697
+dr-xr-xr-x   8 root   root        0 Mar  9 16:56 9717
+dr-xr-xr-x   8 work   work        0 Mar  9 16:56 9718
+dr-xr-xr-x   8 root   root        0 Feb 10 15:43 9791
+dr-xr-xr-x   8 root   root        0 Feb 10 15:43 9805
+dr-xr-xr-x   8 root   root        0 Feb 10 23:33 981
+dr-xr-xr-x   8 root   root        0 Feb 10 23:33 983
+dr-xr-xr-x   8 root   root        0 Feb 10 15:43 9983
+dr-xr-xr-x   8 root   root        0 Mar 10 17:21 acpi
+-r--r--r--   1 root   root        0 Mar 10 17:21 buddyinfo
+dr-xr-xr-x   5 root   root        0 Mar 10 17:21 bus
+-r--r--r--   1 root   root        0 Mar 10 17:21 cgroups
+-r--r--r--   1 root   root        0 Mar 10 17:21 cmdline
+-r--r--r--   1 root   root    16370 Mar 10 17:21 config.gz
+-r--r--r--   1 root   root        0 Mar 10 17:21 cpuinfo
+-r--r--r--   1 root   root        0 Mar 10 17:21 devices
+-r--r--r--   1 root   root        0 Mar 10 17:21 diskstats
+-r--r--r--   1 root   root        0 Mar 10 17:21 dma
+dr-xr-xr-x   2 root   root        0 Mar 10 17:21 driver
+-r--r--r--   1 root   root        0 Mar 10 17:21 execdomains
+-r--r--r--   1 root   root        0 Mar 10 17:21 fb
+-r--r--r--   1 root   root        0 Mar 10 17:21 filesystems
+dr-xr-xr-x   5 root   root        0 Mar 10 17:21 fs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上面列出的是/proc目录中一些进程相关的目录，每个目录中是当程本身相关信息的文件&lt;/p&gt;
+
+&lt;p&gt;下面是作者系统（ CentOS release 4.3）上运行的一个PID为7773的进程saslauthd的相关文件，其中有些文件是每个进程都会具有的，后文会对这些常见文件做出说明&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@10.95.105.163 ~]# ll /proc/7773
+total 0
+dr-xr-xr-x   2 root root 0 Mar 10 17:29 attr
+-r--------   1 root root 0 Mar 10 17:29 auxv
+-r--r--r--   1 root root 0 Mar 10 17:29 cgroup
+--w-------   1 root root 0 Mar 10 17:29 clear_refs
+-r--r--r--   1 root root 0 Feb 16 19:39 cmdline
+-rw-r--r--   1 root root 0 Mar 10 17:29 coredump_filter
+-r--r--r--   1 root root 0 Mar 10 17:29 cpuset
+lrwxrwxrwx   1 root root 0 Feb 16 19:39 cwd -&amp;gt; /noah/modules/3188ff1dc979d905a01dd14a7c7b6063/bin
+-r--------   1 root root 0 Mar 10 17:29 environ
+lrwxrwxrwx   1 root root 0 Feb 16 19:39 exe -&amp;gt; /noah/modules/3188ff1dc979d905a01dd14a7c7b6063/bin/noah-ccs-agent
+dr-x------   2 root root 0 Jan 18 18:12 fd
+dr-x------   2 root root 0 Mar 10 17:29 fdinfo
+-r--------   1 root root 0 Feb 16 19:39 io
+-rw-------   1 root root 0 Mar 10 17:29 limits
+-rw-r--r--   1 root root 0 Mar 10 17:29 loginuid
+-r--r--r--   1 root root 0 Feb 15 16:50 maps
+-rw-------   1 root root 0 Mar 10 17:29 mem
+-r--r--r--   1 root root 0 Mar 10 17:29 mountinfo
+-r--r--r--   1 root root 0 Mar 10 17:29 mounts
+-r--------   1 root root 0 Mar 10 17:29 mountstats
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 &lt;h2 id=&quot;proc-1&quot;&gt;二、/proc目录下常见的文件介绍&lt;/h2&gt;
 
-&lt;p&gt;2.1、/proc/apm&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2.1、/proc/apm
 
-&lt;p&gt;2.2、/proc/buddyinfo&lt;/p&gt;
+2.2、/proc/buddyinfo
 
-&lt;p&gt;2.3、/proc/cmdline&lt;/p&gt;
+2.3、/proc/cmdline
 
-&lt;p&gt;2.4、/proc/cpuinfo&lt;/p&gt;
+2.4、/proc/cpuinfo
 
-&lt;p&gt;2.5、/proc/crypto&lt;/p&gt;
+2.5、/proc/crypto
 
-&lt;p&gt;2.6、/proc/devices&lt;/p&gt;
+2.6、/proc/devices
 
-&lt;p&gt;2.7、/proc/diskstats&lt;/p&gt;
+2.7、/proc/diskstats
 
-&lt;p&gt;2.8、/proc/dma&lt;/p&gt;
+2.8、/proc/dma
 
-&lt;p&gt;2.9、/proc/execdomains&lt;/p&gt;
+2.9、/proc/execdomains
 
-&lt;p&gt;2.10、/proc/fb&lt;/p&gt;
+2.10、/proc/fb
 
-&lt;p&gt;2.11、/proc/filesystems&lt;/p&gt;
+2.11、/proc/filesystems
 
-&lt;p&gt;2.12、/proc/interrupts&lt;/p&gt;
+2.12、/proc/interrupts
 
-&lt;p&gt;2.13、/proc/iomem&lt;/p&gt;
+2.13、/proc/iomem
 
-&lt;p&gt;2.14、/proc/ioports&lt;/p&gt;
+2.14、/proc/ioports
 
-&lt;p&gt;2.15、/proc/kallsyms&lt;/p&gt;
+2.15、/proc/kallsyms
 
-&lt;p&gt;2.16、/proc/kcore&lt;/p&gt;
+2.16、/proc/kcore
 
-&lt;p&gt;2.17、/proc/kmsg&lt;/p&gt;
+2.17、/proc/kmsg
 
-&lt;p&gt;2.18、/proc/loadavg&lt;/p&gt;
+2.18、/proc/loadavg
 
-&lt;p&gt;2.19、/proc/locks&lt;/p&gt;
+2.19、/proc/locks
 
-&lt;p&gt;2.20、/proc/mdstat&lt;/p&gt;
+2.20、/proc/mdstat
 
-&lt;p&gt;2.21、/proc/meminfo&lt;/p&gt;
+2.21、/proc/meminfo
 
-&lt;p&gt;2.22、/proc/mounts&lt;/p&gt;
+2.22、/proc/mounts
 
-&lt;p&gt;2.23、/proc/modules&lt;/p&gt;
+2.23、/proc/modules
 
-&lt;p&gt;2.24、/proc/partitions&lt;/p&gt;
+2.24、/proc/partitions
 
-&lt;p&gt;2.25、/proc/pci&lt;/p&gt;
+2.25、/proc/pci
 
-&lt;p&gt;2.26、/proc/slabinfo&lt;/p&gt;
+2.26、/proc/slabinfo
 
-&lt;p&gt;2.27、/proc/stat&lt;/p&gt;
+2.27、/proc/stat
 
-&lt;p&gt;2.28、/proc/swaps&lt;/p&gt;
+2.28、/proc/swaps
 
-&lt;p&gt;2.29、/proc/uptime&lt;/p&gt;
+2.29、/proc/uptime
 
-&lt;p&gt;2.30、/proc/version&lt;/p&gt;
+2.30、/proc/version
 
-&lt;p&gt;2.31、/proc/vmstat&lt;/p&gt;
+2.31、/proc/vmstat
 
-&lt;p&gt;2.32、/proc/zoneinfo&lt;/p&gt;
+2.32、/proc/zoneinfo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;hr /&gt;
 
@@ -118,6 +187,7 @@
 &lt;blockquote&gt;
   &lt;p&gt;为系统上特殊设备提供参数信息文件的目录，其不同设备的信息文件分别存储于不同的子目录中，如大多数系统上都会具有的/proc/sys/dev/cdrom和/proc/sys/dev/raid（如果内核编译时开启了支持raid的功能） 目录，其内存储的通常是系统上cdrom和raid的相关参数信息文件。&lt;/p&gt;
 &lt;/blockquote&gt;
+
 </description>
         <pubDate>Fri, 10 Mar 2017 15:21:16 +0800</pubDate>
         <link>https://wufangjian.github.io/linux/2017/03/10/proc.html</link>
