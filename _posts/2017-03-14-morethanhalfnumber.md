@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "数组中出现次数超过一半的数字 [算法]"
+title: "数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]"
 date:   2017-03-14 11:22:16 +0800
 categories: [算法]
 ---
@@ -44,3 +44,42 @@ function MoreHalfNum(arr) {
 var num = MoreHalfNum([1,2,3,3,3,2,3]);
 console.log(num); // 3
 ```
+
+
+# 找出数组中第K大的数字
+
+最优解：O(n)
+
+## 思路：
+
+受快速排序影响，找到某一个基准数字，比该基准数字大的放在数组右侧，小的放在数组左侧，大的放在数组右侧
+
+
+## 实现：
+
+```javascript
+
+function findKnum(arr, k){
+    var numK = arr[k];
+    for(var i = 0 ; i < arr.length; i++){
+        if(arr[i] > numK && i < k){
+            var temp = arr[i];
+            arr[i] = numK;
+            numK = temp;
+        }
+        
+        if(i > k && arr[i] < numK){
+            var temp = arr[i];
+            arr[i] = numK;
+            numK = temp;
+        }
+    }
+    
+    return numK;
+}
+
+```
+
+
+
+
