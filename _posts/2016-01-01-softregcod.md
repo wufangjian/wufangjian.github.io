@@ -1,11 +1,9 @@
-
 ---
 layout: post
 title:  "常用软件注册码 [软件]"
 date:   2016-01-01 12:00:00 +0800
 categories: [软件]
 ---
-
 
 
 ## krpano 1.19 破解版 （验证码）
