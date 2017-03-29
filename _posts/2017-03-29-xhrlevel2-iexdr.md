@@ -9,7 +9,7 @@ categories: [性能]
 
 关于跨域可以参考[前端解决跨域问题的8种方案](http://blog.csdn.net/joyhen/article/details/21631833)
 
-## XHR Level2
+## 一、XHR Level2
 
 HTML5中 XMLHttpRequest Level 2 的推出
 
@@ -25,7 +25,7 @@ header( " Access-Control-Allow-Origin: * " );
 header( " Access-Control-Allow-Methods: POST,GET " );
 ```
 
-## XDR (IE 8-9 Only)
+## 二、XDR (IE 8-9 Only)
 
 对于XHR2，IE浏览器的支持是IE10以上。但是IE早在IE8时就推出了 XDomainRequest 对象进行跨域操作，一直沿用到IE10才被取代掉。因此在IE8,IE9中应该使用 XDomainRequest (XDR)来实现。
 
