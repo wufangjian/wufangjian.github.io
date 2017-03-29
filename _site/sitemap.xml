@@ -5,9 +5,61 @@
     <description>My Personal Stack Problems</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 23 Mar 2017 14:16:53 +0800</pubDate>
-    <lastBuildDate>Thu, 23 Mar 2017 14:16:53 +0800</lastBuildDate>
+    <pubDate>Wed, 29 Mar 2017 20:29:28 +0800</pubDate>
+    <lastBuildDate>Wed, 29 Mar 2017 20:29:28 +0800</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>XHR Level2 / IE XDR (XDomainRequest) 实现AJAX跨域 [性能]</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;遇到AJAX跨域需求时都会采用服务器端代理，或者改用 JSONP,  window.name，postMessage() 等方法模拟，但都不是很纯粹的AJAX解决方案。今天学到了新的实现跨域的方法&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;关于跨域可以参考&lt;a href=&quot;http://blog.csdn.net/joyhen/article/details/21631833&quot;&gt;前端解决跨域问题的8种方案&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;一xhr-level2&quot;&gt;一、XHR Level2&lt;/h2&gt;
+
+&lt;p&gt;HTML5中 XMLHttpRequest Level 2 的推出&lt;/p&gt;
+
+&lt;p&gt;可以通过在返回的HTTP请求头中加入 &lt;code class=&quot;highlighter-rouge&quot;&gt;Access-Control-Allow-Origin&lt;/code&gt; 的设置，让浏览器支持对不同域的AJAX请求。&lt;/p&gt;
+
+&lt;p&gt;这个情况下前端AJAX的代码不用做任何更改，只需要在服务端的返回中设置以下头信息即可:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Access-Control-Allow-Origin: * //*代表任何域。也可以指定地址&lt;/li&gt;
+  &lt;li&gt;Access-Control-Allow-Methods: POST,GET //支持的方法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;header( &quot; Access-Control-Allow-Origin: * &quot; );
+header( &quot; Access-Control-Allow-Methods: POST,GET &quot; );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;二xdr-ie-8-9-only&quot;&gt;二、XDR (IE 8-9 Only)&lt;/h2&gt;
+
+&lt;p&gt;对于XHR2，IE浏览器的支持是IE10以上。但是IE早在IE8时就推出了 XDomainRequest 对象进行跨域操作，一直沿用到IE10才被取代掉。因此在IE8,IE9中应该使用 XDomainRequest (XDR)来实现。&lt;/p&gt;
+
+&lt;p&gt;XDR在创建时是通过 new XDomainRequest() 进行创建。其他操作和XHR有细微差别。比如open方法只有method和url两个参数，XDR只支持异步不支持同步操作。&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 1. Create XDR object: &lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xdr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;XDomainRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; 
+&lt;span class=&quot;c1&quot;&gt;// 2. Open connection with server using GET method:&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;xdr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;get&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;http://www.contoso.com/xdr.aspx&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 3. Send string data to server:&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;xdr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;另外使用XDR时也需要服务器端设置上面提到的 Access-Control-Allow-Origin 头信息。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 29 Mar 2017 20:16:16 +0800</pubDate>
+        <link>http://localhost:4000/%E6%80%A7%E8%83%BD/2017/03/29/xhrlevel2-iexdr.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E6%80%A7%E8%83%BD/2017/03/29/xhrlevel2-iexdr.html</guid>
+        
+        
+        <category>性能</category>
+        
+      </item>
     
       <item>
         <title>memoryCache和diskCache [性能]</title>
