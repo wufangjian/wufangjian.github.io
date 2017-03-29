@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/http/2017/01/14/http-cache.html" property="og:url">
+          <meta content="http://localhost:4000/http/2017/01/14/http-cache.html" property="og:url">
         
         
           <meta content="2017-01-14T16:00:00+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="HTTP 缓存 [http]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/http/2017/01/14/http-cache.html">
+          <meta name="twitter:url" content="http://localhost:4000/http/2017/01/14/http-cache.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -140,7 +140,7 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="http-">HTTP 缓存</h1>
+    <div class="post"><h1 id="http-缓存">HTTP 缓存</h1>
 
 <p>有时，HTTP 中的缓存可能会非常让人头疼。</p>
 
@@ -150,7 +150,7 @@
 
 <p>所以这里有一些博主总结的实用并速记的规则，并且在未来博主也会持续地跟进和更新。</p>
 
-<h2 id="section">静态资源</h2>
+<h2 id="静态资源">静态资源</h2>
 
 <p>永远不会修改的内容：JS 和 CSS 文件，图片，和任何类型的二进制文件都属于这个类目。</p>
 
@@ -160,18 +160,18 @@
 
 <p>在文件或者路径中嵌入指纹。避免为指纹使用查询字符串。另外，确保生成的URL长度超过8个不同的字符。</p>
 
-<p>使用这些 HTTP 头：
-<code class="highlighter-rouge">
-Cache-Control: public, max-age=31536000
+<p>使用这些 HTTP 头：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Cache-Control: public, max-age=31536000
 Expires: (一年后的今天)
 ETag: (基于内容生成)
 Last-Modified: (过去某个时间)
 Vary: Accept-Encoding
-</code></p>
+</code></pre>
+</div>
 
 <p>针对静态资源的设置就是那么简单。</p>
 
-<h2 id="section-1">动态资源</h2>
+<h2 id="动态资源">动态资源</h2>
 
 <p>针对应用程序私密性和新鲜度方面需求的不同，我们应该使用不同的缓存控制设置。</p>
 
@@ -187,33 +187,33 @@ Vary: Accept-Encoding
 
 <p>这些设置的效果是：这些资源可以被公开地（通过浏览器和代理服务器）缓存起来。每一次在浏览器使用这些资源之前，浏览器或者代理服务器会检查这些资源是否有更新的版本，如果有，就把它们下载下来。</p>
 
-<p>这样的设置需要注意，浏览器在重新检查资源时效性方面有一定的灵活性。典型的是，当用户点击了「返回／前进」按钮时，浏览器不会重新检查这些资源文件，而是直接使用缓存的版本。你如果需要更严格的控制，需要告知浏览器即使当用户点击了「返回／前进」按钮，也需要重新检查这些资源文件，那么可以使用：
-<code class="highlighter-rouge">
-Cache-Control: public, no-cache, no-store
-</code></p>
+<p>这样的设置需要注意，浏览器在重新检查资源时效性方面有一定的灵活性。典型的是，当用户点击了「返回／前进」按钮时，浏览器不会重新检查这些资源文件，而是直接使用缓存的版本。你如果需要更严格的控制，需要告知浏览器即使当用户点击了「返回／前进」按钮，也需要重新检查这些资源文件，那么可以使用：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Cache-Control: public, no-cache, no-store
+</code></pre>
+</div>
 
-<p>不是所有的动态资源都会马上变成过时的资源。如果它们可以保持至少5分钟的时效，可以使用：
-<code class="highlighter-rouge">
-Cache-Control: public, max-age=300
-</code></p>
+<p>不是所有的动态资源都会马上变成过时的资源。如果它们可以保持至少5分钟的时效，可以使用：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Cache-Control: public, max-age=300
+</code></pre>
+</div>
 
-<p>经过这样的设置，浏览器只会在5分钟之后才重新检查。在这之前，缓存的内容会被直接使用。如果在5分钟后，这些过时的内容需要严格控制，你可以添加 must-revalidate 字段：
-<code class="highlighter-rouge">
-Cache-Control: public, max-age=300, must-revalidate
-</code></p>
+<p>经过这样的设置，浏览器只会在5分钟之后才重新检查。在这之前，缓存的内容会被直接使用。如果在5分钟后，这些过时的内容需要严格控制，你可以添加 must-revalidate 字段：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Cache-Control: public, max-age=300, must-revalidate
+</code></pre>
+</div>
 
-<p>对于私密或者针对用户的内容，需要把 public 替换为 private 以避免内容被代理缓存。
-<code class="highlighter-rouge">
-Cache-Control: private, …
-</code></p>
+<p>对于私密或者针对用户的内容，需要把 public 替换为 private 以避免内容被代理缓存。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Cache-Control: private, …
+</code></pre>
+</div>
 
-<h2 id="cache-control--expires">Cache-Control 和 Expires</h2>
+<h2 id="cache-control-和-expires">Cache-Control 和 Expires</h2>
 
 <p>当同时使用 Cache-Control 和 Expires 时，Cache-Control 获得优先权。</p>
 
 <p>同时使用 Cache-Control 和 Expires 意味着得到更广泛的支持（被不同的浏览器和版本）。当然，它们两个应该被配置成相同的时效值，以避免引起困惑。</p>
 
-<h2 id="etag--last-modified">ETag 和 Last-Modified</h2>
+<h2 id="etag-和-last-modified">ETag 和 Last-Modified</h2>
 
 <p>这两个头在浏览器对资源做重新检查验证的时候会使用到。大致来说，浏览器只是盲目地存储这两个来自于服务器的头的值，然后在需要检查验证的时候，浏览器根据请求条件，把这两个指发送给服务器（分别通过 If-None-Match 和 If-Modified-Since）。</p>
 
@@ -231,14 +231,14 @@ Cache-Control: private, …
   <p>参考 <a href="https://www.techpunch.co.uk/development/should-your-site-be-using-etags-or-not">Should your site be using etags or not?</a></p>
 </blockquote>
 
-<h2 id="ctrl-r">手动按下 Ctrl-R</h2>
+<h2 id="手动按下-ctrl-r">手动按下 Ctrl-R</h2>
 
-<p>当按下 Ctrl-R 时，浏览器会携带下面的请求，以检查是否需要更新缓存内容：
-<code class="highlighter-rouge">
-Cache-Control: max-age=0
+<p>当按下 Ctrl-R 时，浏览器会携带下面的请求，以检查是否需要更新缓存内容：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Cache-Control: max-age=0
 If-None-Match: …
 If-Modifed-Since: …
-</code></p>
+</code></pre>
+</div>
 
 <p>注意这并不只是和原服务器建立连接，其同样适用于代理服务器。本质上，它只是重新检查验证内容。如果服务器回应了一个304，浏览器将会使用缓存的内容。</p>
 
@@ -268,7 +268,7 @@ If-Modifed-Since: …
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/http/2017/01/14/http-cache.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/http/2017/01/14/http-cache.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -336,19 +336,54 @@ If-Modifed-Since: …
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/http/2017/02/22/http.html">HTTP协议 1.0、1.1、2.0 [http]</a>
+                    <a href="http://localhost:4000/http/2017/02/22/http.html">HTTP协议 1.0、1.1、2.0 [http]</a>
                     
                         (Categories: <a href="/category/http">http</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -465,7 +500,7 @@ If-Modifed-Since: …
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_HTTP 缓存 [http]";
+//        var disqus_identifier = "http://localhost:4000_HTTP 缓存 [http]";
 //        var disqus_title = "HTTP 缓存 [http]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */

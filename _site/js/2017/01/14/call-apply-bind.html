@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html" property="og:url">
+          <meta content="http://localhost:4000/js/2017/01/14/call-apply-bind.html" property="og:url">
         
         
           <meta content="2017-01-14T16:16:16+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="call、apply、bind用法 [js]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html">
+          <meta name="twitter:url" content="http://localhost:4000/js/2017/01/14/call-apply-bind.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -146,7 +146,7 @@
 
 <p>call 和 apply 函数就是为了改变函数的 <code class="highlighter-rouge">运行时上下文</code> 而存在，也就是改变函数体内部的 this 指向</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{}</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fruits</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{}</span>
 <span class="nx">fruits</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">color</span><span class="p">:</span> <span class="s1">'red'</span><span class="p">,</span>
     <span class="na">say</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
@@ -163,14 +163,14 @@
 
 <p>banana = {color: ‘blue’}; 此时想让bannana也拥有say方法</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">apple</span><span class="p">.</span><span class="nx">say</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">banana</span><span class="p">);</span> <span class="c1">// blue</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">apple</span><span class="p">.</span><span class="nx">say</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">banana</span><span class="p">);</span> <span class="c1">// blue</span>
 <span class="nx">apple</span><span class="p">.</span><span class="nx">say</span><span class="p">.</span><span class="nx">apple</span><span class="p">(</span><span class="nx">banana</span><span class="p">);</span>  <span class="c1">// blue</span>
 
 </code></pre>
 </div>
 <p>此时我们可以看出，call 、apply 可以动态改变this指向，当某个对象不存在某个方法，而另外一个对象有该方法，那么我们可以用apply 和 call去改变该方法的this指向来完成</p>
 
-<h2 id="call-apply-1">call 、apply的区别</h2>
+<h2 id="call-apply的区别">call 、apply的区别</h2>
 
 <p>call 和 apply 的方法作用是完全一致的，他们的区别在于传输参数的方式不同</p>
 
@@ -181,7 +181,7 @@
 
 <p>栗子：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arg1</span><span class="p">,</span> <span class="nx">arg2</span><span class="p">){</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arg1</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="nx">arg2</span><span class="p">)</span>
      
@@ -197,7 +197,7 @@
 
 <p>1.数组之间的追加</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a1'</span><span class="p">,</span> <span class="s1">'a2'</span><span class="p">,</span> <span class="p">{</span><span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="kc">true</span><span class="p">];</span>
 <span class="kd">var</span> <span class="nx">brr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
 
@@ -208,14 +208,14 @@
 
 <p>2.获取数组中的最大值</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">22</span><span class="p">]</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">22</span><span class="p">]</span>
 <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">Math</span><span class="p">,</span> <span class="nx">arr</span><span class="p">)</span>
 </code></pre>
 </div>
 
 <p>3.验证是否是数组</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">isArray</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">isArray</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
   <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">===</span> <span class="s1">'[object Array]'</span>
 <span class="p">}</span>
 </code></pre>
@@ -227,17 +227,17 @@
 
 <p>但是我们能通过 Array.prototype.slice.call 转换为真正的数组的带有 length 属性的对象，这样 domNodes 就可以应用 Array 下的所有方法了。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">var</span> <span class="nx">domNodes</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"*"</span><span class="p">));</span>
 
 </code></pre>
 </div>
 
-<h2 id="callapply">call、apply栗子</h2>
+<h2 id="callapply栗子">call、apply栗子</h2>
 
 <p>1.模拟console.log方法打印日志</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -247,7 +247,7 @@
 
 <p>以上例子只能打印一个参数的情况，如果需要打印多个参数？</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(){</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(){</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">console</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>  <span class="c1">// 1 2 3</span>
@@ -256,7 +256,7 @@
 
 <p>在输出值前面添加上 <code class="highlighter-rouge">(app)</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">()</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">[].</span><span class="nx">slice</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
   <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="s1">'(app)'</span><span class="p">);</span>
   
@@ -272,7 +272,7 @@
 
 <p>常见 通过缓存中间变量来改变上下文</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">bar</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="na">eventBind</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
@@ -289,7 +289,7 @@
 
 <p>使用bind()后:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">bar</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="na">eventBind</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
@@ -306,7 +306,7 @@
 
 <p>再来一个简单的栗子：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -325,7 +325,7 @@
 
 <p>注意：多次调用bind只有第一次有效</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span>
 <span class="p">}</span>
@@ -348,11 +348,11 @@
 
 <p>在Javascript中，多次 bind() 是无效的。更深层次的原因， bind() 的实现，相当于使用函数在内部包了一个 call / apply ，第二次 bind() 相当于再包住第一次 bind() ,故第二次以后的 bind 是无法生效的。</p>
 
-<h2 id="call-applybind">call 、apply、bind的区别</h2>
+<h2 id="call-applybind的区别">call 、apply、bind的区别</h2>
 
 <p>当你希望改变上下文环境之后并非立即执行，而是回调执行的时候，使用 bind() 方法。而 apply/call 则会立即执行函数。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">x</span><span class="p">:</span> <span class="mi">81</span><span class="p">,</span>
 <span class="p">};</span>
   
@@ -368,7 +368,7 @@
 </code></pre>
 </div>
 
-<h2 id="section">总结</h2>
+<h2 id="总结">总结</h2>
 
 <p><em>apply 、 call 、bind 三者都是用来改变函数的this对象的指向的；</em>
 <em>apply 、 call 、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；</em>
@@ -390,7 +390,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/js/2017/01/14/call-apply-bind.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -479,13 +479,41 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -502,7 +530,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -519,38 +547,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
-                    
-                        (Categories: <a href="/category/js">js</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -581,13 +578,51 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -627,7 +662,7 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_call、apply、bind用法 [js]";
+//        var disqus_identifier = "http://localhost:4000_call、apply、bind用法 [js]";
 //        var disqus_title = "call、apply、bind用法 [js]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */

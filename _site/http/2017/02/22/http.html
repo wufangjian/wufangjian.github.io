@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/http/2017/02/22/http.html" property="og:url">
+          <meta content="http://localhost:4000/http/2017/02/22/http.html" property="og:url">
         
         
           <meta content="2017-02-22T20:04:16+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="HTTP协议 1.0、1.1、2.0 [http]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/http/2017/02/22/http.html">
+          <meta name="twitter:url" content="http://localhost:4000/http/2017/02/22/http.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -140,7 +140,7 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="http">HTTP协议</h1>
+    <div class="post"><h1 id="http协议">HTTP协议</h1>
 
 <p>HTTP（超文本传输协议，HyperText Transfer Protocol)是互联网上应用最为广泛的一种网络协议。所有的WWW文件都必须遵守这个标准。设计HTTP最初的目的是为了提供一种发布和接收HTML页面的方法。是用于从WWW服务器传输超文本到本地浏览器的传输协议。默认使用80端口，HTTP客户端发起一个请求，建立一个到服务器指定端口（默认是80端口）的TCP连接。HTTP协议和TCP协议是不冲突的，HTTP定义在七层协议中的应用层，TCP解决的是传输层的逻辑。HTTP使用TCP而不是UDP的原因在于（打开）一个网页必须传送很多数据，而TCP协议提供传输控制，按顺序组织数据，和错误纠正。HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性。如TCP建立连接时三次握手有1.5个RTT（round-trip time）的延迟，为了避免每次请求的都经历握手带来的延迟，应用层会选择不同策略的http长链接方案。又如TCP在建立连接的初期有慢启动（slow start）的特性，所以连接的重用总是比新建连接性能要好。</p>
 
@@ -281,7 +281,7 @@ Content-Length: 12173
 </code></pre>
 </div>
 
-<h3 id="http-11">HTTP 1.1状态代码及其含义</h3>
+<h3 id="http-11状态代码及其含义">HTTP 1.1状态代码及其含义</h3>
 
 <p>状态代码有三位数字组成，第一个数字定义了响应的类别，且有五种可能取值：</p>
 
@@ -344,7 +344,7 @@ Content-Length: 12173
 </code></pre>
 </div>
 
-<h3 id="app">移动app上的困难</h3>
+<h3 id="移动app上的困难">移动app上的困难</h3>
 
 <p>一段时间内的连接复用对PC端浏览器的体验帮助很大，因为大部分的请求在集中在一小段时间以内。但对移动app来说，成效不大，app端的请求比较分散且时间跨度相对较大。所以移动端app一般会从应用层寻求其它解决方案，长连接方案或者伪长连接方案</p>
 
@@ -433,7 +433,7 @@ b) 使用密码加密一段握手消息，发送给浏览器。
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/http/2017/02/22/http.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/http/2017/02/22/http.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -550,19 +550,54 @@ b) 使用密码加密一段握手消息，发送给浏览器。
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/http/2017/01/14/http-cache.html">HTTP 缓存 [http]</a>
+                    <a href="http://localhost:4000/http/2017/01/14/http-cache.html">HTTP 缓存 [http]</a>
                     
                         (Categories: <a href="/category/http">http</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -630,7 +665,7 @@ b) 使用密码加密一段握手消息，发送给浏览器。
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_HTTP协议 1.0、1.1、2.0 [http]";
+//        var disqus_identifier = "http://localhost:4000_HTTP协议 1.0、1.1、2.0 [http]";
 //        var disqus_title = "HTTP协议 1.0、1.1、2.0 [http]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */

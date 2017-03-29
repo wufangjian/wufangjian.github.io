@@ -6,16 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="shortcut icon" href="/static/img/favicon.ico" />
-        <title>归并排序 [算法] - wufangjian</title>
+        <title>数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法] - wufangjian</title>
         <meta name="author" content="wufangjian" />
-        <meta name="description" content="归并排序 [算法]" />
-        <meta name="keywords" content="归并排序 [算法], wufangjian, 算法" />
+        <meta name="description" content="数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]" />
+        <meta name="keywords" content="数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法], wufangjian, 算法" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
 
         <meta content="1749788565247320" property="fb:app_id">
         <meta content="wufangjian" property="og:site_name">
         
-          <meta content="归并排序 [算法]" property="og:title">
+          <meta content="数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]" property="og:title">
         
         
           <meta content="article" property="og:type">
@@ -24,10 +24,10 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html" property="og:url">
+          <meta content="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/morethanhalfnumber.html" property="og:url">
         
         
-          <meta content="2017-03-06T00:00:16+08:00" property="article:published_time">
+          <meta content="2017-03-14T11:22:16+08:00" property="article:published_time">
           <meta content="http://localhost:4000/about/" property="article:author">
         
         
@@ -46,10 +46,10 @@
         <meta name="twitter:site" content="@wufangjian">
         <meta name="twitter:creator" content="@wufangjian">
         
-          <meta name="twitter:title" content="归并排序 [算法]">
+          <meta name="twitter:title" content="数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]">
         
         
-          <meta name="twitter:url" content="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html">
+          <meta name="twitter:url" content="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/morethanhalfnumber.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -131,8 +131,8 @@
             </div>
 
             <div class="col-sm-8 col-offset-1">
-                <h1>归并排序 [算法]</h1>
-<span class="time">06 Mar 2017</span>
+                <h1>数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]</h1>
+<span class="time">14 Mar 2017</span>
 
 <span class="categories">
     &raquo; <a href="/category/算法">算法</a>
@@ -141,70 +141,84 @@
 
 <div class="content">
     <div class="post"><blockquote>
-  <p>归并是所有排序算法中时间复杂度低的算法</p>
+  <p>数组中有一个数字的出现次数超过了数组长度的一半，请找出这个数字，例如: arr = [1,2,3,4,5,3,3,3,3],3出现了5次那么3就是我们要找的数字</p>
 </blockquote>
 
-<h1 id="归并排序">归并排序</h1>
+<h1 id="数组中出现次数超过一半的数字">数组中出现次数超过一半的数字</h1>
 
-<p><strong>时间复杂度：</strong> O(nlgn)</p>
+<p>最优解：时间复杂度O(n)</p>
 
-<p><strong>基本思想：</strong> 是一个分治策略，先进行划分，再进行合并</p>
+<h2 id="思路">思路:</h2>
 
-<p><strong>归并排序算法的核心：</strong> 先进行划分,再进行排序归并.归并两个有序的数组.即归并两个有序的数组A和B,然后就有了包含这两个新数组的数组C.</p>
+<ul>
+  <li>
+    <p>1.如果数组排好序，那么中间的数字就是我们需要的 时间复杂度： <code class="highlighter-rouge">O(nlog(n))</code></p>
+  </li>
+  <li>
+    <p>2.根据数组特点: a)保存当前出现次数最多的数字，和出现的次数  b)当前数字和前一个数字进行比较如果相等次数+1 不相等次数-1  c)如果为0，则选择当前数字，次数设置为1</p>
+  </li>
+</ul>
 
-<h3 id="归并">归并</h3>
+<h2 id="实现">实现：</h2>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">merge</span><span class="p">(</span><span class="nx">left</span><span class="p">,</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
-	<span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
-	<span class="kd">var</span> <span class="nx">Llen</span> <span class="o">=</span> <span class="nx">left</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-	<span class="kd">var</span> <span class="nx">Rlen</span> <span class="o">=</span> <span class="nx">right</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-	<span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-	<span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-	<span class="k">while</span> <span class="p">(</span><span class="nx">Llen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">Rlen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="p">(</span><span class="nx">left</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">right</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
-			<span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">right</span><span class="p">[</span><span class="nx">j</span><span class="o">++</span><span class="p">]);</span>
-			<span class="nx">Rlen</span><span class="o">--</span><span class="p">;</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">left</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">right</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span> <span class="p">{</span>
-			<span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">left</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">]);</span>
-			<span class="nx">Llen</span><span class="o">--</span><span class="p">;</span>
-		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-			<span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">left</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">]);</span>
-			<span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">right</span><span class="p">[</span><span class="nx">j</span><span class="o">++</span><span class="p">]);</span>
-			<span class="nx">Llen</span><span class="o">--</span><span class="p">;</span>
-			<span class="nx">Rlen</span><span class="o">--</span><span class="p">;</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="k">while</span> <span class="p">(</span><span class="nx">Llen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">left</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">]);</span>
-		<span class="nx">Llen</span><span class="o">--</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">while</span> <span class="p">(</span><span class="nx">Rlen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">ret</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">right</span><span class="p">[</span><span class="nx">j</span><span class="o">++</span><span class="p">]);</span>
-		<span class="nx">Rlen</span><span class="o">--</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">function</span> <span class="nx">MoreHalfNum</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">arr</span> <span class="o">||</span> <span class="o">!</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]){</span>
+        <span class="k">return</span> <span class="nx">arr</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">times</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">times</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span>
+            <span class="nx">times</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">ret</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">ret</span> <span class="o">===</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]){</span>
+            <span class="nx">times</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">times</span><span class="o">--</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">ret</span><span class="p">;</span>
 <span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="nx">MoreHalfNum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num</span><span class="p">);</span> <span class="c1">// 3</span>
 </code></pre>
 </div>
 
-<h3 id="排序">排序</h3>
+<h1 id="找出数组中第k大的数字">找出数组中第K大的数字</h1>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 排序</span>
-<span class="kd">function</span> <span class="nx">mergeSort</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">if</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">{</span>
-		<span class="k">return</span> <span class="nx">arr</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="kd">var</span> <span class="nx">mid</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
-	<span class="kd">var</span> <span class="nx">left</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">mid</span><span class="p">);</span>
-	<span class="kd">var</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">mid</span><span class="p">);</span>
-	<span class="c1">// 归并</span>
-	<span class="k">return</span> <span class="nx">merge</span><span class="p">(</span><span class="nx">mergeSort</span><span class="p">(</span><span class="nx">left</span><span class="p">),</span> <span class="nx">mergeSort</span><span class="p">(</span><span class="nx">right</span><span class="p">));</span>
+<p>最优解：O(n)</p>
+
+<h2 id="思路-1">思路：</h2>
+
+<p>受快速排序影响，找到某一个基准数字，比该基准数字大的放在数组右侧，小的放在数组左侧，大的放在数组右侧</p>
+
+<h2 id="实现-1">实现：</h2>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
+<span class="kd">function</span> <span class="nx">findKnum</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="nx">k</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">numK</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">k</span><span class="p">];</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">numK</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">k</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+            <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">numK</span><span class="p">;</span>
+            <span class="nx">numK</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+        
+        <span class="k">if</span><span class="p">(</span><span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">k</span> <span class="o">&amp;&amp;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">numK</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+            <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">numK</span><span class="p">;</span>
+            <span class="nx">numK</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="nx">numK</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mergeSort</span><span class="p">(</span><span class="nx">arr</span><span class="p">));</span> <span class="c1">// [1,2,3,4,5,6,7,8,9];</span>
+
 </code></pre>
 </div>
+
 </div>
     <div class="share-page">
     <span style="float: left;">分享到 &rarr;&nbsp;&nbsp;</span>
@@ -220,7 +234,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/morethanhalfnumber.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -274,16 +288,6 @@
     
         
             
-                
-                <li class="relatedPost">
-                    <a href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/morethanhalfnumber.html">数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]</a>
-                    
-                        (Categories: <a href="/category/算法">算法</a>)
-                    
-                </li>
-                
-                
-            
         
     
 
@@ -321,6 +325,16 @@
     
     
         
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html">归并排序 [算法]</a>
+                    
+                        (Categories: <a href="/category/算法">算法</a>)
+                    
+                </li>
+                
+                
             
         
     
@@ -478,10 +492,10 @@
 
 <div class="PageNavigation">
   
-    <a class="prev" href="/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html">&laquo; 二分查找 [算法]</a>
+    <a class="prev" href="/linux/2017/03/10/proc.html">&laquo; proc详解 [Linux]</a>
   
   
-    <a class="next" href="/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html">操作系统常用调度算法 [操作系统] &raquo;</a>
+    <a class="next" href="/%E7%AE%97%E6%B3%95/2017/03/14/arrayChildSumMax.html">求最大子数组和 [算法] &raquo;</a>
   
 </div>
 
@@ -492,8 +506,8 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "http://localhost:4000_归并排序 [算法]";
-//        var disqus_title = "归并排序 [算法]";
+//        var disqus_identifier = "http://localhost:4000_数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]";
+//        var disqus_title = "数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
 //        (function() {

@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/js/2017/01/15/arguments.html" property="og:url">
+          <meta content="http://localhost:4000/js/2017/01/15/arguments.html" property="og:url">
         
         
           <meta content="2017-01-15T16:16:16+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="ECMAScript arguments 对象 [js]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/15/arguments.html">
+          <meta name="twitter:url" content="http://localhost:4000/js/2017/01/15/arguments.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -140,7 +140,7 @@
 
 
 <div class="content">
-    <div class="post"><h1 id="arguments-">arguments 对象</h1>
+    <div class="post"><h1 id="arguments-对象">arguments 对象</h1>
 
 <blockquote>
   <p>说明： arguments对象，在函数方法内部使用</p>
@@ -148,7 +148,7 @@
 
 <p><strong>一、无需指定参数名称</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
     <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="s1">'a'</span><span class="p">){</span>
         <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
     <span class="p">}</span>
@@ -159,7 +159,7 @@
 
 <p><strong>二、检测参数个数</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Test</span><span class="p">(){</span>
     <span class="k">return</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -175,12 +175,12 @@
 
 <p>java:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Person</span><span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Person</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">){</span>
         <span class="k">return</span> <span class="n">a</span><span class="o">;</span>
     <span class="o">}</span>
     
-    <span class="kd">public</span> <span class="kt">void</span> <span class="n">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">){</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">method</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">){</span>
             <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -190,7 +190,7 @@
 
 <p>js : 中只需要判断传入参数个数就能实现方法的重载</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">method</span><span class="p">(){</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">method</span><span class="p">(){</span>
     <span class="k">if</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">){</span>
         <span class="k">return</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
     <span class="p">}</span>
@@ -223,7 +223,7 @@
   <li>借助数组特性进行转换 Array、slice、splice</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 重点在于: 返回Array类型的对象</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 重点在于: 返回Array类型的对象</span>
 
 <span class="nb">Array</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
 <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
@@ -237,7 +237,7 @@
   <li>遍历</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 遍历是程序开发中万能的方法，高级方法底层往往就是调用的for循环</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 遍历是程序开发中万能的方法，高级方法底层往往就是调用的for循环</span>
 
 <span class="kd">function</span> <span class="nx">A</span><span class="p">(){</span>
     <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">[];</span>
@@ -264,7 +264,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/15/arguments.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/js/2017/01/15/arguments.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -353,13 +353,41 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -376,31 +404,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
-                    
-                        (Categories: <a href="/category/js">js</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -424,7 +428,31 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -455,13 +483,20 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
+                    <a href="http://localhost:4000/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -501,7 +536,7 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_ECMAScript arguments 对象 [js]";
+//        var disqus_identifier = "http://localhost:4000_ECMAScript arguments 对象 [js]";
 //        var disqus_title = "ECMAScript arguments 对象 [js]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */

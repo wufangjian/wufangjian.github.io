@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html" property="og:url">
+          <meta content="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html" property="og:url">
         
         
           <meta content="2017-03-05T16:02:16+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="二分查找 [算法]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html">
+          <meta name="twitter:url" content="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -144,7 +144,7 @@
   <p>近期想把一些常见的算法，整理一下</p>
 </blockquote>
 
-<h2 id="section">二分查找</h2>
+<h2 id="二分查找">二分查找</h2>
 
 <p>概念：二分查找又称折半查找</p>
 
@@ -158,9 +158,9 @@
 
 <p><strong>过程：</strong> 首先，假设表中元素是按升序排列，将表中间位置记录的关键字与查找关键字比较，如果两者相等，则查找成功；否则利用中间位置记录将表分成前、后两个子表，如果中间位置记录的关键字大于查找关键字，则进一步查找前一子表，否则进一步查找后一子表。重复以上过程，直到找到满足条件的记录，使查找成功，或直到子表不存在为止，此时查找不成功。</p>
 
-<h2 id="section-1">1.递归实现</h2>
+<h2 id="1递归实现">1.递归实现</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">binarySearch</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">binarySearch</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
 	<span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">;</span>
 	<span class="kd">var</span> <span class="nx">binary</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">start</span> <span class="o">+</span> <span class="nx">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
 	<span class="k">if</span> <span class="p">(</span><span class="nx">num</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">binary</span><span class="p">])</span> <span class="p">{</span>
@@ -178,8 +178,8 @@
 </code></pre>
 </div>
 
-<h2 id="section-2">2.非递归实现</h2>
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 非递归</span>
+<h2 id="2非递归实现">2.非递归实现</h2>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 非递归</span>
 <span class="kd">function</span> <span class="nx">binarySearch</span><span class="p">(</span><span class="nx">arr</span><span class="p">,</span> <span class="nx">dist</span><span class="p">){</span>
 	<span class="kd">var</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 	<span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
@@ -216,7 +216,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -242,13 +242,37 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html">Consistent Hashing [算法]</a>
+                    <a href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/arrayChildSumMax.html">求最大子数组和 [算法]</a>
+                    
+                        (Categories: <a href="/category/算法">算法</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/morethanhalfnumber.html">数组中出现次数超过一半的数字 && 找出数组中第K大的数字 [算法]</a>
                     
                         (Categories: <a href="/category/算法">算法</a>)
                     
@@ -272,7 +296,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html">归并排序 [算法]</a>
+                    <a href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html">Consistent Hashing [算法]</a>
                     
                         (Categories: <a href="/category/算法">算法</a>)
                     
@@ -296,13 +320,44 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/03/sort.html">常用排序算法 [算法]</a>
+                    <a href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html">归并排序 [算法]</a>
                     
                         (Categories: <a href="/category/算法">算法</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/03/sort.html">常用排序算法 [算法]</a>
+                    
+                        (Categories: <a href="/category/算法">算法</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -433,7 +488,7 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_二分查找 [算法]";
+//        var disqus_identifier = "http://localhost:4000_二分查找 [算法]";
 //        var disqus_title = "二分查找 [算法]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */

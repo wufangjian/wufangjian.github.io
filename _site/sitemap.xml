@@ -3,11 +3,485 @@
   <channel>
     <title>wufangjian</title>
     <description>My Personal Stack Problems</description>
-    <link>https://wufangjian.github.io/</link>
-    <atom:link href="https://wufangjian.github.io/sitemap.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 12 Mar 2017 14:09:20 +0800</pubDate>
-    <lastBuildDate>Sun, 12 Mar 2017 14:09:20 +0800</lastBuildDate>
-    <generator>Jekyll v3.0.3</generator>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/sitemap.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 23 Mar 2017 14:16:53 +0800</pubDate>
+    <lastBuildDate>Thu, 23 Mar 2017 14:16:53 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>memoryCache和diskCache [性能]</title>
+        <description>
+</description>
+        <pubDate>Mon, 20 Mar 2017 18:16:16 +0800</pubDate>
+        <link>http://localhost:4000/%E6%80%A7%E8%83%BD/2017/03/20/memorycache-and-diskcache.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E6%80%A7%E8%83%BD/2017/03/20/memorycache-and-diskcache.html</guid>
+        
+        
+        <category>性能</category>
+        
+      </item>
+    
+      <item>
+        <title>原码反码补码 [操作系统]</title>
+        <description>&lt;h2 id=&quot;一-机器数和真值&quot;&gt;一. 机器数和真值&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;在学习原码, 反码和补码之前, 需要先了解机器数和真值的概念.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;1机器数&quot;&gt;1、机器数&lt;/h3&gt;
+
+&lt;p&gt;一个数在计算机中的二进制表示形式,  叫做这个数的&lt;code class=&quot;highlighter-rouge&quot;&gt;机器数&lt;/code&gt;。机器数是带符号的，在计算机用一个数的最高位存放符号, 正数为0, 负数为1.&lt;/p&gt;
+
+&lt;p&gt;例如：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;十进制        二进制(计算机字长为8位)
+ 3          00000011
+ -3         10000011
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;那么，这里的 00000011 和 10000011 就是机器数。&lt;/p&gt;
+
+&lt;h3 id=&quot;2真值&quot;&gt;2、真值&lt;/h3&gt;
+
+&lt;p&gt;因为第一位是符号位，所以机器数的形式值就不等于真正的数值。例如上面的有符号数 10000011，其最高位1代表负，其真正数值是 -3 而不是形式值131（10000011转换成十进制等于131）。所以，为区别起见，将带符号位的机器数对应的真正数值称为机器数的真值。&lt;/p&gt;
+
+&lt;p&gt;例：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;机器码         真值      十进制
+
+0000 0001  +000 0001    +1
+1000 0001  –000 0001    –1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;二-原码反码补码-的基础概念和计算方法&quot;&gt;二. 原码/反码/补码 的基础概念和计算方法&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-原码&quot;&gt;1. 原码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;原码就是符号位加上真值的绝对值, 即用第一位表示符号, 其余位表示值. 比如如果是8位&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;二进制:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[+1]原= 0000 0001
+
+[-1]原= 1000 0001
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;第一位是符号位. 因为第一位是符号位, 所以&lt;code class=&quot;highlighter-rouge&quot;&gt;8位二进制数的取值范围&lt;/code&gt;就是: [1111 1111 , 0111 1111]&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;总结：原码是人脑最容易理解和计算的表示方式.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-反码&quot;&gt;2. 反码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;正数的反码是其本身,负数的反码是在其原码的基础上, 符号位不变，其余各个位取反.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[+1] = [00000001]原= [00000001]反
+
+[-1] = [10000001]原= [11111110]反
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;可见如果一个反码表示的是负数, 人脑无法直观的看出来它的数值. 通常要将其转换成原码再计算.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;3-补码&quot;&gt;3. 补码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;正数的补码就是其本身,负数的补码是在其原码的基础上, 符号位不变, 其余各位取反, 最后+1. (即在反码的基础上+1)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[+1] = [00000001]原= [00000001]反= [00000001]补
+
+[-1] = [10000001]原= [11111110]反= [11111111]补
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;对于负数, 补码表示方式也是人脑无法直观看出其数值的. 通常也需要转换成原码在计算其数值.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;三-为何要使用原码-反码和补码&quot;&gt;三. 为何要使用原码, 反码和补码&lt;/h2&gt;
+
+&lt;p&gt;首先, 因为人脑可以知道第一位是符号位, 在计算的时候我们会根据符号位, 选择对真值区域的加减. (真值的概念在本文最开头). 但是对于计算机, 加减乘数已经是最基础的运算, 要设计的尽量简单. 计算机辨别”符号位”显然会让计算机的基础电路设计变得十分复杂! 于是人们想出了将符号位也参与运算的方法. 我们知道, 根据运算法则减去一个正数等于加上一个负数, 即: 1-1 = 1 + (-1) = 0 , 所以&lt;code class=&quot;highlighter-rouge&quot;&gt;机器可以只有加法而没有减法&lt;/code&gt;, 这样计算机运算的设计就更简单了.&lt;/p&gt;
+
+&lt;p&gt;于是人们开始探索 将符号位参与运算, 并且只保留加法的方法. 首先来看原码:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;计算十进制的表达式: 1-1=0
+
+1 - 1 = 1 + (-1) = [00000001]原+ [10000001]原= [10000010]原= -2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果用原码表示, 让符号位也参与计算, 显然对于减法来说, 结果是不正确的.这也就是为何计算机内部不使用原码表示一个数.&lt;/p&gt;
+
+&lt;p&gt;为了解决原码做减法的问题, 出现了反码:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;计算十进制的表达式: 1-1=0
+
+1 - 1 = 1 + (-1) = [0000 0001]原+ [1000 0001]原= [0000 0001]反+ [1111 1110]反= [1111 1111]反= [1000 0000]原= -0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;发现用反码计算减法, 结果的真值部分是正确的. 而唯一的问题其实就出现在&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;0&quot;&lt;/code&gt;这个特殊的数值上. 虽然人们理解上+0和-0是一样的, 但是0带符号是没有任何意义的. 而且会有[0000 0000]原和[1000 0000]原两个编码表示0.&lt;/p&gt;
+
+&lt;p&gt;于是补码的出现, 解决了0的符号以及两个编码的问题:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1-1 = 1 + (-1) = [0000 0001]原+ [1000 0001]原= [0000 0001]补+ [1111 1111]补= [0000 0000]补=[0000 0000]原
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这样0用[0000 0000]表示, 而以前出现问题的-0则不存在了.而且可以用[1000 0000]表示-128:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(-1) + (-127) = [1000 0001]原+ [1111 1111]原= [1111 1111]补+ [1000 0001]补= [1000 0000]补
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;-1-127的结果应该是-128, 在用补码运算的结果中, [1000 0000]补就是-128. 但是注意因为实际上是使用以前的-0的补码来表示-128, 所以-128并没有原码和反码表示.(对-128的补码表示[1000 0000]补算出来的原码是[0000 0000]原, 这是不正确的)&lt;/p&gt;
+
+&lt;p&gt;使用补码, 不仅仅修复了0的符号以及存在两个编码的问题, 而且还能够多表示一个最低数. 这就是为什么8位二进制, 使用原码或反码表示的范围为[-127, +127], 而使用补码表示的范围为[-128, 127].&lt;/p&gt;
+
+&lt;p&gt;因为机器使用补码, 所以对于编程中常用到的32位int类型, 可以表示范围是: [-231, 231-1] 因为第一位表示的是符号位.而使用补码表示时又可以多保存一个最小值.&lt;/p&gt;
+
+&lt;h2 id=&quot;四-原码-反码-补码-再深入&quot;&gt;四 原码, 反码, 补码 再深入&lt;/h2&gt;
+
+&lt;p&gt;计算机巧妙地把符号位参与运算, 并且将减法变成了加法, 背后蕴含了怎样的数学原理呢?&lt;/p&gt;
+
+&lt;p&gt;将钟表想象成是一个1位的12进制数. 如果当前时间是6点, 我希望将时间设置成4点, 需要怎么做呢?我们可以:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. 往回拨2个小时: 6 - 2 = 4
+
+2. 往前拨10个小时: (6 + 10) mod 12 = 4
+
+3. 往前拨10+12=22个小时: (6+22) mod 12 =4
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;所以钟表往回拨(减法)的结果可以用往前拨(加法)替代!&lt;/p&gt;
+
+&lt;p&gt;现在的焦点就落在了如何用一个正数, 来替代一个负数. 上面的例子我们能感觉出来一些端倪, 发现一些规律. 但是数学是严谨的. 不能靠感觉.&lt;/p&gt;
+
+&lt;p&gt;首先介绍一个数学中相关的概念: &lt;code class=&quot;highlighter-rouge&quot;&gt;同余&lt;/code&gt; 两个整数a，b，若它们除以整数m所得的余数相等，则称a，b对于模m同余. 记作 a ≡ b (mod m). 读作 &lt;code class=&quot;highlighter-rouge&quot;&gt;a 与 b 关于模 m 同余&lt;/code&gt;。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;4 mod 12 = 4
+
+16 mod 12 = 4
+
+28 mod 12 = 4
+
+所以4, 16, 28关于模 12 同余.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;负数取模&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;x mod y = x - y L x / y J [ x mod y等于 x 减去 y 乘上 x与y的商的下界.]&lt;/p&gt;
+
+&lt;p&gt;以 -3 mod 2 举例:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;= -3 - 2xL -3/2 J
+
+= -3 - 2xL-1.5J
+
+= -3 - 2x(-2)
+
+= -3 + 4 = 1
+
+----------
+
+(-2) mod 12 = 12-2=10
+
+(-4) mod 12 = 12-4 = 8
+
+(-5) mod 12 = 12 - 5 = 7
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;开始证明&lt;/p&gt;
+
+&lt;p&gt;再回到时钟的问题上:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;回拨2小时 = 前拨10小时
+
+回拨4小时 = 前拨8小时
+
+回拨5小时= 前拨7小时
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;结合上面学到的同余的概念.实际上:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(-2) mod 12 = 10
+
+10 mod 12 = 10
+
+-2与10是同余的.
+
+-------------------
+
+(-4) mod 12 = 8
+
+8 mod 12 = 8
+
+-4与8是同余的.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;距离成功越来越近了. 要实现用正数替代负数, 只需要运用同余数的两个定理:&lt;/p&gt;
+
+&lt;p&gt;反身性:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;a ≡ a (mod m)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;线性运算定理:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;如果
+
+a ≡ b (mod m)，c ≡ d (mod m)
+
+那么
+
+(1)a ± c ≡ b ± d (mod m)
+
+(2)a * c ≡ b * d (mod m)
+
+所以:
+
+7 ≡ 7 (mod 12)
+
+(-2) ≡ 10 (mod 12)
+
+7 - 2 ≡ 7 + 10 (mod 12)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;现在我们为一个负数, 找到了它的正数同余数. 但是并不是7-2 = 7+10, 而是 7 -2 ≡ 7 + 10 (mod 12) , 即计算结果的余数相等.&lt;/p&gt;
+
+&lt;p&gt;接下来回到二进制的问题上, 看一下: 2-1=1的问题.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2-1=2+(-1) = [0000 0010]原+ [1000 0001]原= [0000 0010]反+ [1111 1110]反
+
+发现有如下规律:
+
+(-1) mod 127 = 126
+
+126 mod 127 = 126
+
+即:
+
+(-1) ≡ 126 (mod 127)
+
+2-1 ≡ 2+126 (mod 127)
+
+2-1 与 2+126的余数结果是相同的! 而这个余数, 正式我们的期望的计算结果: 2-1=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;所以说一个数的反码, 实际上是这个数对于一个膜的同余数. 而这个膜并不是我们的二进制, 而是所能表示的最大值! 这就和钟表一样, 转了一圈后总能找到在可表示范围内的一个正确的数值!&lt;/p&gt;
+
+&lt;p&gt;而2+126很显然相当于钟表转过了一轮, 而因为符号位是参与计算的, 正好和溢出的最高位形成正确的运算结果.&lt;/p&gt;
+
+&lt;p&gt;既然反码可以将减法变成加法, 那么现在计算机使用的补码呢? 为什么在反码的基础上加1, 还能得到正确的结果?&lt;/p&gt;
+
+&lt;p&gt;2-1=2+(-1) = [0000 0010]原+ [1000 0001]原= [0000 0010]补+ [1111 1111]补&lt;/p&gt;
+
+&lt;p&gt;如果把[1111 1111]当成原码, 去除符号位, 则:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[0111 1111]原= 127
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其实, 在反码的基础上+1, 只是相当于增加了膜的值:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(-1) mod 128 = 127
+
+127 mod 128 = 127
+
+2-1 ≡ 2+127 (mod 128)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;此时, 表盘相当于每128个刻度转一轮. 所以用补码表示的运算结果最小值和最大值应该是[-128, 128].&lt;/p&gt;
+
+&lt;p&gt;但是由于0的特殊情况, 没有办法表示128, 所以补码的取值范围是[-128, 127]&lt;/p&gt;
+</description>
+        <pubDate>Mon, 20 Mar 2017 18:16:16 +0800</pubDate>
+        <link>http://localhost:4000/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/20/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/20/%E5%8E%9F%E7%A0%81%E5%8F%8D%E7%A0%81%E8%A1%A5%E7%A0%81.html</guid>
+        
+        
+        <category>操作系统</category>
+        
+      </item>
+    
+      <item>
+        <title>求最大子数组和 [算法]</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;输入一个整数数组，有正数也有负数，数组中连续一个或多个组成一个子数组，求和最大的子数组&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;例子：&lt;/p&gt;
+
+&lt;p&gt;数组：[1,2,3,-10,-5,90,-25,23,1,-1,23]&lt;/p&gt;
+
+&lt;p&gt;最大子数组：[90,-25,23,1,-1,23] 和为：111&lt;/p&gt;
+
+&lt;h1 id=&quot;求最大子数组和&quot;&gt;求最大子数组和&lt;/h1&gt;
+
+&lt;p&gt;最优解时间复杂度：&lt;code class=&quot;highlighter-rouge&quot;&gt;O(n)&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1思路&quot;&gt;1.思路&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;1）遍历数组，对数组进行累加，同时设置[sum：当前累加值    max：当前最大累加值]&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;2）判断当前累加值，是否小于0。如果小于0，舍弃将累加sum设置为0&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;3）如果累加值大于0，判断是否大于最大累加值&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;4）返回最大累加值max&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2实现&quot;&gt;2.实现&lt;/h2&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;  &lt;span class=&quot;nx&quot;&gt;getChildMaxSum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;90&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;23&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getChildMaxSum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 14 Mar 2017 16:26:16 +0800</pubDate>
+        <link>http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/arrayChildSumMax.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/arrayChildSumMax.html</guid>
+        
+        
+        <category>算法</category>
+        
+      </item>
+    
+      <item>
+        <title>数组中出现次数超过一半的数字 &amp;&amp; 找出数组中第K大的数字 [算法]</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;数组中有一个数字的出现次数超过了数组长度的一半，请找出这个数字，例如: arr = [1,2,3,4,5,3,3,3,3],3出现了5次那么3就是我们要找的数字&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;数组中出现次数超过一半的数字&quot;&gt;数组中出现次数超过一半的数字&lt;/h1&gt;
+
+&lt;p&gt;最优解：时间复杂度O(n)&lt;/p&gt;
+
+&lt;h2 id=&quot;思路&quot;&gt;思路:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;1.如果数组排好序，那么中间的数字就是我们需要的 时间复杂度： &lt;code class=&quot;highlighter-rouge&quot;&gt;O(nlog(n))&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;2.根据数组特点: a)保存当前出现次数最多的数字，和出现的次数  b)当前数字和前一个数字进行比较如果相等次数+1 不相等次数-1  c)如果为0，则选择当前数字，次数设置为1&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;实现&quot;&gt;实现：&lt;/h2&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MoreHalfNum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]){&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;times&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MoreHalfNum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;找出数组中第k大的数字&quot;&gt;找出数组中第K大的数字&lt;/h1&gt;
+
+&lt;p&gt;最优解：O(n)&lt;/p&gt;
+
+&lt;h2 id=&quot;思路-1&quot;&gt;思路：&lt;/h2&gt;
+
+&lt;p&gt;受快速排序影响，找到某一个基准数字，比该基准数字大的放在数组右侧，小的放在数组左侧，大的放在数组右侧&lt;/p&gt;
+
+&lt;h2 id=&quot;实现-1&quot;&gt;实现：&lt;/h2&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;findKnum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;numK&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 14 Mar 2017 11:22:16 +0800</pubDate>
+        <link>http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/morethanhalfnumber.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/14/morethanhalfnumber.html</guid>
+        
+        
+        <category>算法</category>
+        
+      </item>
     
       <item>
         <title>proc详解 [Linux]</title>
@@ -15,7 +489,7 @@
   &lt;p&gt;通常在Linux系统下面我们需要运行：ll /proc/1111&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;proc&quot;&gt;proc文件系统&lt;/h2&gt;
+&lt;h2 id=&quot;proc文件系统&quot;&gt;proc文件系统&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;概念：&lt;/strong&gt; Linux系统上的/proc目录是一种文件系统&lt;/p&gt;
 
@@ -33,7 +507,7 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;一、进程目录中的常见文件介绍&lt;/h2&gt;
+&lt;h2 id=&quot;一进程目录中的常见文件介绍&quot;&gt;一、进程目录中的常见文件介绍&lt;/h2&gt;
 
 &lt;p&gt;/proc目录中包含许多以数字命名的子目录，这些数字表示系统当前正在运行进程的进程号，里面包含对应进程相关的多个信息文件。&lt;/p&gt;
 
@@ -100,7 +574,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;proc-1&quot;&gt;二、/proc目录下常见的文件介绍&lt;/h2&gt;
+&lt;h2 id=&quot;二proc目录下常见的文件介绍&quot;&gt;二、/proc目录下常见的文件介绍&lt;/h2&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2.1、/proc/apm
 
@@ -170,7 +644,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;procsys&quot;&gt;三、/proc/sys目录详解&lt;/h2&gt;
+&lt;h2 id=&quot;三procsys目录详解&quot;&gt;三、/proc/sys目录详解&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;3.1、/proc/sys/debug 子目录&lt;/li&gt;
@@ -190,8 +664,8 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 </description>
         <pubDate>Fri, 10 Mar 2017 15:21:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/linux/2017/03/10/proc.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/linux/2017/03/10/proc.html</guid>
+        <link>http://localhost:4000/linux/2017/03/10/proc.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/2017/03/10/proc.html</guid>
         
         
         <category>Linux</category>
@@ -203,8 +677,8 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
         <description>
 </description>
         <pubDate>Wed, 08 Mar 2017 11:32:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html</guid>
+        <link>http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/08/Consistent-Hashing.html</guid>
         
         
         <category>算法</category>
@@ -217,13 +691,13 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
   &lt;p&gt;《操作系统》是所有计算机专业的必修课程，也是编程的基础，不管是前端还是后端都应该去了解&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;进程调度算法&lt;/h2&gt;
+&lt;h2 id=&quot;进程调度算法&quot;&gt;进程调度算法&lt;/h2&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;调度实质是一种资源分配，因而调度算法是指：根据系统分配策略所规定的资源分配算法。不同的系统和系统目标，通常采用不同的调度算法&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&quot;fcfs-first-come-first-service&quot;&gt;1.FCFS [first come first service]&lt;/h3&gt;
+&lt;h3 id=&quot;1fcfs-first-come-first-service&quot;&gt;1.FCFS [first come first service]&lt;/h3&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;FCFS的意思是&lt;code class=&quot;highlighter-rouge&quot;&gt;先来先服务&lt;/code&gt;(First Come First Service)。顾名思义就是按照进程被添加到等待&lt;code class=&quot;highlighter-rouge&quot;&gt;队列&lt;/code&gt;的先后顺序来进行调用的。在进程调度中，FCFS调度算法每次从就绪队列中选择最先进入该队列的进程，将处理机分配给它，使之投入运行，直到完成或因某种原因而阻塞时才释放处理机。&lt;/p&gt;
@@ -265,7 +739,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;spf-short-process-first-or--sjfshort-job-first&quot;&gt;2.SPF [Short Process First] or  SJF[Short Job First]&lt;/h3&gt;
+&lt;h3 id=&quot;2spf-short-process-first-or--sjfshort-job-first&quot;&gt;2.SPF [Short Process First] or  SJF[Short Job First]&lt;/h3&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;SPF(SJF)的意思是&lt;code class=&quot;highlighter-rouge&quot;&gt;短进程(作业)优先&lt;/code&gt;。进程要运行多长时间都可以提前知道。这个值是程序提前写在进程里面的了，系统只要去读取这个值就可以了&lt;/p&gt;
@@ -302,7 +776,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;3.优先级调度算法&lt;/h3&gt;
+&lt;h3 id=&quot;3优先级调度算法&quot;&gt;3.优先级调度算法&lt;/h3&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;优先级调度算法又称&lt;code class=&quot;highlighter-rouge&quot;&gt;优先权调度算法&lt;/code&gt;，该算法既可以用于作业调度，也可以用于进程调度，该算法中的优先级用于描述作业运行的紧迫程度。&lt;/p&gt;
@@ -336,7 +810,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;4.高响应比优先调度算法&lt;/h3&gt;
+&lt;h3 id=&quot;4高响应比优先调度算法&quot;&gt;4.高响应比优先调度算法&lt;/h3&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;高响应比优先调度算法主要用于进程(作业)调度，该算法是对FCFS调度算法和SPF(SJF)调度算法的一种综合平衡，同时考虑每个作业的等待时间和估计的运行时间。在每次进行作业调度时，先计算后备作业队列中每个作业的响应比，从中选出响应比最高的作业投入运行。&lt;/p&gt;
@@ -362,7 +836,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-3&quot;&gt;5.时间片轮转调度算法&lt;/h3&gt;
+&lt;h3 id=&quot;5时间片轮转调度算法&quot;&gt;5.时间片轮转调度算法&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -378,7 +852,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-4&quot;&gt;6.多级反馈队列调度算法（集合了前几种算法的优点）&lt;/h3&gt;
+&lt;h3 id=&quot;6多级反馈队列调度算法集合了前几种算法的优点&quot;&gt;6.多级反馈队列调度算法（集合了前几种算法的优点）&lt;/h3&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;多级反馈队列调度算法是&lt;code class=&quot;highlighter-rouge&quot;&gt;时间片轮转调度算法&lt;/code&gt;和 &lt;code class=&quot;highlighter-rouge&quot;&gt;优先级调度算法&lt;/code&gt; 的综合和发展。通过动态调整进程优先级和时间片大小，多级反馈队列调度算法可以兼顾多方面的系统目标。&lt;/p&gt;
@@ -456,8 +930,8 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 </description>
         <pubDate>Tue, 07 Mar 2017 16:14:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html</guid>
+        <link>http://localhost:4000/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/2017/03/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95.html</guid>
         
         
         <category>操作系统</category>
@@ -470,7 +944,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
   &lt;p&gt;归并是所有排序算法中时间复杂度低的算法&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;section&quot;&gt;归并排序&lt;/h1&gt;
+&lt;h1 id=&quot;归并排序&quot;&gt;归并排序&lt;/h1&gt;
 
 &lt;p&gt;&lt;strong&gt;时间复杂度：&lt;/strong&gt; O(nlgn)&lt;/p&gt;
 
@@ -478,9 +952,9 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;p&gt;&lt;strong&gt;归并排序算法的核心：&lt;/strong&gt; 先进行划分,再进行排序归并.归并两个有序的数组.即归并两个有序的数组A和B,然后就有了包含这两个新数组的数组C.&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;归并&lt;/h3&gt;
+&lt;h3 id=&quot;归并&quot;&gt;归并&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Llen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rlen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -514,9 +988,9 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;排序&lt;/h3&gt;
+&lt;h3 id=&quot;排序&quot;&gt;排序&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 排序&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 排序&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mergeSort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -533,8 +1007,8 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 &lt;/div&gt;
 </description>
         <pubDate>Mon, 06 Mar 2017 00:00:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html</guid>
+        <link>http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/06/mergesort.html</guid>
         
         
         <category>算法</category>
@@ -547,7 +1021,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
   &lt;p&gt;近期想把一些常见的算法，整理一下&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;二分查找&lt;/h2&gt;
+&lt;h2 id=&quot;二分查找&quot;&gt;二分查找&lt;/h2&gt;
 
 &lt;p&gt;概念：二分查找又称折半查找&lt;/p&gt;
 
@@ -561,9 +1035,9 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;p&gt;&lt;strong&gt;过程：&lt;/strong&gt; 首先，假设表中元素是按升序排列，将表中间位置记录的关键字与查找关键字比较，如果两者相等，则查找成功；否则利用中间位置记录将表分成前、后两个子表，如果中间位置记录的关键字大于查找关键字，则进一步查找前一子表，否则进一步查找后一子表。重复以上过程，直到找到满足条件的记录，使查找成功，或直到子表不存在为止，此时查找不成功。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;1.递归实现&lt;/h2&gt;
+&lt;h2 id=&quot;1递归实现&quot;&gt;1.递归实现&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;binarySearch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;binarySearch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;binary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -581,8 +1055,8 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;2.非递归实现&lt;/h2&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 非递归&lt;/span&gt;
+&lt;h2 id=&quot;2非递归实现&quot;&gt;2.非递归实现&lt;/h2&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 非递归&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;binarySearch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -606,8 +1080,8 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 &lt;/div&gt;
 </description>
         <pubDate>Sun, 05 Mar 2017 16:02:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html</guid>
+        <link>http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/05/binarysearch.html</guid>
         
         
         <category>算法</category>
@@ -620,14 +1094,14 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
   &lt;p&gt;了解常用排序算法的时间复杂度，空间复杂度对于学好算法至关重要&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;常用排序算法&lt;/h2&gt;
+&lt;h2 id=&quot;常用排序算法&quot;&gt;常用排序算法&lt;/h2&gt;
 
 &lt;p&gt;&lt;img src=&quot;/static/img/2017/sort.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 03 Mar 2017 16:02:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/03/sort.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/%E7%AE%97%E6%B3%95/2017/03/03/sort.html</guid>
+        <link>http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/03/sort.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E7%AE%97%E6%B3%95/2017/03/03/sort.html</guid>
         
         
         <category>算法</category>
@@ -636,17 +1110,17 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
     
       <item>
         <title>模块机制 [node]</title>
-        <description>&lt;h2 id=&quot;commonjs&quot;&gt;CommonJS规范&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;commonjs规范&quot;&gt;CommonJS规范&lt;/h2&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;说明&lt;/h3&gt;
+&lt;h3 id=&quot;说明&quot;&gt;说明&lt;/h3&gt;
 
-&lt;h3 id=&quot;commonjs-1&quot;&gt;CommonJS出发点&lt;/h3&gt;
+&lt;h3 id=&quot;commonjs出发点&quot;&gt;CommonJS出发点&lt;/h3&gt;
 
-&lt;h3 id=&quot;commonjs-2&quot;&gt;CommonJS模块规范&lt;/h3&gt;
+&lt;h3 id=&quot;commonjs模块规范&quot;&gt;CommonJS模块规范&lt;/h3&gt;
 
 &lt;p&gt;1.模块引用&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;math&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;math&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;math&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'math'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -654,7 +1128,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 
 &lt;p&gt;2.模块定义&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
 	&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 		&lt;span class=&quot;nx&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -673,8 +1147,8 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
 &lt;p&gt;3.模块标识&lt;/p&gt;
 </description>
         <pubDate>Wed, 01 Mar 2017 16:02:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/node/2017/03/01/module.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/node/2017/03/01/module.html</guid>
+        <link>http://localhost:4000/node/2017/03/01/module.html</link>
+        <guid isPermaLink="true">http://localhost:4000/node/2017/03/01/module.html</guid>
         
         
         <category>node</category>
@@ -683,7 +1157,7 @@ dr-x------   2 root root 0 Mar 10 17:29 fdinfo
     
       <item>
         <title>HTTP协议 1.0、1.1、2.0 [http]</title>
-        <description>&lt;h1 id=&quot;http&quot;&gt;HTTP协议&lt;/h1&gt;
+        <description>&lt;h1 id=&quot;http协议&quot;&gt;HTTP协议&lt;/h1&gt;
 
 &lt;p&gt;HTTP（超文本传输协议，HyperText Transfer Protocol)是互联网上应用最为广泛的一种网络协议。所有的WWW文件都必须遵守这个标准。设计HTTP最初的目的是为了提供一种发布和接收HTML页面的方法。是用于从WWW服务器传输超文本到本地浏览器的传输协议。默认使用80端口，HTTP客户端发起一个请求，建立一个到服务器指定端口（默认是80端口）的TCP连接。HTTP协议和TCP协议是不冲突的，HTTP定义在七层协议中的应用层，TCP解决的是传输层的逻辑。HTTP使用TCP而不是UDP的原因在于（打开）一个网页必须传送很多数据，而TCP协议提供传输控制，按顺序组织数据，和错误纠正。HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性。如TCP建立连接时三次握手有1.5个RTT（round-trip time）的延迟，为了避免每次请求的都经历握手带来的延迟，应用层会选择不同策略的http长链接方案。又如TCP在建立连接的初期有慢启动（slow start）的特性，所以连接的重用总是比新建连接性能要好。&lt;/p&gt;
 
@@ -824,7 +1298,7 @@ Content-Length: 12173
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h3 id=&quot;http-11&quot;&gt;HTTP 1.1状态代码及其含义&lt;/h3&gt;
+&lt;h3 id=&quot;http-11状态代码及其含义&quot;&gt;HTTP 1.1状态代码及其含义&lt;/h3&gt;
 
 &lt;p&gt;状态代码有三位数字组成，第一个数字定义了响应的类别，且有五种可能取值：&lt;/p&gt;
 
@@ -887,7 +1361,7 @@ Content-Length: 12173
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h3 id=&quot;app&quot;&gt;移动app上的困难&lt;/h3&gt;
+&lt;h3 id=&quot;移动app上的困难&quot;&gt;移动app上的困难&lt;/h3&gt;
 
 &lt;p&gt;一段时间内的连接复用对PC端浏览器的体验帮助很大，因为大部分的请求在集中在一小段时间以内。但对移动app来说，成效不大，app端的请求比较分散且时间跨度相对较大。所以移动端app一般会从应用层寻求其它解决方案，长连接方案或者伪长连接方案&lt;/p&gt;
 
@@ -963,8 +1437,8 @@ b) 使用密码加密一段握手消息，发送给浏览器。
 &lt;p&gt;TLS握手过程中如果有任何错误，都会使加密连接断开，从而阻止了隐私信息的传输。正是由于HTTPS非常的安全，攻击者无法从中找到下手的地方，于是更多的是采用了假证书的手法来欺骗客户端，从而获取明文的信息。默认HTTP的端口号为80，HTTPS的端口号为443。&lt;/p&gt;
 </description>
         <pubDate>Wed, 22 Feb 2017 20:04:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/http/2017/02/22/http.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/http/2017/02/22/http.html</guid>
+        <link>http://localhost:4000/http/2017/02/22/http.html</link>
+        <guid isPermaLink="true">http://localhost:4000/http/2017/02/22/http.html</guid>
         
         
         <category>http</category>
@@ -979,11 +1453,11 @@ b) 使用密码加密一段握手消息，发送给浏览器。
 
 &lt;p&gt;在css中，&lt;em&gt;&amp;lt;html&amp;gt;&lt;/em&gt; 和 &lt;em&gt;&amp;lt;body&amp;gt;&lt;/em&gt; 的区别往往被忽略，全局样式或者定义在html上，或者 body 上，实际上两者是有区别的&lt;/p&gt;
 
-&lt;h2 id=&quot;htmlbody&quot;&gt;html和body的关联&lt;/h2&gt;
+&lt;h2 id=&quot;html和body的关联&quot;&gt;html和body的关联&lt;/h2&gt;
 
 &lt;hr /&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
 	&lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
@@ -1009,7 +1483,7 @@ b) 使用密码加密一段握手消息，发送给浏览器。
 
 &lt;hr /&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;:root {
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;:root {
 
 }
 html {
@@ -1019,13 +1493,13 @@ html {
 &lt;/div&gt;
 &lt;p&gt;提示: &lt;code class=&quot;highlighter-rouge&quot;&gt;:root&lt;/code&gt; 选择符的优先级大于html选择符&lt;/p&gt;
 
-&lt;h2 id=&quot;html&quot;&gt;哪些全局样式应用到 html&lt;/h2&gt;
+&lt;h2 id=&quot;哪些全局样式应用到-html&quot;&gt;哪些全局样式应用到 html&lt;/h2&gt;
 
 &lt;hr /&gt;
 
 &lt;p&gt;&lt;strong&gt;1.rem&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;html {font-size: 62.5%}
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;html {font-size: 62.5%}
 body {font-size: 1.4rem}    /*14px*/
 h1 {font-size: 2.4rem}      /*24px*/
 &lt;/code&gt;&lt;/pre&gt;
@@ -1044,11 +1518,11 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;如果body及其子元素的高度需要设置为窗口高度，那么html元素上也需要添加&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;html {height: 100%}
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;html {height: 100%}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;body-&quot;&gt;应用到 body 上的全局样式&lt;/h2&gt;
+&lt;h2 id=&quot;应用到-body-上的全局样式&quot;&gt;应用到 body 上的全局样式&lt;/h2&gt;
 
 &lt;hr /&gt;
 
@@ -1081,7 +1555,7 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;总结:&lt;/h2&gt;
+&lt;h2 id=&quot;总结&quot;&gt;总结:&lt;/h2&gt;
 
 &lt;hr /&gt;
 
@@ -1089,8 +1563,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 </description>
         <pubDate>Tue, 14 Feb 2017 22:46:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/html/2017/02/14/html-body.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/html/2017/02/14/html-body.html</guid>
+        <link>http://localhost:4000/html/2017/02/14/html-body.html</link>
+        <guid isPermaLink="true">http://localhost:4000/html/2017/02/14/html-body.html</guid>
         
         
         <category>html</category>
@@ -1103,13 +1577,13 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;p&gt;项目开发过程中我们经常会用SSH工具进行远程连接，windows下面常用的是secureCRT，Mac下secureCRT也可以用，但是付费版本，稳定性不太好。iTerm2 是 MAC 下最好的终端工具，下面将介绍iterm2在Max下面的安装与使用&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;iterm2-&quot;&gt;一、iTerm2 安装&lt;/h2&gt;
+&lt;h2 id=&quot;一iterm2-安装&quot;&gt;一、iTerm2 安装&lt;/h2&gt;
 
 &lt;p&gt;直接访问 &lt;a href=&quot;http://www.iterm2.com/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;官网&lt;/code&gt;&lt;/a&gt; 下载安装&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;iterm2rz-sz-&quot;&gt;二、配置iTerm2支持rz sz 命令&lt;/h2&gt;
+&lt;h2 id=&quot;二配置iterm2支持rz-sz-命令&quot;&gt;二、配置iTerm2支持rz sz 命令&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -1120,30 +1594,30 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;maclrzsz&quot;&gt;1、在mac下安装lrzsz&lt;/h3&gt;
+&lt;h3 id=&quot;1在mac下安装lrzsz&quot;&gt;1、在mac下安装lrzsz&lt;/h3&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;brew&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;lrzsz&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;brew&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;lrzsz&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h3 id=&quot;zmoden&quot;&gt;2、下载zmoden脚本&lt;/h3&gt;
+&lt;h3 id=&quot;2下载zmoden脚本&quot;&gt;2、下载zmoden脚本&lt;/h3&gt;
 
 &lt;p&gt;github上 &lt;a href=&quot;https://github.com/mmastrac/iterm2-zmodem&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;下载&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;iterm2-recv-zmodem.sh 与 iterm2-send-zmodem.sh 移入  /usr/local/bin/目录下&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 执行赋值权限&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 执行赋值权限&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;iterm2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;zmodem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;
 
 &lt;span class=&quot;nx&quot;&gt;chmod&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;iterm2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;zmodem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;3、配置&lt;/h3&gt;
+&lt;h3 id=&quot;3配置&quot;&gt;3、配置&lt;/h3&gt;
 
 &lt;p&gt;同时按&lt;code class=&quot;highlighter-rouge&quot;&gt;cmd和,&lt;/code&gt;键，选择profile-&amp;gt;default-&amp;gt;advanced-&amp;gt;triggers-&amp;gt;edit中添加配置&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;nl&quot;&gt;expression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;B0100&lt;/span&gt;
 &lt;span class=&quot;nl&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Run&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Silent&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Coprocess&lt;/span&gt;
 &lt;span class=&quot;nl&quot;&gt;Parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/usr/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;iterm2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;zmodem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sh&lt;/span&gt;
@@ -1156,8 +1630,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 </description>
         <pubDate>Tue, 14 Feb 2017 22:46:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/mac/2017/02/14/iterm2.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/mac/2017/02/14/iterm2.html</guid>
+        <link>http://localhost:4000/mac/2017/02/14/iterm2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/mac/2017/02/14/iterm2.html</guid>
         
         
         <category>mac</category>
@@ -1170,9 +1644,9 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;p&gt;stack(栈) 是编程语言中最重要的概念之一，本文主要是说明栈的含义，个人在编程的过程中对栈的概念总是很含糊&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;section&quot;&gt;栈&lt;/h1&gt;
+&lt;h1 id=&quot;栈&quot;&gt;栈&lt;/h1&gt;
 
-&lt;h2 id=&quot;lifo&quot;&gt;1.数据结构 &lt;code class=&quot;highlighter-rouge&quot;&gt;LIFO&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;1数据结构-lifo&quot;&gt;1.数据结构 &lt;code class=&quot;highlighter-rouge&quot;&gt;LIFO&lt;/code&gt;&lt;/h2&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;数据的存放方式 LIFO(last in first out)&lt;/code&gt;&lt;/p&gt;
 
@@ -1192,11 +1666,11 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;call-stack&quot;&gt;2.代码运行方式 &lt;code class=&quot;highlighter-rouge&quot;&gt;call stack&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;2代码运行方式-call-stack&quot;&gt;2.代码运行方式 &lt;code class=&quot;highlighter-rouge&quot;&gt;call stack&lt;/code&gt;&lt;/h2&gt;
 
 &lt;p&gt;调用栈(call stack)，表示函数或子程序像堆放积木一样存放，实现层层调用&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;kr&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;age&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;              
     &lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;      
@@ -1237,7 +1711,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;3.内存区域&lt;/h2&gt;
+&lt;h2 id=&quot;3内存区域&quot;&gt;3.内存区域&lt;/h2&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;存放数据的一种内存区域&lt;/code&gt;&lt;/p&gt;
 
@@ -1256,13 +1730,13 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;只要是局部的，占用空间确定的数据，都存放在stack&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// java&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// java&lt;/span&gt;
 
 &lt;span class=&quot;kr&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Test&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;kr&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
       &lt;span class=&quot;kr&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
       &lt;span class=&quot;kr&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;wfj&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;Person&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;p1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'wfj'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -1291,8 +1765,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 </description>
         <pubDate>Mon, 23 Jan 2017 11:46:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html</guid>
+        <link>http://localhost:4000/js/2017/01/23/%E6%A0%88.html</link>
+        <guid isPermaLink="true">http://localhost:4000/js/2017/01/23/%E6%A0%88.html</guid>
         
         
         <category>js</category>
@@ -1307,11 +1781,11 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;其实：&lt;code class=&quot;highlighter-rouge&quot;&gt;let/const/var&lt;/code&gt; 定义的变量 &lt;code class=&quot;highlighter-rouge&quot;&gt;都会发生声明提升&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;声明提升&lt;/h2&gt;
+&lt;h2 id=&quot;声明提升&quot;&gt;声明提升&lt;/h2&gt;
 
 &lt;p&gt;先来看个例子&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;  &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -1336,7 +1810,7 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// undefined, a 在这里会被初始化为 undefined&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// ReferenceError, b 在这里会保持为未初始化的状态不变&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
@@ -1351,7 +1825,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;例子：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;outer&quot;&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;outer&quot;&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;c1&quot;&gt;// 内部的 a 变量在这里被声明，TDZ 开始的地方&lt;/span&gt;
@@ -1365,7 +1839,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;稍微复杂一点的例子：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 没有问题&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 没有问题&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//  ReferenceError，在这里b并没有完全的被初始化,还处在 TDZ 当中&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
@@ -1374,7 +1848,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;&lt;strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ES6 中函数默认参数的计算顺序是从左到右进行的&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 函数的参数 a 想要得到参数 b 的值，而参数 b 这时还未被初始化， 处在 TDZ 中， 所以会报 ReferenceError 的错误&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 函数的参数 a 想要得到参数 b 的值，而参数 b 这时还未被初始化， 处在 TDZ 中， 所以会报 ReferenceError 的错误&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1383,7 +1857,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// &lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// &lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;// 这里的 a 已经被初始化，所以 b 可以取到 a 的值&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1398,7 +1872,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;再看看下面的三个例子：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 2&lt;/span&gt;
@@ -1432,7 +1906,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;参数在有默认值的情况下，此时会创建一个新的作用域，这个作用域既不是函数作用域，也不是全局作用域。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 默认值，并不会肯定从全局去取，而是从 params scope 中取&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 默认值，并不会肯定从全局去取，而是从 params scope 中取&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
@@ -1468,9 +1942,9 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;思考&lt;/h2&gt;
+&lt;h2 id=&quot;思考&quot;&gt;思考&lt;/h2&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;c1&quot;&gt;// reference error: x is not defined. 因为这里 x 是处在 TDZ(Temporal Dead Zone)。&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1490,8 +1964,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 </description>
         <pubDate>Sun, 22 Jan 2017 16:16:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html</guid>
+        <link>http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html</link>
+        <guid isPermaLink="true">http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html</guid>
         
         
         <category>js</category>
@@ -1500,7 +1974,7 @@ h1 {font-size: 2.4rem}      /*24px*/
     
       <item>
         <title>ECMAScript arguments 对象 [js]</title>
-        <description>&lt;h1 id=&quot;arguments-&quot;&gt;arguments 对象&lt;/h1&gt;
+        <description>&lt;h1 id=&quot;arguments-对象&quot;&gt;arguments 对象&lt;/h1&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;说明： arguments对象，在函数方法内部使用&lt;/p&gt;
@@ -1508,8 +1982,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;&lt;strong&gt;一、无需指定参数名称&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;a&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
@@ -1519,7 +1993,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;&lt;strong&gt;二、检测参数个数&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -1535,12 +2009,12 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;java:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Person&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
     
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
             &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
@@ -1550,7 +2024,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;js : 中只需要判断传入参数个数就能实现方法的重载&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1583,7 +2057,7 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;li&gt;借助数组特性进行转换 Array、slice、splice&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 重点在于: 返回Array类型的对象&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 重点在于: 返回Array类型的对象&lt;/span&gt;
 
 &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -1597,7 +2071,7 @@ h1 {font-size: 2.4rem}      /*24px*/
   &lt;li&gt;遍历&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 遍历是程序开发中万能的方法，高级方法底层往往就是调用的for循环&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 遍历是程序开发中万能的方法，高级方法底层往往就是调用的for循环&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
@@ -1611,8 +2085,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 &lt;/div&gt;
 </description>
         <pubDate>Sun, 15 Jan 2017 16:16:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/js/2017/01/15/arguments.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/js/2017/01/15/arguments.html</guid>
+        <link>http://localhost:4000/js/2017/01/15/arguments.html</link>
+        <guid isPermaLink="true">http://localhost:4000/js/2017/01/15/arguments.html</guid>
         
         
         <category>js</category>
@@ -1627,9 +2101,9 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;call 和 apply 函数就是为了改变函数的 &lt;code class=&quot;highlighter-rouge&quot;&gt;运行时上下文&lt;/code&gt; 而存在，也就是改变函数体内部的 this 指向&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fruits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fruits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;fruits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;red&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'red'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;say&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
         &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1644,14 +2118,14 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;banana = {color: ‘blue’}; 此时想让bannana也拥有say方法&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;apple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;say&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;banana&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// blue&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;apple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;say&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;banana&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// blue&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;apple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;say&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apple&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;banana&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// blue&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;此时我们可以看出，call 、apply 可以动态改变this指向，当某个对象不存在某个方法，而另外一个对象有该方法，那么我们可以用apply 和 call去改变该方法的this指向来完成&lt;/p&gt;
 
-&lt;h2 id=&quot;call-apply-1&quot;&gt;call 、apply的区别&lt;/h2&gt;
+&lt;h2 id=&quot;call-apply的区别&quot;&gt;call 、apply的区别&lt;/h2&gt;
 
 &lt;p&gt;call 和 apply 的方法作用是完全一致的，他们的区别在于传输参数的方式不同&lt;/p&gt;
 
@@ -1662,14 +2136,14 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;栗子：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arg2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arg1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39; &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arg2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arg1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;' '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arg2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
      
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;nx&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;arg1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;arg2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// arg1 arg2&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;arg1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;arg2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// arg1 arg2&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'arg1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'arg2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// arg1 arg2&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'arg1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'arg2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// arg1 arg2&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -1678,8 +2152,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;1.数组之间的追加&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;a1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;a2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'a1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'a2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;brr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
 
 &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;brr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -1689,15 +2163,15 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;2.获取数组中的最大值&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;3.验证是否是数组&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;isArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;[object Array]&#39;&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;isArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'[object Array]'&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -1708,27 +2182,27 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;但是我们能通过 Array.prototype.slice.call 转换为真正的数组的带有 length 属性的对象，这样 domNodes 就可以应用 Array 下的所有方法了。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;domNodes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementsByTagName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;*&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;callapply&quot;&gt;call、apply栗子&lt;/h2&gt;
+&lt;h2 id=&quot;callapply栗子&quot;&gt;call、apply栗子&lt;/h2&gt;
 
 &lt;p&gt;1.模拟console.log方法打印日志&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;aaa&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// aaa&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'aaa'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// aaa&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;以上例子只能打印一个参数的情况，如果需要打印多个参数？&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 1 2 3&lt;/span&gt;
@@ -1737,9 +2211,9 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;在输出值前面添加上 &lt;code class=&quot;highlighter-rouge&quot;&gt;(app)&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;slice&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;arguments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;unshift&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;(app)&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;unshift&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'(app)'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1753,12 +2227,12 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;常见 通过缓存中间变量来改变上下文&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;eventBind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
         &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;_this&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;.someClass&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;click&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'.someClass'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'click'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;cm&quot;&gt;/* Act on the event */&lt;/span&gt;
             &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;//1&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
@@ -1770,11 +2244,11 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;使用bind()后:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;eventBind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;.someClass&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;click&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'.someClass'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'click'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;cm&quot;&gt;/* Act on the event */&lt;/span&gt;
             &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
@@ -1787,7 +2261,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;再来一个简单的栗子：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -1806,7 +2280,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;注意：多次调用bind只有第一次有效&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1829,11 +2303,11 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;在Javascript中，多次 bind() 是无效的。更深层次的原因， bind() 的实现，相当于使用函数在内部包了一个 call / apply ，第二次 bind() 相当于再包住第一次 bind() ,故第二次以后的 bind 是无法生效的。&lt;/p&gt;
 
-&lt;h2 id=&quot;call-applybind&quot;&gt;call 、apply、bind的区别&lt;/h2&gt;
+&lt;h2 id=&quot;call-applybind的区别&quot;&gt;call 、apply、bind的区别&lt;/h2&gt;
 
 &lt;p&gt;当你希望改变上下文环境之后并非立即执行，而是回调执行的时候，使用 bind() 方法。而 apply/call 则会立即执行函数。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;81&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
   
@@ -1849,7 +2323,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;总结&lt;/h2&gt;
+&lt;h2 id=&quot;总结&quot;&gt;总结&lt;/h2&gt;
 
 &lt;p&gt;&lt;em&gt;apply 、 call 、bind 三者都是用来改变函数的this对象的指向的；&lt;/em&gt;
 &lt;em&gt;apply 、 call 、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；&lt;/em&gt;
@@ -1858,8 +2332,8 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 </description>
         <pubDate>Sat, 14 Jan 2017 16:16:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html</guid>
+        <link>http://localhost:4000/js/2017/01/14/call-apply-bind.html</link>
+        <guid isPermaLink="true">http://localhost:4000/js/2017/01/14/call-apply-bind.html</guid>
         
         
         <category>js</category>
@@ -1868,7 +2342,7 @@ h1 {font-size: 2.4rem}      /*24px*/
     
       <item>
         <title>HTTP 缓存 [http]</title>
-        <description>&lt;h1 id=&quot;http-&quot;&gt;HTTP 缓存&lt;/h1&gt;
+        <description>&lt;h1 id=&quot;http-缓存&quot;&gt;HTTP 缓存&lt;/h1&gt;
 
 &lt;p&gt;有时，HTTP 中的缓存可能会非常让人头疼。&lt;/p&gt;
 
@@ -1878,7 +2352,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;所以这里有一些博主总结的实用并速记的规则，并且在未来博主也会持续地跟进和更新。&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;静态资源&lt;/h2&gt;
+&lt;h2 id=&quot;静态资源&quot;&gt;静态资源&lt;/h2&gt;
 
 &lt;p&gt;永远不会修改的内容：JS 和 CSS 文件，图片，和任何类型的二进制文件都属于这个类目。&lt;/p&gt;
 
@@ -1888,18 +2362,18 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 &lt;p&gt;在文件或者路径中嵌入指纹。避免为指纹使用查询字符串。另外，确保生成的URL长度超过8个不同的字符。&lt;/p&gt;
 
-&lt;p&gt;使用这些 HTTP 头：
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-Cache-Control: public, max-age=31536000
+&lt;p&gt;使用这些 HTTP 头：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Cache-Control: public, max-age=31536000
 Expires: (一年后的今天)
 ETag: (基于内容生成)
 Last-Modified: (过去某个时间)
 Vary: Accept-Encoding
-&lt;/code&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;针对静态资源的设置就是那么简单。&lt;/p&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;动态资源&lt;/h2&gt;
+&lt;h2 id=&quot;动态资源&quot;&gt;动态资源&lt;/h2&gt;
 
 &lt;p&gt;针对应用程序私密性和新鲜度方面需求的不同，我们应该使用不同的缓存控制设置。&lt;/p&gt;
 
@@ -1915,33 +2389,33 @@ Vary: Accept-Encoding
 
 &lt;p&gt;这些设置的效果是：这些资源可以被公开地（通过浏览器和代理服务器）缓存起来。每一次在浏览器使用这些资源之前，浏览器或者代理服务器会检查这些资源是否有更新的版本，如果有，就把它们下载下来。&lt;/p&gt;
 
-&lt;p&gt;这样的设置需要注意，浏览器在重新检查资源时效性方面有一定的灵活性。典型的是，当用户点击了「返回／前进」按钮时，浏览器不会重新检查这些资源文件，而是直接使用缓存的版本。你如果需要更严格的控制，需要告知浏览器即使当用户点击了「返回／前进」按钮，也需要重新检查这些资源文件，那么可以使用：
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-Cache-Control: public, no-cache, no-store
-&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这样的设置需要注意，浏览器在重新检查资源时效性方面有一定的灵活性。典型的是，当用户点击了「返回／前进」按钮时，浏览器不会重新检查这些资源文件，而是直接使用缓存的版本。你如果需要更严格的控制，需要告知浏览器即使当用户点击了「返回／前进」按钮，也需要重新检查这些资源文件，那么可以使用：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Cache-Control: public, no-cache, no-store
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;不是所有的动态资源都会马上变成过时的资源。如果它们可以保持至少5分钟的时效，可以使用：
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-Cache-Control: public, max-age=300
-&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;不是所有的动态资源都会马上变成过时的资源。如果它们可以保持至少5分钟的时效，可以使用：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Cache-Control: public, max-age=300
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;经过这样的设置，浏览器只会在5分钟之后才重新检查。在这之前，缓存的内容会被直接使用。如果在5分钟后，这些过时的内容需要严格控制，你可以添加 must-revalidate 字段：
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-Cache-Control: public, max-age=300, must-revalidate
-&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;经过这样的设置，浏览器只会在5分钟之后才重新检查。在这之前，缓存的内容会被直接使用。如果在5分钟后，这些过时的内容需要严格控制，你可以添加 must-revalidate 字段：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Cache-Control: public, max-age=300, must-revalidate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;对于私密或者针对用户的内容，需要把 public 替换为 private 以避免内容被代理缓存。
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-Cache-Control: private, …
-&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;对于私密或者针对用户的内容，需要把 public 替换为 private 以避免内容被代理缓存。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Cache-Control: private, …
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;h2 id=&quot;cache-control--expires&quot;&gt;Cache-Control 和 Expires&lt;/h2&gt;
+&lt;h2 id=&quot;cache-control-和-expires&quot;&gt;Cache-Control 和 Expires&lt;/h2&gt;
 
 &lt;p&gt;当同时使用 Cache-Control 和 Expires 时，Cache-Control 获得优先权。&lt;/p&gt;
 
 &lt;p&gt;同时使用 Cache-Control 和 Expires 意味着得到更广泛的支持（被不同的浏览器和版本）。当然，它们两个应该被配置成相同的时效值，以避免引起困惑。&lt;/p&gt;
 
-&lt;h2 id=&quot;etag--last-modified&quot;&gt;ETag 和 Last-Modified&lt;/h2&gt;
+&lt;h2 id=&quot;etag-和-last-modified&quot;&gt;ETag 和 Last-Modified&lt;/h2&gt;
 
 &lt;p&gt;这两个头在浏览器对资源做重新检查验证的时候会使用到。大致来说，浏览器只是盲目地存储这两个来自于服务器的头的值，然后在需要检查验证的时候，浏览器根据请求条件，把这两个指发送给服务器（分别通过 If-None-Match 和 If-Modified-Since）。&lt;/p&gt;
 
@@ -1959,14 +2433,14 @@ Cache-Control: private, …
   &lt;p&gt;参考 &lt;a href=&quot;https://www.techpunch.co.uk/development/should-your-site-be-using-etags-or-not&quot;&gt;Should your site be using etags or not?&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;ctrl-r&quot;&gt;手动按下 Ctrl-R&lt;/h2&gt;
+&lt;h2 id=&quot;手动按下-ctrl-r&quot;&gt;手动按下 Ctrl-R&lt;/h2&gt;
 
-&lt;p&gt;当按下 Ctrl-R 时，浏览器会携带下面的请求，以检查是否需要更新缓存内容：
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-Cache-Control: max-age=0
+&lt;p&gt;当按下 Ctrl-R 时，浏览器会携带下面的请求，以检查是否需要更新缓存内容：&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Cache-Control: max-age=0
 If-None-Match: …
 If-Modifed-Since: …
-&lt;/code&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;注意这并不只是和原服务器建立连接，其同样适用于代理服务器。本质上，它只是重新检查验证内容。如果服务器回应了一个304，浏览器将会使用缓存的内容。&lt;/p&gt;
 
@@ -1983,8 +2457,8 @@ If-Modifed-Since: …
 &lt;p&gt;&lt;a href=&quot;https://www.css3.io/http_cache.html&quot;&gt;其它资源&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 14 Jan 2017 16:00:00 +0800</pubDate>
-        <link>https://wufangjian.github.io/http/2017/01/14/http-cache.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/http/2017/01/14/http-cache.html</guid>
+        <link>http://localhost:4000/http/2017/01/14/http-cache.html</link>
+        <guid isPermaLink="true">http://localhost:4000/http/2017/01/14/http-cache.html</guid>
         
         
         <category>http</category>
@@ -1993,14 +2467,14 @@ If-Modifed-Since: …
     
       <item>
         <title>闭包 [js]</title>
-        <description>&lt;h4 id=&quot;javascriptclosure&quot;&gt;学习Javascript闭包（Closure）&lt;/h4&gt;
+        <description>&lt;h4 id=&quot;学习javascript闭包closure&quot;&gt;学习Javascript闭包（Closure）&lt;/h4&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;闭包（closure）是Javascript语言的一个难点，也是它的特色，很多高级应用都要依靠闭包实现。
 下面就是我的学习笔记，对于Javascript初学者应该是很有用的。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h5 id=&quot;section&quot;&gt;一、变量的作用域&lt;/h5&gt;
+&lt;h5 id=&quot;一变量的作用域&quot;&gt;一、变量的作用域&lt;/h5&gt;
 
 &lt;p&gt;要理解闭包，首先必须理解Javascript特殊的变量作用域。&lt;/p&gt;
 
@@ -2008,7 +2482,7 @@ If-Modifed-Since: …
 
 &lt;p&gt;Javascript语言的特殊之处，就在于函数内部可以直接读取全局变量。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -2019,7 +2493,7 @@ If-Modifed-Since: …
 
 &lt;p&gt;另一方面，在函数外部自然无法读取函数内的局部变量&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
   &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -2029,7 +2503,7 @@ If-Modifed-Since: …
 
 &lt;p&gt;这里有一个地方需要注意，函数内部声明变量的时候，一定要使用var命令。如果不用的话，你实际上声明了一个全局变量！&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
   &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -2038,13 +2512,13 @@ If-Modifed-Since: …
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h5 id=&quot;section-1&quot;&gt;二、如何从外部读取局部变量？&lt;/h5&gt;
+&lt;h5 id=&quot;二如何从外部读取局部变量&quot;&gt;二、如何从外部读取局部变量？&lt;/h5&gt;
 
 &lt;p&gt;出于种种原因，我们有时候需要得到函数内的局部变量。但是，前面已经说过了，正常情况下，这是办不到的，只有通过变通方法才能实现。&lt;/p&gt;
 
 &lt;p&gt;那就是在函数的内部，再定义一个函数。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
       &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 999&lt;/span&gt;
@@ -2057,7 +2531,7 @@ If-Modifed-Since: …
 
 &lt;p&gt;既然f2可以读取f1中的局部变量，那么只要把f2作为返回值，我们不就可以在f1外部读取它的内部变量了吗！&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
     &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;　　　　&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;　　　　&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
@@ -2071,7 +2545,7 @@ If-Modifed-Since: …
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h5 id=&quot;section-2&quot;&gt;三、闭包的概念&lt;/h5&gt;
+&lt;h5 id=&quot;三闭包的概念&quot;&gt;三、闭包的概念&lt;/h5&gt;
 &lt;p&gt;上一节代码中的f2函数，就是闭包。&lt;/p&gt;
 
 &lt;p&gt;各种专业文献上的”闭包”（closure）定义非常抽象，很难看懂。我的理解是，闭包就是能够读取其他函数内部变量的函数。&lt;/p&gt;
@@ -2080,11 +2554,11 @@ If-Modifed-Since: …
 
 &lt;p&gt;所以，在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。&lt;/p&gt;
 
-&lt;h5 id=&quot;section-3&quot;&gt;四、闭包的用途&lt;/h5&gt;
+&lt;h5 id=&quot;四闭包的用途&quot;&gt;四、闭包的用途&lt;/h5&gt;
 
 &lt;p&gt;闭包可以用在许多地方。它的最大用处有两个，一个是前面提到的可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;nAdd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
@@ -2110,17 +2584,17 @@ If-Modifed-Since: …
 
 &lt;p&gt;这段代码中另一个值得注意的地方，就是”nAdd=function(){n+=1}”这一行，首先在nAdd前面没有使用var关键字，因此nAdd是一个全局变量，而不是局部变量。其次，nAdd的值是一个匿名函数（anonymous function），而这个匿名函数本身也是一个闭包，所以nAdd相当于是一个setter，可以在函数外部对函数内部的局部变量进行操作。&lt;/p&gt;
 
-&lt;h5 id=&quot;section-4&quot;&gt;五、使用闭包的注意点&lt;/h5&gt;
+&lt;h5 id=&quot;五使用闭包的注意点&quot;&gt;五、使用闭包的注意点&lt;/h5&gt;
 
 &lt;p&gt;1）由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退出函数之前，将不使用的局部变量全部删除。&lt;/p&gt;
 
 &lt;p&gt;2）闭包会在父函数外部，改变父函数内部变量的值。所以，如果你把父函数当作对象（object）使用，把闭包当作它的公用方法（Public Method），把内部变量当作它的私有属性（private value），这时一定要小心，不要随便改变父函数内部变量的值。&lt;/p&gt;
 
-&lt;h5 id=&quot;section-5&quot;&gt;六、思考题&lt;/h5&gt;
+&lt;h5 id=&quot;六思考题&quot;&gt;六、思考题&lt;/h5&gt;
 
 &lt;p&gt;如果你能理解下面两段代码的运行结果，应该就算理解闭包的运行机制了。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;The Window&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;My Object&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -2135,7 +2609,7 @@ If-Modifed-Since: …
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;The Window&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
      &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;My Object&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -2152,8 +2626,8 @@ If-Modifed-Since: …
 
 </description>
         <pubDate>Sat, 14 Jan 2017 16:00:00 +0800</pubDate>
-        <link>https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html</guid>
+        <link>http://localhost:4000/js/2017/01/14/%E9%97%AD%E5%8C%85.html</link>
+        <guid isPermaLink="true">http://localhost:4000/js/2017/01/14/%E9%97%AD%E5%8C%85.html</guid>
         
         
         <category>js</category>
@@ -2169,8 +2643,8 @@ If-Modifed-Since: …
 &lt;p&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2014/10/event-loop.html&quot;&gt;JavaScript 运行机制详解：再谈Event Loop&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 05 Jan 2017 12:00:00 +0800</pubDate>
-        <link>https://wufangjian.github.io/%E8%BD%AC%E8%BD%BD/2017/01/05/%E5%86%8D%E8%B0%88Event-Loop.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/%E8%BD%AC%E8%BD%BD/2017/01/05/%E5%86%8D%E8%B0%88Event-Loop.html</guid>
+        <link>http://localhost:4000/%E8%BD%AC%E8%BD%BD/2017/01/05/%E5%86%8D%E8%B0%88Event-Loop.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E8%BD%AC%E8%BD%BD/2017/01/05/%E5%86%8D%E8%B0%88Event-Loop.html</guid>
         
         
         <category>转载</category>
@@ -2183,9 +2657,9 @@ If-Modifed-Since: …
 
 &lt;p&gt;[TOC]&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;一、定位元素&lt;/h2&gt;
+&lt;h2 id=&quot;一定位元素&quot;&gt;一、定位元素&lt;/h2&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;1.1 盒子模型&lt;/h3&gt;
+&lt;h3 id=&quot;11-盒子模型&quot;&gt;1.1 盒子模型&lt;/h3&gt;
 
 &lt;hr /&gt;
 
@@ -2201,28 +2675,42 @@ If-Modifed-Since: …
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;1.2 浮动与清除浮动&lt;/h3&gt;
+&lt;h3 id=&quot;12-浮动与清除浮动&quot;&gt;1.2 浮动与清除浮动&lt;/h3&gt;
 
 &lt;hr /&gt;
 
-&lt;h4 id=&quot;section-3&quot;&gt;1.2.1 浮动&lt;/h4&gt;
+&lt;h4 id=&quot;121-浮动&quot;&gt;1.2.1 浮动&lt;/h4&gt;
 
 &lt;p&gt;概念：CSS 设计 float 属性的主要目的,是为了实现文本绕排图片的效果。然而,这个属 性居然也成了创建多栏布局最简单的方式。&lt;/p&gt;
 
 &lt;p&gt;场景：在你浮动一张图片或者其他元素时,你是在要求浏览器把它往上方 推,直到它碰到父元素(也就是 body 元素)的内边界。后面的段落(带灰色边框) 不再认为浮动元素在文档流中位于它的前面了,因而它会占据父元素左上角的位置。 不过,它的内容(文本)会绕开浮动的图片&lt;/p&gt;
 
-&lt;h4 id=&quot;section-4&quot;&gt;1.2.2 清除浮动&lt;/h4&gt;
+&lt;h4 id=&quot;122-清除浮动&quot;&gt;1.2.2 清除浮动&lt;/h4&gt;
 
 &lt;p&gt;清除浮动原因：浮动元素脱离了文档流,其父元素也看不到它了,因而也不会包围它。这种情况有 时候并非我们想要的&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;方法一、给父元素添加 overflow: hidden &lt;code class=&quot;highlighter-rouge&quot;&gt;BFC&lt;/code&gt;&lt;/strong&gt;
-»»»&amp;gt; 22fc6a5d7bda51958d03c6612d77fbfbaabdc6a5&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;方法一、给父元素添加 overflow: hidden &lt;code class=&quot;highlighter-rouge&quot;&gt;BFC&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;blockquote&gt;
+      &lt;blockquote&gt;
+        &lt;blockquote&gt;
+          &lt;blockquote&gt;
+            &lt;blockquote&gt;
+              &lt;p&gt;22fc6a5d7bda51958d03c6612d77fbfbaabdc6a5&lt;/p&gt;
+            &lt;/blockquote&gt;
+          &lt;/blockquote&gt;
+        &lt;/blockquote&gt;
+      &lt;/blockquote&gt;
+    &lt;/blockquote&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;为父元素应用 overflow:hidden，以强制它包围浮动元素。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// css
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// css
 section {border:1px solid blue; margin:0 0 10px 0; overflow: hidden;}
 img {float:left;}
 p {border:1px solid red;}
@@ -2231,7 +2719,7 @@ footer {border:1px solid red;}
 // html
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
    &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;images/1.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It&#39;s fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It's fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;footer&amp;gt;&lt;/span&gt;
     Here is the footer element that runs across the bottom of the page.
@@ -2246,7 +2734,7 @@ footer {border:1px solid red;}
   &lt;p&gt;浮动 section 以后，不管其子元素是否浮动，它都会紧紧地包围(也称收缩包裹)住它的子元素。因此，需要用 width:100% 再让 section 与浏览器容器同宽。由 于 section 现在也浮动了，所以 footer 会努力往上挤到它旁边去。为了强制 footer 依然呆在 section 下方，要给它应用 clear:left。被清除的元素不会被提升到浮动元 素的旁边&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 // css
 section {border:1px solid blue; margin:0 0 10px 0; float: left; width: 100%;}
 img {float:left;}
@@ -2256,7 +2744,7 @@ footer {border:1px solid red; clear: left;}
 // html
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
    &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;images/1.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It&#39;s fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It's fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;footer&amp;gt;&lt;/span&gt;
     Here is the footer element that runs across the bottom of the page.
@@ -2270,7 +2758,7 @@ footer {border:1px solid red; clear: left;}
   &lt;p&gt;添加额外html元素&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// css
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// css
 section {border:1px solid blue; margin:0 0 10px 0;}
 img {float:left;}
 p {border:1px solid red;}
@@ -2280,7 +2768,7 @@ footer {border:1px solid red; clear: left;}
 // html
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
    &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;images/1.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It&#39;s fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It's fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;clear_me&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;footer&amp;gt;&lt;/span&gt;
@@ -2293,18 +2781,18 @@ footer {border:1px solid red; clear: left;}
   &lt;p&gt;通过class:after 伪元素 &lt;code class=&quot;highlighter-rouge&quot;&gt;确保无宽高&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 // css 
 section {border:1px solid blue; margin:0 0 10px 0;}
 img {float:left;}
 p {border:1px solid red;}
 footer {border:1px solid red; clear: left;}
-.clearfix:after{content: &#39;.&#39;; height: 0; visibility: hidden;clear:both; display: block;}
+.clearfix:after{content: '.'; height: 0; visibility: hidden;clear:both; display: block;}
 
 // html
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;section&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;clearfix&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
    &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;images/1.jpg&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It&#39;s fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;It's fun to float.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;footer&amp;gt;&lt;/span&gt;
     Here is the footer element that runs across the bottom of the page.
@@ -2312,7 +2800,7 @@ footer {border:1px solid red; clear: left;}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h3 id=&quot;section-5&quot;&gt;1.3 定位&lt;/h3&gt;
+&lt;h3 id=&quot;13-定位&quot;&gt;1.3 定位&lt;/h3&gt;
 
 &lt;hr /&gt;
 
@@ -2350,9 +2838,9 @@ footer {border:1px solid red; clear: left;}
   &lt;p&gt;固定定位元素的定位上下文是视口(浏览器窗口或手持设备的屏幕),因此它不会随页面滚动而移动. 此时拥有属性 top、right、bottom、left&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;section-6&quot;&gt;二、布局&lt;/h2&gt;
+&lt;h2 id=&quot;二布局&quot;&gt;二、布局&lt;/h2&gt;
 
-&lt;h3 id=&quot;section-7&quot;&gt;2.1 布局的概念&lt;/h3&gt;
+&lt;h3 id=&quot;21-布局的概念&quot;&gt;2.1 布局的概念&lt;/h3&gt;
 
 &lt;hr /&gt;
 
@@ -2364,11 +2852,11 @@ footer {border:1px solid red; clear: left;}
 
 &lt;p&gt;&lt;strong&gt;弹性：&lt;/strong&gt; flex弹性布局,随着浏览器缩放而改变，不仅宽高改变，而且内容也改变&lt;/p&gt;
 
-&lt;h3 id=&quot;section-8&quot;&gt;2.2 三栏-固定宽度&lt;/h3&gt;
+&lt;h3 id=&quot;22-三栏-固定宽度&quot;&gt;2.2 三栏-固定宽度&lt;/h3&gt;
 
 &lt;hr /&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// css
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// css
 *{padding: 0;margin: 0;}
 #wrapper{width: 960px; margin: 0 auto; background: #eee;}
 nav{width: 150px; background: red; float: left;}
@@ -2409,13 +2897,13 @@ footer{ background: yellow; clear: both; text-align: center;}
 
 &lt;p&gt;2.设定内边距和边框：添加内层div &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div class=&quot;inner&quot;&amp;gt;&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;section-9&quot;&gt;2.3 三栏-中栏流动布局&lt;/h3&gt;
+&lt;h3 id=&quot;23-三栏-中栏流动布局&quot;&gt;2.3 三栏-中栏流动布局&lt;/h3&gt;
 
-&lt;h3 id=&quot;section-10&quot;&gt;2.4 多行多栏布局&lt;/h3&gt;
+&lt;h3 id=&quot;24-多行多栏布局&quot;&gt;2.4 多行多栏布局&lt;/h3&gt;
 </description>
         <pubDate>Tue, 01 Nov 2016 16:16:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/css/2016/11/01/CSS%E5%B8%83%E5%B1%80.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/css/2016/11/01/CSS%E5%B8%83%E5%B1%80.html</guid>
+        <link>http://localhost:4000/css/2016/11/01/CSS%E5%B8%83%E5%B1%80.html</link>
+        <guid isPermaLink="true">http://localhost:4000/css/2016/11/01/CSS%E5%B8%83%E5%B1%80.html</guid>
         
         
         <category>css</category>
@@ -2430,17 +2918,17 @@ footer{ background: yellow; clear: both; text-align: center;}
 
 &lt;p&gt;JavaScript 的并发模型基于 “event loop”。这个模型与其他在 C 或者 Java 等语言中的模型着实不同。&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;运行时概念&lt;/h2&gt;
+&lt;h2 id=&quot;运行时概念&quot;&gt;运行时概念&lt;/h2&gt;
 
 &lt;p&gt;下面的内容解释了一个理论上的模型。现代 JavaScript 引擎着重实现和优化了描述的几个语义。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/static/img/2017/eventloop.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;section-1&quot;&gt;栈&lt;/h3&gt;
+&lt;h3 id=&quot;栈&quot;&gt;栈&lt;/h3&gt;
 
 &lt;p&gt;函数调用形成了一个堆栈帧&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;35&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -2460,23 +2948,23 @@ footer{ background: yellow; clear: both; text-align: center;}
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-2&quot;&gt;堆&lt;/h3&gt;
+&lt;h3 id=&quot;堆&quot;&gt;堆&lt;/h3&gt;
 
 &lt;p&gt;对象被分配在一个堆中，一个用以表示一个内存中大的未被组织的区域。&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-3&quot;&gt;队列&lt;/h3&gt;
+&lt;h3 id=&quot;队列&quot;&gt;队列&lt;/h3&gt;
 
 &lt;p&gt;一个 JavaScript 运行时包含了一个待处理的消息队列。&lt;code class=&quot;highlighter-rouge&quot;&gt;每一个消息都与一个函数相关联&lt;/code&gt; 。当栈为空时，从队列中取出一个消息进行处理。这个处理过程包含了调用与这个消息相关联的函数（以及因而创建了一个初始堆栈帧）。当栈再次为空的时候，也就意味着消息处理结束。&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;section-4&quot;&gt;事件循环&lt;/h2&gt;
+&lt;h2 id=&quot;事件循环&quot;&gt;事件循环&lt;/h2&gt;
 
 &lt;p&gt;之所以称为 事件循环，是因为它经常被用于类似如下的方式来实现：&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;waitForMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()){&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;processNextMessage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -2487,7 +2975,7 @@ footer{ background: yellow; clear: both; text-align: center;}
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-5&quot;&gt;“执行至完成”&lt;/h3&gt;
+&lt;h3 id=&quot;执行至完成&quot;&gt;“执行至完成”&lt;/h3&gt;
 
 &lt;p&gt;每一个消息执行完成后，其它消息才会被执行。当你分析你的程序时，这点提供了一些优秀的特性，包括当一个函数运行时，它不能被取代且会在其它代码运行前先完成（而且能够修改这个函数控制的数据）。这点与C语言不同。例如，C语言中当一个程序在一个线程中运行时，它可以在任何点停止且可以在其它线程中运行其它代码。&lt;/p&gt;
 
@@ -2495,7 +2983,7 @@ footer{ background: yellow; clear: both; text-align: center;}
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-6&quot;&gt;添加消息&lt;/h3&gt;
+&lt;h3 id=&quot;添加消息&quot;&gt;添加消息&lt;/h3&gt;
 
 &lt;p&gt;在浏览器里，当一个事件出现且有一个事件监听器被绑定时，消息会被随时添加。如果没有事件监听器，事件会丢失。所以点击一个附带点击事件处理函数的元素会添加一个消息。其它事件亦然。&lt;/p&gt;
 
@@ -2503,46 +2991,46 @@ footer{ background: yellow; clear: both; text-align: center;}
 
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-7&quot;&gt;零延迟&lt;/h3&gt;
+&lt;h3 id=&quot;零延迟&quot;&gt;零延迟&lt;/h3&gt;
 
 &lt;p&gt;零延迟 (Zero delay) 并不是意味着回调会立即执行。在零延迟调用 setTimeout 时，其并不是过了给定的时间间隔后就马上执行回调函数。其等待的时间基于队列里正在等待的消息数量。在下面的例子中，”this is just a message” 将会在回调 (callback) 获得处理之前输出到控制台，这是因为延迟是要求 &lt;code class=&quot;highlighter-rouge&quot;&gt;运行时 (runtime) 处理请求&lt;/code&gt; 所需的最小时间，但不是有所保证的时间。&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;this is the start&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'this is the start'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
   &lt;span class=&quot;nx&quot;&gt;setTimeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;this is a msg from call back&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'this is a msg from call back'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
 
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;this is just a message&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'this is just a message'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
   &lt;span class=&quot;nx&quot;&gt;setTimeout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;cb1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;this is a msg from call back1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'this is a msg from call back1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;this is the  end&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'this is the  end'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;})();&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;hr /&gt;
 
-&lt;h3 id=&quot;section-8&quot;&gt;多个运行时互相通信&lt;/h3&gt;
+&lt;h3 id=&quot;多个运行时互相通信&quot;&gt;多个运行时互相通信&lt;/h3&gt;
 
 &lt;p&gt;一个 web worker 或者一个跨域的 iframe 都有它们自己的栈，堆和消息队列。两个不同的运行时只有通过 postMessage 方法进行通信。这个方法会给另一个运行时添加一个消息如果后者监听了 message 事件。&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;section-9&quot;&gt;绝不阻塞&lt;/h2&gt;
+&lt;h2 id=&quot;绝不阻塞&quot;&gt;绝不阻塞&lt;/h2&gt;
 
 &lt;p&gt;一个很有趣的事件循环 (event loop) 模型特性在于，Javascript 跟其它语言不同，它永不阻塞。处理 I/O (input/output) 通常由事件或者回调函数进行实现。所以当一个应用正等待 IndexedDB 的查询的返回或者一个 XHR 的请求返回时，它仍然可以处理其它事情例如用户输入。&lt;/p&gt;
 
 &lt;p&gt;例外是存在的，如 alert 或者同步 XHR，但避免它们被认为是最佳实践。注意的是，例外的例外也是存在的（但通常是实现错误而非其它原因）。&lt;/p&gt;
 </description>
         <pubDate>Sat, 01 Oct 2016 12:00:00 +0800</pubDate>
-        <link>https://wufangjian.github.io/js/2016/10/01/Event-Loop.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/js/2016/10/01/Event-Loop.html</guid>
+        <link>http://localhost:4000/js/2016/10/01/Event-Loop.html</link>
+        <guid isPermaLink="true">http://localhost:4000/js/2016/10/01/Event-Loop.html</guid>
         
         
         <category>js</category>
@@ -2551,7 +3039,7 @@ footer{ background: yellow; clear: both; text-align: center;}
     
       <item>
         <title>SSP-供应方平台 [广告]</title>
-        <description>&lt;h2 id=&quot;section&quot;&gt;1.项目简介&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;1项目简介&quot;&gt;1.项目简介&lt;/h2&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;SSP（Sell-SidePlatform 供应方平台），目前有&lt;code class=&quot;highlighter-rouge&quot;&gt;广告位管理&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;报表管理&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;模板管理&lt;/code&gt;等模块&lt;/p&gt;
@@ -2571,7 +3059,7 @@ footer{ background: yellow; clear: both; text-align: center;}
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;section-1&quot;&gt;2.项目架构&lt;/h2&gt;
+&lt;h2 id=&quot;2项目架构&quot;&gt;2.项目架构&lt;/h2&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;该系统选用的技术栈 &lt;code class=&quot;highlighter-rouge&quot;&gt;yog2&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;fis3&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;angularjs&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;gulp&lt;/code&gt;，前后端完全分离&lt;/p&gt;
@@ -2628,7 +3116,7 @@ footer{ background: yellow; clear: both; text-align: center;}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;section-2&quot;&gt;3.项目部署&lt;/h2&gt;
+&lt;h2 id=&quot;3项目部署&quot;&gt;3.项目部署&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;*前提：环境必备&lt;/strong&gt;&lt;/p&gt;
 
@@ -2699,8 +3187,8 @@ yog2 release debug -wLd 8084
 
 </description>
         <pubDate>Sun, 24 Jan 2016 12:00:00 +0800</pubDate>
-        <link>https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html</guid>
+        <link>http://localhost:4000/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E5%B9%BF%E5%91%8A/2016/01/24/%E4%BE%9B%E5%BA%94%E6%96%B9%E5%B9%B3%E5%8F%B0.html</guid>
         
         
         <category>广告</category>
@@ -2713,11 +3201,32 @@ yog2 release debug -wLd 8084
 
 </description>
         <pubDate>Sat, 16 Jan 2016 16:16:16 +0800</pubDate>
-        <link>https://wufangjian.github.io/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html</link>
-        <guid isPermaLink="true">https://wufangjian.github.io/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html</guid>
+        <link>http://localhost:4000/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html</link>
+        <guid isPermaLink="true">http://localhost:4000/css/2016/01/16/%E7%90%86%E8%A7%A3CSS%E4%B8%ADBFC.html</guid>
         
         
         <category>css</category>
+        
+      </item>
+    
+      <item>
+        <title>常用软件注册码 [软件]</title>
+        <description>&lt;h2 id=&quot;krpano-119-破解版-验证码&quot;&gt;krpano 1.19 破解版 （验证码）&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ruza4tk2X4MdHuE7djJQGr9QTftMFHiSH2ac5jkIlFgGqG0K0IVQnh5vF/ci
+cLpwedsURI0QTg+UluEgysRLUytpeVFyBTxdwREEIGquRh1Hp2BY2EtZ8kdO
+2r6CHLJAFlzY5w6au1rnHwRhJXgaK8J75RwK1DYb/OEZ4tD2pniUrnMrpFwG
+WwcKnxGyNSmMktsU6qadFjKbMH3HUKNXa7Y59lEzbDZJbsTuP+UynwwBhogv
+8K+byjs2LDvU48sx4/CNHWi26g==
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 01 Jan 2016 12:00:00 +0800</pubDate>
+        <link>http://localhost:4000/%E8%BD%AF%E4%BB%B6/2016/01/01/softregcod.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E8%BD%AF%E4%BB%B6/2016/01/01/softregcod.html</guid>
+        
+        
+        <category>软件</category>
         
       </item>
     

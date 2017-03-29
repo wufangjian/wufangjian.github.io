@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/html/2017/02/14/html-body.html" property="og:url">
+          <meta content="http://localhost:4000/html/2017/02/14/html-body.html" property="og:url">
         
         
           <meta content="2017-02-14T22:46:16+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="html body 在css中的区别 [html]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/html/2017/02/14/html-body.html">
+          <meta name="twitter:url" content="http://localhost:4000/html/2017/02/14/html-body.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -146,11 +146,11 @@
 
 <p>在css中，<em>&lt;html&gt;</em> 和 <em>&lt;body&gt;</em> 的区别往往被忽略，全局样式或者定义在html上，或者 body 上，实际上两者是有区别的</p>
 
-<h2 id="htmlbody">html和body的关联</h2>
+<h2 id="html和body的关联">html和body的关联</h2>
 
 <hr />
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;head&gt;</span>
 	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
@@ -176,7 +176,7 @@
 
 <hr />
 
-<div class="highlighter-rouge"><pre class="highlight"><code>:root {
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>:root {
 
 }
 html {
@@ -186,13 +186,13 @@ html {
 </div>
 <p>提示: <code class="highlighter-rouge">:root</code> 选择符的优先级大于html选择符</p>
 
-<h2 id="html">哪些全局样式应用到 html</h2>
+<h2 id="哪些全局样式应用到-html">哪些全局样式应用到 html</h2>
 
 <hr />
 
 <p><strong>1.rem</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>html {font-size: 62.5%}
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>html {font-size: 62.5%}
 body {font-size: 1.4rem}    /*14px*/
 h1 {font-size: 2.4rem}      /*24px*/
 </code></pre>
@@ -211,11 +211,11 @@ h1 {font-size: 2.4rem}      /*24px*/
 
 <p>如果body及其子元素的高度需要设置为窗口高度，那么html元素上也需要添加</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>html {height: 100%}
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>html {height: 100%}
 </code></pre>
 </div>
 
-<h2 id="body-">应用到 body 上的全局样式</h2>
+<h2 id="应用到-body-上的全局样式">应用到 body 上的全局样式</h2>
 
 <hr />
 
@@ -248,7 +248,7 @@ h1 {font-size: 2.4rem}      /*24px*/
   </tbody>
 </table>
 
-<h2 id="section">总结:</h2>
+<h2 id="总结">总结:</h2>
 
 <hr />
 
@@ -269,7 +269,7 @@ h1 {font-size: 2.4rem}      /*24px*/
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/html/2017/02/14/html-body.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/html/2017/02/14/html-body.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -283,6 +283,41 @@ h1 {font-size: 2.4rem}      /*24px*/
 </div>
 
 
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
 
     
     
@@ -449,7 +484,7 @@ h1 {font-size: 2.4rem}      /*24px*/
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_html body 在css中的区别 [html]";
+//        var disqus_identifier = "http://localhost:4000_html body 在css中的区别 [html]";
 //        var disqus_title = "html body 在css中的区别 [html]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */

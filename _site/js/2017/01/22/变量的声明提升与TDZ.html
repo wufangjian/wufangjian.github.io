@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html" property="og:url">
+          <meta content="http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html" property="og:url">
         
         
           <meta content="2017-01-22T16:16:16+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="变量的声明提升 与 TDZ [js]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">
+          <meta name="twitter:url" content="http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -146,11 +146,11 @@
 
 <p>其实：<code class="highlighter-rouge">let/const/var</code> 定义的变量 <code class="highlighter-rouge">都会发生声明提升</code></p>
 
-<h2 id="section">声明提升</h2>
+<h2 id="声明提升">声明提升</h2>
 
 <p>先来看个例子</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">var</span>  <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="p">;(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -175,7 +175,7 @@
   </li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>  <span class="c1">// undefined, a 在这里会被初始化为 undefined</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>  <span class="c1">// ReferenceError, b 在这里会保持为未初始化的状态不变</span>
   <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
@@ -190,7 +190,7 @@
 
 <p>例子：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="s2">"outer"</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="s2">"outer"</span>
 
 <span class="p">;(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// 内部的 a 变量在这里被声明，TDZ 开始的地方</span>
@@ -204,7 +204,7 @@
 
 <p>稍微复杂一点的例子：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span> <span class="c1">// 没有问题</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span> <span class="c1">// 没有问题</span>
 
 <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">b</span> <span class="c1">//  ReferenceError，在这里b并没有完全的被初始化,还处在 TDZ 当中</span>
 </code></pre>
@@ -213,7 +213,7 @@
 
 <p><strong><code class="highlighter-rouge">ES6 中函数默认参数的计算顺序是从左到右进行的</code></strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 函数的参数 a 想要得到参数 b 的值，而参数 b 这时还未被初始化， 处在 TDZ 中， 所以会报 ReferenceError 的错误</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 函数的参数 a 想要得到参数 b 的值，而参数 b 这时还未被初始化， 处在 TDZ 中， 所以会报 ReferenceError 的错误</span>
 <span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
 <span class="p">}</span>
@@ -222,7 +222,7 @@
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// </span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// </span>
 <span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// 这里的 a 已经被初始化，所以 b 可以取到 a 的值</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
@@ -237,7 +237,7 @@
 
 <p>再看看下面的三个例子：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">x</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">)},</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">x</span><span class="p">();</span> <span class="c1">// 2</span>
@@ -271,7 +271,7 @@
 
 <p>参数在有默认值的情况下，此时会创建一个新的作用域，这个作用域既不是函数作用域，也不是全局作用域。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">// 默认值，并不会肯定从全局去取，而是从 params scope 中取</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 默认值，并不会肯定从全局去取，而是从 params scope 中取</span>
 
 <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
@@ -307,9 +307,9 @@
 
 <hr />
 
-<h2 id="section-1">思考</h2>
+<h2 id="思考">思考</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="c1">// reference error: x is not defined. 因为这里 x 是处在 TDZ(Temporal Dead Zone)。</span>
 
 <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -342,7 +342,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -431,13 +431,41 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -461,7 +489,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -478,44 +506,13 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
                 </li>
                 
                 
-            
-        
-    
-
-    
-    
-        
-            
-        
-    
-
-    
-    
-        
-            
-                
-                <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
-                    
-                        (Categories: <a href="/category/js">js</a>)
-                    
-                </li>
-                
-                
-            
-        
-    
-
-    
-    
-        
             
         
     
@@ -533,13 +530,51 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+                
+                <li class="relatedPost">
+                    <a href="http://localhost:4000/js/2016/10/01/Event-Loop.html">Event Loop (事件循环) [js]</a>
+                    
+                        (Categories: <a href="/category/js">js</a>)
+                    
+                </li>
+                
+                
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -579,7 +614,7 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_变量的声明提升 与 TDZ [js]";
+//        var disqus_identifier = "http://localhost:4000_变量的声明提升 与 TDZ [js]";
 //        var disqus_title = "变量的声明提升 与 TDZ [js]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */

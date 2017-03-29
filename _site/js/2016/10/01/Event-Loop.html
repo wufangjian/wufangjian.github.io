@@ -24,14 +24,14 @@
           <meta content="My Personal Stack Problems" property="og:description">
         
         
-          <meta content="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html" property="og:url">
+          <meta content="http://localhost:4000/js/2016/10/01/Event-Loop.html" property="og:url">
         
         
           <meta content="2016-10-01T12:00:00+08:00" property="article:published_time">
-          <meta content="https://wufangjian.github.io/about/" property="article:author">
+          <meta content="http://localhost:4000/about/" property="article:author">
         
         
-          <meta content="https://wufangjian.github.io/static/img/logo-high-resolution.png" property="og:image">
+          <meta content="http://localhost:4000/static/img/logo-high-resolution.png" property="og:image">
         
         
           
@@ -49,7 +49,7 @@
           <meta name="twitter:title" content="Event Loop (事件循环) [js]">
         
         
-          <meta name="twitter:url" content="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html">
+          <meta name="twitter:url" content="http://localhost:4000/js/2016/10/01/Event-Loop.html">
         
         
           <meta name="twitter:description" content="My Personal Stack Problems">
@@ -146,17 +146,17 @@
 
 <p>JavaScript 的并发模型基于 “event loop”。这个模型与其他在 C 或者 Java 等语言中的模型着实不同。</p>
 
-<h2 id="section">运行时概念</h2>
+<h2 id="运行时概念">运行时概念</h2>
 
 <p>下面的内容解释了一个理论上的模型。现代 JavaScript 引擎着重实现和优化了描述的几个语义。</p>
 
 <p><img src="/static/img/2017/eventloop.jpg" alt="" /></p>
 
-<h3 id="section-1">栈</h3>
+<h3 id="栈">栈</h3>
 
 <p>函数调用形成了一个堆栈帧</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">b</span><span class="p">){</span>
   <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
   <span class="k">return</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="o">+</span><span class="mi">35</span><span class="p">;</span>
@@ -176,23 +176,23 @@
 
 <hr />
 
-<h3 id="section-2">堆</h3>
+<h3 id="堆">堆</h3>
 
 <p>对象被分配在一个堆中，一个用以表示一个内存中大的未被组织的区域。</p>
 
 <hr />
 
-<h3 id="section-3">队列</h3>
+<h3 id="队列">队列</h3>
 
 <p>一个 JavaScript 运行时包含了一个待处理的消息队列。<code class="highlighter-rouge">每一个消息都与一个函数相关联</code> 。当栈为空时，从队列中取出一个消息进行处理。这个处理过程包含了调用与这个消息相关联的函数（以及因而创建了一个初始堆栈帧）。当栈再次为空的时候，也就意味着消息处理结束。</p>
 
 <hr />
 
-<h2 id="section-4">事件循环</h2>
+<h2 id="事件循环">事件循环</h2>
 
 <p>之所以称为 事件循环，是因为它经常被用于类似如下的方式来实现：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>
 <span class="k">while</span><span class="p">(</span><span class="nx">queue</span><span class="p">.</span><span class="nx">waitForMessage</span><span class="p">()){</span>
   <span class="nx">queue</span><span class="p">.</span><span class="nx">processNextMessage</span><span class="p">();</span>
 <span class="p">}</span>
@@ -203,7 +203,7 @@
 
 <hr />
 
-<h3 id="section-5">“执行至完成”</h3>
+<h3 id="执行至完成">“执行至完成”</h3>
 
 <p>每一个消息执行完成后，其它消息才会被执行。当你分析你的程序时，这点提供了一些优秀的特性，包括当一个函数运行时，它不能被取代且会在其它代码运行前先完成（而且能够修改这个函数控制的数据）。这点与C语言不同。例如，C语言中当一个程序在一个线程中运行时，它可以在任何点停止且可以在其它线程中运行其它代码。</p>
 
@@ -211,7 +211,7 @@
 
 <hr />
 
-<h3 id="section-6">添加消息</h3>
+<h3 id="添加消息">添加消息</h3>
 
 <p>在浏览器里，当一个事件出现且有一个事件监听器被绑定时，消息会被随时添加。如果没有事件监听器，事件会丢失。所以点击一个附带点击事件处理函数的元素会添加一个消息。其它事件亦然。</p>
 
@@ -219,11 +219,11 @@
 
 <hr />
 
-<h3 id="section-7">零延迟</h3>
+<h3 id="零延迟">零延迟</h3>
 
 <p>零延迟 (Zero delay) 并不是意味着回调会立即执行。在零延迟调用 setTimeout 时，其并不是过了给定的时间间隔后就马上执行回调函数。其等待的时间基于队列里正在等待的消息数量。在下面的例子中，”this is just a message” 将会在回调 (callback) 获得处理之前输出到控制台，这是因为延迟是要求 <code class="highlighter-rouge">运行时 (runtime) 处理请求</code> 所需的最小时间，但不是有所保证的时间。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'this is the start'</span><span class="p">);</span>
 
@@ -244,13 +244,13 @@
 </div>
 <hr />
 
-<h3 id="section-8">多个运行时互相通信</h3>
+<h3 id="多个运行时互相通信">多个运行时互相通信</h3>
 
 <p>一个 web worker 或者一个跨域的 iframe 都有它们自己的栈，堆和消息队列。两个不同的运行时只有通过 postMessage 方法进行通信。这个方法会给另一个运行时添加一个消息如果后者监听了 message 事件。</p>
 
 <hr />
 
-<h2 id="section-9">绝不阻塞</h2>
+<h2 id="绝不阻塞">绝不阻塞</h2>
 
 <p>一个很有趣的事件循环 (event loop) 模型特性在于，Javascript 跟其它语言不同，它永不阻塞。处理 I/O (input/output) 通常由事件或者回调函数进行实现。所以当一个应用正等待 IndexedDB 的查询的返回或者一个 XHR 的请求返回时，它仍然可以处理其它事情例如用户输入。</p>
 
@@ -270,7 +270,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Facebook -->
-    <div class="fb-share-button" data-href="https://wufangjian.github.io/js/2016/10/01/Event-Loop.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
+    <div class="fb-share-button" data-href="http://localhost:4000/js/2016/10/01/Event-Loop.html" data-layout="button_count" style="position: relative; top: -8px; left: 3px;">
     </div>
 </div>
 <div id="fb-root"></div>
@@ -359,13 +359,41 @@
     
         
             
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
+        
+    
+
+    
+    
+        
+            
                 
                 <div class="panel-body">
                 <h4>相关文章</h4>
                 <ul>
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/23/%E6%A0%88.html">栈 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -382,7 +410,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/22/%E5%8F%98%E9%87%8F%E7%9A%84%E5%A3%B0%E6%98%8E%E6%8F%90%E5%8D%87%E4%B8%8ETDZ.html">变量的声明提升 与 TDZ [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -399,7 +427,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/15/arguments.html">ECMAScript arguments 对象 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -416,7 +444,7 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/14/call-apply-bind.html">call、apply、bind用法 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
@@ -440,13 +468,20 @@
             
                 
                 <li class="relatedPost">
-                    <a href="https://wufangjian.github.io/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
+                    <a href="http://localhost:4000/js/2017/01/14/%E9%97%AD%E5%8C%85.html">闭包 [js]</a>
                     
                         (Categories: <a href="/category/js">js</a>)
                     
                 </li>
                 
                 
+            
+        
+    
+
+    
+    
+        
             
         
     
@@ -507,7 +542,7 @@
 //        /* <![CDATA[ */
 //
 //        var disqus_shortname = "wufangjian";
-//        var disqus_identifier = "https://wufangjian.github.io_Event Loop (事件循环) [js]";
+//        var disqus_identifier = "http://localhost:4000_Event Loop (事件循环) [js]";
 //        var disqus_title = "Event Loop (事件循环) [js]";
 //
 //        /* * * DON'T EDIT BELOW THIS LINE * * */
