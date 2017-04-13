@@ -23,7 +23,7 @@ categories: [性能]
 
 也就是说当调用动作n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间。
 
-- 参数说明
+**参数说明**
 
 ```javascript
 
@@ -36,7 +36,7 @@ categories: [性能]
 debounce(idle,action);
 ```
 
-- 函数定义
+**函数定义**
 
 ```javascript
 
@@ -52,7 +52,7 @@ var debounce = function(idle, action){
 }
 ```
 
-- 例子
+**例子**
 
 ```javascript
 //1. 简单的防抖动函数
@@ -92,7 +92,7 @@ window.addEventListener('scroll',realFunc);
 也就是会说预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期。
 
 
-- 参数说明
+**参数说明**
 
 ```javascript
 
@@ -105,7 +105,7 @@ window.addEventListener('scroll',realFunc);
 throttle(delay,action);
 ```
 
-- 函数定义
+**函数定义**
 
 ```javascript
 
@@ -121,7 +121,7 @@ var throttle = function(delay, action){
 }
 ```
 
-- 例子
+**例子**
 
 ```javascript
 //1. 简单的节流函数
