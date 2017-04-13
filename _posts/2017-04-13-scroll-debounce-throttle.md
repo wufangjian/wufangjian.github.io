@@ -23,6 +23,8 @@ categories: [性能]
 
 也就是说当调用动作n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间。
 
+- 参数说明
+
 ```javascript
 
 /**
@@ -33,6 +35,8 @@ categories: [性能]
 */
 debounce(idle,action);
 ```
+
+- 函数定义
 
 ```javascript
 
@@ -48,6 +52,35 @@ var debounce = function(idle, action){
 }
 ```
 
+- 例子
+
+```javascript
+//1. 简单的防抖动函数
+function debounce(func, wait, immediate) {
+    var timeout;
+    
+    // 定时器变量
+    return function() {
+        // 每次触发 scroll handler 时先清除定时器
+        clearTimeout(timeout);
+        // 指定 xx ms 后触发真正想进行的操作 handler
+        timeout = setTimeout(func, wait);
+    };
+};
+ 
+//2. 实际想绑定在 scroll 事件上的 handler
+function realFunc(){
+    console.log("Success");
+}
+
+//3. 采用了防抖动
+window.addEventListener('scroll',debounce(realFunc,500));
+
+//4. 没采用防抖动
+window.addEventListener('scroll',realFunc);
+```
+
+
 ---
 
 ## throttle（节流）
@@ -57,6 +90,9 @@ var debounce = function(idle, action){
 防抖函数确实不错，但是也存在问题，譬如图片的懒加载，我希望在下滑过程中图片不断的被加载出来，而不是只有当我停止下滑时候，图片才被加载出来。又或者下滑时候的数据的 ajax 请求加载也是同理。
 
 也就是会说预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期。
+
+
+- 参数说明
 
 ```javascript
 
@@ -68,6 +104,8 @@ var debounce = function(idle, action){
 */
 throttle(delay,action);
 ```
+
+- 函数定义
 
 ```javascript
 
@@ -81,6 +119,41 @@ var throttle = function(delay, action){
     }
   }
 }
+```
+
+- 例子
+
+```javascript
+//1. 简单的节流函数
+function throttle(func, wait, mustRun) {
+    var timeout,
+        startTime = new Date();
+    
+    return function() {
+        var context = this;
+        var args = arguments;
+        var curTime = new Date();
+        
+        clearTimeout(timeout);
+        // 如果达到了规定的触发时间间隔，触发 handler
+        if(curTime - startTime >= mustRun){
+            func.apply(context,args);
+            startTime = curTime;
+            
+        }
+        // 没达到触发间隔，重新设定定时器
+        else{
+            timeout = setTimeout(func, wait);
+        }
+    };
+};
+
+//2. 实际想绑定在 scroll 事件上的 handler
+function realFunc(){
+    console.log("Success");
+}
+//3. 采用了节流函数
+window.addEventListener('scroll',throttle(realFunc,500,1000));
 ```
 
 
