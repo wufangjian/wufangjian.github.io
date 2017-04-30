@@ -10,6 +10,8 @@ categories: [js]
 
 **目录**
 
+---
+
 [1 call/apply](#一callapply)
 
 [2 call/apply 的区别](#二callapply-的区别)
@@ -22,7 +24,6 @@ categories: [js]
 
 [6 总结](#六总结)
 
----
 ---
 
 
