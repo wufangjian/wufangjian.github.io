@@ -10,9 +10,9 @@ categories: [js]
 
 ---
 
-[1 ajax readyState 的五种状态](#一ajaxreadystate的五种状态)
+[1 ajax readyState 的五种状态](#一ajax-readystate的五种状态)
 
-[2 onreadystatechange 事件](#二onreadystatechange事件)
+[2 onreadystatechange 事件](#二onreadystatechange-事件)
 
 ---
 
