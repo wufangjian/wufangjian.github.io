@@ -5,9 +5,30 @@ date:   2017-01-14 16:00:00 +0800
 categories: [http]
 ---
 
-# HTTP 缓存
+> 缓存是性能优化中一个永恒的话题，HTTP 中的缓存可能会非常让人头疼
 
-有时，HTTP 中的缓存可能会非常让人头疼。
+
+**目录**
+
+---
+
+[1 HTTP 缓存](#一HTTP缓存)
+
+[2 静态资源](#二静态资源)
+
+[3 动态资源](#三动态资源)
+
+[4 Cache-Control 和 Expires](#四cache-control-和-expires)
+
+[5 ETag 和 Last-Modified](#五etag-和-last-modified)
+
+[6 手动按下 Ctrl-R](#六手动按下-ctrl-r)
+
+[7 Vary: Accept-Encoding](#七vary-accept-encoding)
+
+---
+
+## 一、HTTP 缓存
 
 按照文档正确地使用 HTTP 并不是那么困难，但事实上，不同的浏览器和 HTTP 版本常常困扰着我们。
 
@@ -15,9 +36,10 @@ categories: [http]
 
 所以这里有一些博主总结的实用并速记的规则，并且在未来博主也会持续地跟进和更新。
 
+---
 
 
-## 静态资源
+## 二、静态资源
 
 永远不会修改的内容：JS 和 CSS 文件，图片，和任何类型的二进制文件都属于这个类目。
 
@@ -39,7 +61,9 @@ Vary: Accept-Encoding
 针对静态资源的设置就是那么简单。
 
 
-## 动态资源
+---
+
+## 三、动态资源
 
 针对应用程序私密性和新鲜度方面需求的不同，我们应该使用不同的缓存控制设置。
 
@@ -77,14 +101,17 @@ Cache-Control: public, max-age=300, must-revalidate
 Cache-Control: private, …
 ```
 
+---
 
-## Cache-Control 和 Expires
+## 四、Cache-Control 和 Expires
 
 当同时使用 Cache-Control 和 Expires 时，Cache-Control 获得优先权。
 
 同时使用 Cache-Control 和 Expires 意味着得到更广泛的支持（被不同的浏览器和版本）。当然，它们两个应该被配置成相同的时效值，以避免引起困惑。
 
-## ETag 和 Last-Modified
+---
+
+## 五、ETag 和 Last-Modified
 
 这两个头在浏览器对资源做重新检查验证的时候会使用到。大致来说，浏览器只是盲目地存储这两个来自于服务器的头的值，然后在需要检查验证的时候，浏览器根据请求条件，把这两个指发送给服务器（分别通过 If-None-Match 和 If-Modified-Since）。
 
@@ -100,8 +127,9 @@ Cache-Control: private, …
 >参考 [Should your site be using etags or not?](https://www.techpunch.co.uk/development/should-your-site-be-using-etags-or-not)
 
 
+---
 
-## 手动按下 Ctrl-R
+## 六、手动按下 Ctrl-R
 
 当按下 Ctrl-R 时，浏览器会携带下面的请求，以检查是否需要更新缓存内容：
 ```
@@ -113,7 +141,9 @@ If-Modifed-Since: …
 注意这并不只是和原服务器建立连接，其同样适用于代理服务器。本质上，它只是重新检查验证内容。如果服务器回应了一个304，浏览器将会使用缓存的内容。
 
 
-## Vary: Accept-Encoding
+---
+
+## 七、Vary: Accept-Encoding
  
 这个头对于一些人来说可能比较陌生。
 
