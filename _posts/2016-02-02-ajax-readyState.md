@@ -1,11 +1,22 @@
 ---
 layout: post
-title:  "ajax readyState的五种状态 [js]"
+title:  "Ajax readyState 状态 [js]"
 date:   2016-02-02 12:00:00 +0800
 categories: [js]
 ---
+> AJAX 是与服务器交换数据并更新部分网页的技术，在不重新加载整个页面的情况下，更新局部数据
 
-## ajax readyState的五种状态
+**目录**
+
+---
+
+[1 ajax readyState 的五种状态](#一ajaxreadystate的五种状态)
+
+[2 onreadystatechange 事件](#二onreadystatechange事件)
+
+---
+
+## 一、ajax readyState的五种状态
 
 先看看原生js封装的ajax
 
@@ -65,8 +76,10 @@ function ajax(method, url, data, success) {
 
     （完成）此阶段确认全部数据都已经解析为客户端可用的格式，解析已经完成。值为4表示数据解析完毕，可以通过XMLHttpRequest对象的相应属性取得数据。 
 
+---
 
-## onreadystatechange 事件
+
+## 二、onreadystatechange 事件
 
 当请求被发送到服务器时，我们需要执行一些基于响应的任务。
 
@@ -75,6 +88,7 @@ function ajax(method, url, data, success) {
 readyState 属性存有 XMLHttpRequest 的状态信息。
 
 下面是 XMLHttpRequest 对象的三个重要的属性：
+
 ```
 onreadystatechange 
     存储函数（或函数名），每当 readyState 属性改变时，就会调用该函数。
@@ -93,3 +107,4 @@ status
 ```
 
 注释：`onreadystatechange` 事件被触发 5 次（0 - 4），对应着 readyState 的每个变化。
+
