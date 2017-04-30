@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "defer、async [js]"
-date:   2015-02-01 12:00:00 +0800
+date:   2015-02-13 12:00:00 +0800
 categories: [js]
 ---
 

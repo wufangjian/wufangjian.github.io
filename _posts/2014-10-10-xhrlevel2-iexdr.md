@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "XHR Level2 / IE XDR (XDomainRequest) 实现AJAX跨域 [性能]" 
-date:   2017-03-29 20:16:16 +0800
+date:   2014-10-10 20:16:16 +0800
 categories: [性能]
 ---
 > 遇到AJAX跨域需求时都会采用服务器端代理，或者改用 JSONP,  window.name，postMessage() 等方法模拟，但都不是很纯粹的AJAX解决方案。今天学到了新的实现跨域的方法
