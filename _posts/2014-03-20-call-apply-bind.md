@@ -10,15 +10,15 @@ categories: [js]
 
 **目录**
 
-[call/apply](#call/apply)
+[call/apply](#callapply)
 
-[call/apply 的区别](#call/apply 的区别)
+[call/apply 的区别](#callapply-的区别)
 
-[call/apply 栗子](#call/apply 栗子)
+[call/apply 栗子](#callapply-栗子)
 
 [bind](#bind)
 
-[call/apply/bind 的区别](#call/apply/bind 的区别)
+[call/apply/bind 的区别](#callapplybind-的区别)
 
 [总结](#总结)
 
@@ -27,7 +27,7 @@ categories: [js]
 
 
 
-## call/apply
+## 一、call/apply
 
 call 和 apply 函数就是为了改变函数的 `运行时上下文` 而存在，也就是改变函数体内部的 this 指向
 
@@ -59,7 +59,7 @@ apple.say.apple(banana);  // blue
 
 ---
 
-## call/apply 的区别
+## 二、call/apply 的区别
 
 call 和 apply 的方法作用是完全一致的，他们的区别在于传输参数的方式不同
 
@@ -123,7 +123,7 @@ var domNodes = Array.prototype.slice.call(document.getElementsByTagName("*"));
 
 ---
 
-## call/apply 栗子
+## 三、call/apply 栗子
 
 1.模拟console.log方法打印日志
 
@@ -159,7 +159,7 @@ log(1, 2, 3);
 
 ---
 
-## bind
+## 四、bind
 
 bind()方法会创建一个新函数，称为绑定函数，当调用这个绑定函数时，绑定函数会以创建它时传入 bind()方法的第一个参数作为 this，传入 bind() 方法的第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数。
 
@@ -246,7 +246,7 @@ func(); // 3
 
 ---
 
-## call/apply/bind 的区别
+## 五、call/apply/bind 的区别
 
 当你希望改变上下文环境之后并非立即执行，而是回调执行的时候，使用 bind() 方法。而 apply/call 则会立即执行函数。
 
@@ -268,7 +268,7 @@ console.log(foo.getX.apply(obj));   //81
 
 ---
 
-## 总结
+## 六、总结
 
 *apply 、 call 、bind 三者都是用来改变函数的this对象的指向的；*
 *apply 、 call 、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；*
