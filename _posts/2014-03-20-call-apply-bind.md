@@ -10,17 +10,17 @@ categories: [js]
 
 **目录**
 
-[call/apply](#callapply)
+[1 call/apply](#一callapply)
 
-[call/apply 的区别](#callapply-的区别)
+[2 call/apply 的区别](#二callapply-的区别)
 
-[call/apply 栗子](#callapply-栗子)
+[3 call/apply 栗子](#三callapply-栗子)
 
-[bind](#bind)
+[4 bind](#四bind)
 
-[call/apply/bind 的区别](#callapplybind-的区别)
+[5 call/apply/bind 的区别](#五callapplybind-的区别)
 
-[总结](#总结)
+[6 总结](#六总结)
 
 ---
 ---
