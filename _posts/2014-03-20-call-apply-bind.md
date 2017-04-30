@@ -37,6 +37,8 @@ apple.say.apple(banana);  // blue
 ```
 此时我们可以看出，call 、apply 可以动态改变this指向，当某个对象不存在某个方法，而另外一个对象有该方法，那么我们可以用apply 和 call去改变该方法的this指向来完成
 
+---
+
 ## call 、apply的区别
 
 call 和 apply 的方法作用是完全一致的，他们的区别在于传输参数的方式不同
@@ -99,6 +101,7 @@ var domNodes = Array.prototype.slice.call(document.getElementsByTagName("*"));
 ```
 
 
+---
 
 ## call、apply栗子
 
@@ -134,7 +137,7 @@ log(1, 2, 3);
 ```
 
 
-
+---
 
 ## bind
 
@@ -221,6 +224,7 @@ func(); // 3
 
 在Javascript中，多次 bind() 是无效的。更深层次的原因， bind() 的实现，相当于使用函数在内部包了一个 call / apply ，第二次 bind() 相当于再包住第一次 bind() ,故第二次以后的 bind 是无法生效的。
 
+---
 
 ## call 、apply、bind的区别
 
@@ -242,6 +246,7 @@ console.log(foo.getX.call(obj));    //81
 console.log(foo.getX.apply(obj));   //81
 ```
 
+---
 
 ## 总结
 
