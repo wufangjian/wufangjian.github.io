@@ -5,9 +5,29 @@ date:   2014-03-20 16:16:16 +0800
 categories: [js]
 ---
 
-javascript的一大特点，函数存在 `定义时上下文` `运行时上下文` `上下文可改变` 的概念
+> javascript的一大特点，函数存在 `定义时上下文` `运行时上下文` `上下文可改变` 的概念
 
-## call 、apply
+
+**目录**
+
+[call/apply](#call/apply)
+
+[call/apply 的区别](#call/apply 的区别)
+
+[call/apply 栗子](#call/apply 栗子)
+
+[bind](#bind)
+
+[call/apply/bind 的区别](#call/apply/bind 的区别)
+
+[总结](#总结)
+
+---
+---
+
+
+
+## call/apply
 
 call 和 apply 函数就是为了改变函数的 `运行时上下文` 而存在，也就是改变函数体内部的 this 指向
 
@@ -39,7 +59,7 @@ apple.say.apple(banana);  // blue
 
 ---
 
-## call 、apply的区别
+## call/apply 的区别
 
 call 和 apply 的方法作用是完全一致的，他们的区别在于传输参数的方式不同
 
@@ -103,7 +123,7 @@ var domNodes = Array.prototype.slice.call(document.getElementsByTagName("*"));
 
 ---
 
-## call、apply栗子
+## call/apply 栗子
 
 1.模拟console.log方法打印日志
 
@@ -226,7 +246,7 @@ func(); // 3
 
 ---
 
-## call 、apply、bind的区别
+## call/apply/bind 的区别
 
 当你希望改变上下文环境之后并非立即执行，而是回调执行的时候，使用 bind() 方法。而 apply/call 则会立即执行函数。
 
