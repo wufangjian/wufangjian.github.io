@@ -20,16 +20,104 @@ categories: [性能]
 ---
 
 
-## 性能测试
+## 一、性能测试
 
-在瀑布图和屏幕截图上方的表格中是页面级别指标(page level metrics)，包括 `整页加载时间`、 `第一字节加载所需时间`、 `第一项内容加载所需时间`、 `页面中 DOM元素的数量`、 `document.onload事件触发事件`、 `页面所有元素加载花费时间`、 以及为了`完成页面绘制所需请求的 HTTP请求次数`
+在瀑布图和屏幕截图上方的表格中是页面级别指标(page level metrics)，包括 ：
+
+- 整页加载时间 (Load Time)
+
+- 第一字节加载所需时间 (First Byte)
+
+- 第一项内容加载所需时间 (Start Render)
+
+- 页面可见部分的平均时间 (Speed Index)
+
+- dom ready时间 (Document complete)
+
+- 页面所有元素加载花费时间 (Fully Loaded)
+
+- 完成页面绘制所需请求的 HTTP请求次数 (Requests)
+
+### 1.1 summary: 摘要
+
+![](/static/img/2017/webpagetest/01summary.png)
+
+Waterfall: 页面 `首次加载视图` 和 `缓存重复加载视图` 的瀑布图
+
+Screen Shot: 对应的视频截图
+
+摘要页面提供了所有数据的高度概括,以下是二级页面：
+
+### 1.2 Details: 详情
+
+![](/static/img/2017/webpagetest/02details.png)
+
+### 1.3 Performance Review:  性能查看
+
+![](/static/img/2017/webpagetest/03perfomancereview.png)
+
+显示了每一项内容在各项标准下的表现
+
+Keep Alire (保持有效)
+
+Gzip Text (Gzip文本)
+
+Compress Images (图片压缩)
+
+Progressive (渐进增强)
+
+Cache Static (缓存统计)
+
+CDN detected (CDN检测)
+
+### 1.4 Content Breakdown: 内容分解
+
+![](/static/img/2017/webpagetest/04contentbreakdown.png)
+
+### 1.5 Domains: 域
+
+![](/static/img/2017/webpagetest/05domains.png)
+
+### 1.6 Content Breakdown: 内容分解
+
+![](/static/img/2017/webpagetest/06processingbreakdown.png)
+
+### 1.7 Screen Shot: 视频截图
+
+![](/static/img/2017/webpagetest/07screenshot.png)
 
 
-![](/static/img/2017/webpagetest01.png)
+
+
+
+```
+summary: 摘要
+Details: 详情
+Performance Review:  性能查看
+    显示了每一项内容在各项标准下的表现
+    Keep Alire (保持有效)
+    Gzip Text (Gzip文本)
+    Compress Images (图片压缩)
+    Cache Static (缓存统计)
+    Combine (组合)
+    CDN detected (CDN检测)
+    Minify (缩减)
+    JS
+    cookies
+Content Breakdown: 内容分解
+Domains: 域
+Screen Shot: 视频截图
+```
+
+
 
 ---
 
 ## 名词解释
+
+### Speed Index
+
+定义：速度索引是显示页面的可见部分的平均时间。 它以毫秒为单位，取决于 `浏览器可是区大小`。
 
 ### Start Render
 
@@ -83,6 +171,7 @@ TTST(Time To Script)：BODY中所有脚本加载和执行的时间
 (2) BODY中脚本使用情况
 ```
 
+说明：通过对一些实际监控数据的分析得出，在一个通过正常方式加载脚本的页面中，脚本的加载和执行时间往往能占DOM Ready时间的50%左右，由此可见脚本的使用对DOM Ready指标的影响如何的显著！因此，对DOM Ready指标的优化也应该着重从脚本的使用入手
 
 
 ---
