@@ -71,7 +71,7 @@ navigate http://www.tom-barker.com
 ```
 
 
-在瀑布图和屏幕截图上方的表格中是页面级别指标(page level metrics)，包括`整页加载时间`、`第一字节加载所需时间`、`第一项内容加载所需时间`、`页面中 DOM元素的数量`、`document.onload事件触发事件`，`页面所有元素加载花费时间`，以及为了`完成页面绘制所需请求的 HTTP请求次数`
+在瀑布图和屏幕截图上方的表格中是页面级别指标(page level metrics)，包括 `整页加载时间`、 `第一字节加载所需时间`、 `第一项内容加载所需时间`、 `页面中 DOM元素的数量`、 `document.onload事件触发事件`、 `页面所有元素加载花费时间`、 以及为了`完成页面绘制所需请求的 HTTP请求次数`
 
 ![](/static/img/2017/webpagetest01.png)
 
