@@ -13,7 +13,9 @@ categories: [性能]
 
 [1 性能测试]()
 
-[2 webpagetest 参数设置]()
+[2 与性能相关的几个重要概念]()
+
+[3 webpagetest 参数设置]()
 
 ---
 
@@ -100,11 +102,13 @@ Screen Shot: 对应的视频截图
 
 ---
 
-## 名词解释
+## 二、与性能相关的几个重要概念
 
 ### Speed Index
 
 定义：速度索引是显示页面的可见部分的平均时间。 它以毫秒为单位，取决于 `浏览器可是区大小`。
+
+---
 
 ### Start Render
 
@@ -130,6 +134,8 @@ TTHE(Time To Head End)：HTML文档头部解析完成所需要的时间
 (3) Head中资源使用情况
 ```
 
+
+---
 
 ### DOM Ready
 
@@ -164,13 +170,13 @@ TTST(Time To Script)：BODY中所有脚本加载和执行的时间
 ---
 
 
-## webpagetest 参数设置
+## 三、webpagetest 参数设置
 
 **1.advanced (高级的)**
 
 - 1、Stop Test at Document Complete (文档完成时停止测试运行)
 
-*可以通知我们 document.onload 事件是何时出发的，而不是当前所有页面资源都加载完成之后再通知我们*
+> 可以通知我们 document.onload 事件是何时出发的，而不是当前所有页面资源都加载完成之后再通知我们
 
 - 2、Disable JavaScript (禁用javascript)
 
@@ -178,7 +184,7 @@ TTST(Time To Script)：BODY中所有脚本加载和执行的时间
 
 - 4、Ignore SSL Certificate Errors (忽略 SSL 认证错误)
 
-*否则测试可能无法正常运行，因为这种情况下最终用户需要出示证书后会话才能继续进行，否则会话将终止*
+> 否则测试可能无法正常运行，因为这种情况下最终用户需要出示证书后会话才能继续进行，否则会话将终止
 
 - 5、Disable Compatibility View (IE Only) (禁用兼容性视图)
 
@@ -188,7 +194,7 @@ TTST(Time To Script)：BODY中所有脚本加载和执行的时间
 
 - 8、Preserve original User Agent string (保留原有用户代理字符串)
 
-*保留用户原有的运行测试的浏览器的代理字符串，而不是添加一个字符串来将该访问识别为一个 WebPagetest 测试*
+> 保留用户原有的运行测试的浏览器的代理字符串，而不是添加一个字符串来将该访问识别为一个 WebPagetest 测试
 
 **2.chrome (特定的高级设置)**
 
