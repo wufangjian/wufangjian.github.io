@@ -11,14 +11,84 @@ categories: [性能]
 
 ---
 
-[]()
+[1 性能测试]()
 
-[]()
+[2 webpagetest 参数设置]()
 
-[]()
+[3 ]()
 
 ---
 
+
+## 性能测试
+
+在瀑布图和屏幕截图上方的表格中是页面级别指标(page level metrics)，包括 `整页加载时间`、 `第一字节加载所需时间`、 `第一项内容加载所需时间`、 `页面中 DOM元素的数量`、 `document.onload事件触发事件`、 `页面所有元素加载花费时间`、 以及为了`完成页面绘制所需请求的 HTTP请求次数`
+
+
+![](/static/img/2017/webpagetest01.png)
+
+---
+
+## 名词解释
+
+### Start Render
+
+定义：顾名思义指的是浏览器开始渲染的时间，从用户角度出发则可以定义为用户在页面上看到的第一个内容的时间
+
+用户体验：该时间决定着用户对页面的`第一体验时机`，如果时间越短给用户的体验则是页面速度越快，这样用户等待其余内容展现的耐心也会更大一些。如果时间过长，则用户会在长时间内面对的都是一个空白的页面，这对用户的耐心将是一个考验。总的来说，`Start Render时间是越短越好，而且是非常关键的指标`
+
+影响因素：`Time To Start Render = TTFB + TTDD + TTHE`
+
+```
+TTFB(Time To First Byte)：发起请求到服务器返回数据的时间
+
+TTDD(Time To Document Download)：从服务器加载HTML文档的时间
+
+TTHE(Time To Head End)：HTML文档头部解析完成所需要的时间
+
+通过以上公式可以看到Start Render主要受以下因素影响(开发人员可控)：
+
+(1) 服务器响应时间
+
+(2) HTML文档的大小
+
+(3) Head中资源使用情况
+```
+
+
+### DOM Ready
+
+定义：页面解析完成的时间，在高级浏览器里有对应的DOM事件 - `DOMContentLoaded`
+
+> 该事件在文档解析完成时会触发。那么文档解析到底包括哪些操作呢？虽然暂不能给出一个完全的答案，但文档的解析至少应该包括以下操作：`HTML文档分析` 以及 `DOM树的创建`、 `外链脚本的加载`、 `外链脚本的执行` 以及 `内联脚本的执行`，但是不包括图片、iframe等其它资源的加载。正因为如此，该事件触发的时机一般比window.onload要早，而且是在所有DOM元素都可以操作之时。
+
+
+DOM Ready 指标并不直接影响感官体验，往往影响的是交互功能何时可用
+
+> 由于DOMContentLoaded事件触发时是所有DOM节点可以进行操作的时候，比如添加事件、增删改节点等，因此用JavaScript实现的一些交互功能往往会在DOMContentLoaded事件中去初始化，也只有在DOMContentLoaded事件触发后这项功能才可用，DOM Ready时间如果过长的话，用户会发现页面已经出来了，但是很多功能却是不可用的，也许点击某个链接会跳到页面顶部。因此， DOM Ready 时间也是越短越好，这样交互功能才能尽早可用
+
+影响因素：`Time To Dom Ready = TTSR + TTDC + TTST`
+
+```
+TTSR(Time To Start Render)：浏览器开始渲染的时间
+
+TTDC(Time To Dom Created)：DOM树创建所耗时间
+
+TTST(Time To Script)：BODY中所有脚本加载和执行的时间
+
+通过以上公式可以看到Start Render主要受以下因素影响(开发人员可控)：
+
+(1) DOM结构的复杂程度
+
+(2) BODY中脚本使用情况
+```
+
+
+
+---
+
+
+## webpagetest 参数设置
 
 **1.advanced (高级的)**
 
@@ -69,19 +139,6 @@ categories: [性能]
 block .png
 navigate http://www.tom-barker.com
 ```
-
-
-在瀑布图和屏幕截图上方的表格中是页面级别指标(page level metrics)，包括 `整页加载时间`、 `第一字节加载所需时间`、 `第一项内容加载所需时间`、 `页面中 DOM元素的数量`、 `document.onload事件触发事件`、 `页面所有元素加载花费时间`、 以及为了`完成页面绘制所需请求的 HTTP请求次数`
-
-![](/static/img/2017/webpagetest01.png)
-
-
-
-
-
-
-
-
 
 
 
