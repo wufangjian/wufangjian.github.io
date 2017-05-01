@@ -20,7 +20,7 @@ categories: [性能]
 ---
 
 
-## 一、性能测试
+# 一、性能测试
 
 在瀑布图和屏幕截图上方的表格中是页面级别指标(page level metrics)，包括 ：
 
@@ -38,7 +38,7 @@ categories: [性能]
 
 - 完成页面绘制所需请求的 HTTP请求次数 (Requests)
 
-### 1.1 summary: 摘要
+## 1.1 summary: 摘要
 
 ![](/static/img/2017/webpagetest/01summary.png)
 
@@ -50,14 +50,14 @@ Screen Shot: 对应的视频截图
 
 摘要页面提供了所有数据的高度概括,以下是二级页面：
 
-### 1.2 Details: 详情
+## 1.2 Details: 详情
 
 ![](/static/img/2017/webpagetest/02details.png)
 
 
 ---
 
-### 1.3 Performance Review:  性能查看
+## 1.3 Performance Review:  性能查看
 
 ![](/static/img/2017/webpagetest/03performancereview.png)
 
@@ -77,40 +77,40 @@ Screen Shot: 对应的视频截图
 
 ---
 
-### 1.4 Content Breakdown: 内容分解
+## 1.4 Content Breakdown: 内容分解
 
 ![](/static/img/2017/webpagetest/04contentbreakdown.png)
 
 ---
 
-### 1.5 Domains: 域
+## 1.5 Domains: 域
 
 ![](/static/img/2017/webpagetest/05domains.png)
 
 ---
 
-### 1.6 Content Breakdown: 内容分解
+## 1.6 Content Breakdown: 内容分解
 
 ![](/static/img/2017/webpagetest/06processingbreakdown.png)
 
 ---
 
-### 1.7 Screen Shot: 视频截图
+## 1.7 Screen Shot: 视频截图
 
 ![](/static/img/2017/webpagetest/07screenshot.png)
 
 
 ---
 
-## 二、与性能相关的几个重要概念
+# 二、与性能相关的几个重要概念
 
-### Speed Index
+## Speed Index
 
 定义：速度索引是显示页面的可见部分的平均时间。 它以毫秒为单位，取决于 `浏览器可是区大小`。
 
 ---
 
-### Start Render
+## Start Render
 
 定义：顾名思义指的是浏览器开始渲染的时间，从用户角度出发则可以定义为用户在页面上看到的第一个内容的时间
 
@@ -137,7 +137,7 @@ TTHE(Time To Head End)：HTML文档头部解析完成所需要的时间
 
 ---
 
-### DOM Ready
+## DOM Ready
 
 定义：页面解析完成的时间，在高级浏览器里有对应的DOM事件 - `DOMContentLoaded`
 
@@ -170,9 +170,9 @@ TTST(Time To Script)：BODY中所有脚本加载和执行的时间
 ---
 
 
-## 三、webpagetest 参数设置
+# 三、webpagetest 参数设置
 
-**1.advanced (高级的)**
+## 3.1 advanced (高级的)
 
 - 1、Stop Test at Document Complete (文档完成时停止测试运行)
 
@@ -196,22 +196,22 @@ TTST(Time To Script)：BODY中所有脚本加载和执行的时间
 
 > 保留用户原有的运行测试的浏览器的代理字符串，而不是添加一个字符串来将该访问识别为一个 WebPagetest 测试
 
-**2.chrome (特定的高级设置)**
+## 3.2 chrome (特定的高级设置)
 
 > 模拟不同的手机（xiaomi、huawei等），不同的端（ios、android），比如在 iOS下某些功能存在，android下面不存在
 
 
-**3.Auth (认证)**
+## 3.3 Auth (认证)
 
 > 如果 Web 网站使用 HTTP 认证才能访问，可以在 Auth（认证）选项卡中指定证书，要记住小心谨慎。(推荐使用创建一个仅用于测试的有权限限制的账号进行测试)
 
 
-**4.script (脚本)**
+## 3.4 script (脚本)
 
 > 测试一些非常特殊的场景，例如：仅当某些特殊事件触发时才对这些特性进行性能测试。 你可以运行一个复杂的测试（访问多个URL、发送click、key事件给DOM，提交表单数据，执行特殊的 JavaScript，还要更新 DOM）甚至（修改 HTTP 请求设置，以实现诸如设置特定 cookie、主机IP设置以及用户代理变更等事情）
 
 
-**5.Block (分块)**
+## 3.5 Block (分块)
 
 > 允许我们对`请求的内容进行分块`，这对于我们比较有没有广告、有没有javascript、以及有没有图片文件的测试结果是非常有用的
 
