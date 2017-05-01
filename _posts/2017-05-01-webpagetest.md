@@ -30,11 +30,13 @@ categories: [性能]
 
 - 第一项内容加载所需时间 (Start Render)
 
-- 页面可见部分的平均时间 (Speed Index)
+- 页面可见部分的平均时间 (`Speed Index`)
 
-- dom ready时间 (Document complete)
+- 页面的可交互时间 (`Interactive`)
 
-- 页面所有元素加载花费时间 (Fully Loaded)
+- dom ready时间 (`Document complete`)
+
+- 页面所有元素加载花费时间 (`Fully Loaded`)
 
 - 完成页面绘制所需请求的 HTTP请求次数 (Requests)
 
@@ -184,6 +186,27 @@ TTST(Time To Script)：BODY中所有脚本加载和执行的时间
 1) 因为是在 dom ready 之后触发，因此 dom ready 指标的影响因素也会影响page load
 
 2) 图片、iframe等资源越多，page load 的加载时间也会越长
+
+---
+
+## 2.5 TTI (time to interact)
+
+定义：页面可交互的时间
+
+> 核心功能的定义则是随着页面的不同而不同，例如对于百度首页而言，最为关键的就是搜索框出现的时间、而对于一些购物网站的商品详情页最关键的是购买功能可用和描述出现的时间。而目前的实际情况，TTI大都等于DOM Ready时间，因为不论交互功能是否重要，相关的Javascript都会在DOM Ready 后才进行初始化和绑定，而实际上 `TTI是可以更早的`
+
+用户体验：
+
+TTI 的长短对于用户体验的影响是十分重要的，它影响着用户对核心功能的使用
+
+
+影响因素：
+
+1) StartRender时间(只有内容渲染出来了，才可以谈交互，因此渲染时间的快与慢会直接影响TTI时间)
+
+2) 核心功能相关HTML元素的显示时间 (决定着核心功能可见的时间)
+
+3) 核心功能相关Javascript功能的绑定时间 (决定着核心 Javascript 功能可交互的时间)
 
 
 ---
