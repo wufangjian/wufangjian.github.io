@@ -104,13 +104,13 @@ Screen Shot: 对应的视频截图
 
 # 二、与性能相关的几个重要概念
 
-## Speed Index
+## 2.1 Speed Index
 
 定义：速度索引是显示页面的可见部分的平均时间。 它以毫秒为单位，取决于 `浏览器可是区大小`。
 
 ---
 
-## Start Render
+## 2.2 Start Render
 
 定义：顾名思义指的是浏览器开始渲染的时间，从用户角度出发则可以定义为用户在页面上看到的第一个内容的时间
 
@@ -137,7 +137,7 @@ TTHE(Time To Head End)：HTML文档头部解析完成所需要的时间
 
 ---
 
-## DOM Ready
+## 2.3 DOM Ready
 
 定义：页面解析完成的时间，在高级浏览器里有对应的DOM事件 - `DOMContentLoaded`
 
