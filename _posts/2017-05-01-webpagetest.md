@@ -15,8 +15,6 @@ categories: [性能]
 
 [2 webpagetest 参数设置]()
 
-[3 ]()
-
 ---
 
 
@@ -46,69 +44,58 @@ Waterfall: 页面 `首次加载视图` 和 `缓存重复加载视图` 的瀑布�
 
 Screen Shot: 对应的视频截图
 
+---
+
 摘要页面提供了所有数据的高度概括,以下是二级页面：
 
 ### 1.2 Details: 详情
 
 ![](/static/img/2017/webpagetest/02details.png)
 
+
+---
+
 ### 1.3 Performance Review:  性能查看
 
-![](/static/img/2017/webpagetest/03perfomancereview.png)
+![](/static/img/2017/webpagetest/03performancereview.png)
 
 显示了每一项内容在各项标准下的表现
 
-Keep Alire (保持有效)
+- Keep Alire (保持有效)
 
-Gzip Text (Gzip文本)
+- Gzip Text (Gzip文本)
 
-Compress Images (图片压缩)
+- Compress Images (图片压缩)
 
-Progressive (渐进增强)
+- Progressive (渐进增强)
 
-Cache Static (缓存统计)
+- Cache Static (缓存统计)
 
-CDN detected (CDN检测)
+- CDN detected (CDN检测)
+
+---
 
 ### 1.4 Content Breakdown: 内容分解
 
 ![](/static/img/2017/webpagetest/04contentbreakdown.png)
 
+---
+
 ### 1.5 Domains: 域
 
 ![](/static/img/2017/webpagetest/05domains.png)
+
+---
 
 ### 1.6 Content Breakdown: 内容分解
 
 ![](/static/img/2017/webpagetest/06processingbreakdown.png)
 
+---
+
 ### 1.7 Screen Shot: 视频截图
 
 ![](/static/img/2017/webpagetest/07screenshot.png)
-
-
-
-
-
-```
-summary: 摘要
-Details: 详情
-Performance Review:  性能查看
-    显示了每一项内容在各项标准下的表现
-    Keep Alire (保持有效)
-    Gzip Text (Gzip文本)
-    Compress Images (图片压缩)
-    Cache Static (缓存统计)
-    Combine (组合)
-    CDN detected (CDN检测)
-    Minify (缩减)
-    JS
-    cookies
-Content Breakdown: 内容分解
-Domains: 域
-Screen Shot: 视频截图
-```
-
 
 
 ---
