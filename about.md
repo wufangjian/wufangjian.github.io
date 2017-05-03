@@ -96,6 +96,8 @@ permalink: /about/
 
 《Web前端黑客技术揭秘》
 《算法 第4版 Algorithms Fourth Edition》
+《计算机操作系统 第四版》
+《计算机网络（第6版）》
 ```
 
 **联系方式**
