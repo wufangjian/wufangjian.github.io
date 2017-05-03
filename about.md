@@ -89,10 +89,21 @@ permalink: /about/
 ```
 《精通CSS：高级Web标准解决方案（第2版）》
 《JavaScript高级程序设计（第3版）》
+《javascript设计模式》
+《react-native入门与实战》
 《深入浅出Node.js》
 
 《javascript性能优化》
 《web性能》
+
+《http权威指南》
+《图解TCP/IP》
+
+《mysql高效编程》
+《高性能mysql》
+
+《Java核心技术》
+《深入理解Java虚拟机(周志明)》
 
 《Web前端黑客技术揭秘》
 《算法 第4版 Algorithms Fourth Edition》
