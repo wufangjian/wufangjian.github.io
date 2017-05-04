@@ -13,6 +13,8 @@ permalink: /about/
 
 专业课程：数据结构、计算机网路、操作系统、算法导论、交换原理、通信原理、c++(大一)、java(大二)... 等
 
+爱好：足球、台球、乒乓球、读书、跑步、玩儿
+
 时间：2010.09 - 2014.06
 ```
 
@@ -34,10 +36,8 @@ permalink: /about/
     负责爱奇艺主站首页优化
     负责爱奇艺主站：影视评论区、用户云安全中心开发优化工作
     负责爱奇艺商城：首页、详情页、购物车页
-```
 
 
-```
 时间：2015.07 - 至今       百度
 
 部门：凤巢原生广告部
@@ -61,27 +61,27 @@ permalink: /about/
     linux   vim/shell
 
 前端基础
-    javascript
+    javascript  
     node
     ES6 语法
-    css    [BFC flex 常见布局...]
-    angularjs   大型项目经验，复杂场景
-    vue / react 熟悉
-    css3 / h5   熟悉
-    mongodb     熟悉常用API
+    css             [BFC flex 常见布局...]
+    angularjs       大型项目经验，复杂场景
+    vue / react     熟悉
+    css3 / h5       熟悉
+    mongodb         熟悉常用API
     
 前端工程化工具
-    git     项目中使用
-    svn     熟悉
-    yog2    大型项目经验
-    fis3    大型项目经验
-    webpack 熟悉
-    grunt   熟悉
-    gulp    熟悉
+    git         深入理解
+    svn         项目经验
+    yog2        大型项目经验
+    fis3        大型项目经验
+    webpack     项目经验
+    grunt       项目经验
+    gulp        项目经验
 
 前端性能优化
-    spa 性能优化
-    主站首页性能优化
+    SPA 性能优化       项目经验
+    主站首页性能优化    项目经验
 
 后端
     java
@@ -123,7 +123,7 @@ email: 177676656@qq.com
 ```
 
 ```
-这是一个前端界最坏的时代，也是最好的时代
+愿尝尽所有光荣与低谷 还能做一个鲜衣怒马的好少年
 ```
 
 
